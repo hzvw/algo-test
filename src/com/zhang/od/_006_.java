@@ -12,36 +12,47 @@ import java.util.Scanner;
  * @Version 1.0
  */
 public class _006_ {
+    static long[] A;
+    static long[][] buffer;
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int N = sc.nextInt();
-        A = new int[N];
+        A = new long[N];
+        buffer = new long[N][N];
 
         for(int i = 0; i<N; i++){
             A[i] = sc.nextInt();
         }
 
-        int max = 0;
+        long max = 0;
         for(int i = 0; i<N; i++){
             max = Math.max(max, A[i] + p(check(i-1),check(i+1)));
         }
         System.out.println(max);
-
-
     }
 
-    static int[] A;
-    static int p(int i, int j){
+
+    static long p(int i, int j){
         if(A[i] > A[j]){
             i = check(i-1);
         }else{
             j = check(j+1);
         }
+        if(buffer[i][j] > 0){
+            return buffer[i][j];
+        }
 
         if(i == j){
+            buffer[i][j] = A[i];
             return A[i];
         }
-        return Math.max(A[i] + p( check(i-1), j), A[j] + p( i, check(j+1)));
+
+        long i1 = A[i] + p( check(i-1), j);
+        long i2 = A[j] + p( i, check(j+1));
+
+        buffer[i][j] = i1 > i2 ? i1:i2;
+        return buffer[i][j];
     }
 
     static int check(int i){
