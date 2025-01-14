@@ -17,6 +17,27 @@ public class _016_ {
         int N = sc.nextInt();
         int E = sc.nextInt();
 
+        long last_x = 0;
+        long last_y = 0;
+
+        long s = 0;
+        for(int i = 0; i<N; i++){
+            long x = sc.nextInt();
+            long offsetY = sc.nextInt();
+
+            long y = last_y + offsetY;
+
+            s += (x - last_x) * Math.abs(last_y);
+
+            last_x = x;
+            last_y = y;
+        }
+
+        if(E > last_x){
+            s += (E-last_x) * Math.abs(last_y);
+        }
+        System.out.println(s);
+
 
 
 
