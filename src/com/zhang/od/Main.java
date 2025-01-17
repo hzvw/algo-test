@@ -5,103 +5,78 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        String zipStr = sc.nextLine(); // 输入的压缩串
-        String unZipStr = unZip(zipStr); // 解压后字符串
+//        String s1 = sc.next();
+//        String s2 = sc.next();
+//        int k = sc.nextInt();
+//        String s1 = "ab";
+//        String s2 = "aabcd";
+//        int k = 1 ;
+//
+//        System.out.println(solution(s1, s2, k));
+        for(int i = 0; i<100000; i++){
 
-        if ("!error".equals(unZipStr) || !zipStr.equals(zip(unZipStr))) { // 对解压后的字符串二次压缩, 如果二次压缩结果和输入的压缩串不一致, 则输入不合法
-            System.out.println("!error");
-        } else {
-            System.out.println(unZipStr);
         }
+
     }
 
-    // 解压
-    public static String unZip(String zipStr) {
-        char[] s = zipStr.toCharArray(); // charAt写出来的代码太臃肿了
+    public static int solution(String s1, String s2, int k) {
+        // 在s2中选一个子串，满足:该子串长度为 n1+k
+        int n1 = s1.length();
+        int n2 = s2.length();
+        if (n2 < n1 + k) return -1;
 
-        StringBuilder unZipStr = new StringBuilder(); // 记录解压结果串
+        // 由于字符串s1中都是小写字母，因此每个字母的ASCII码范围是97~122，因此这里初始化128长度数组来作为统计容器
+        int[] count = new int[128];
 
-        int i = 0;
-        while (i < s.length) {
-            char c = s[i];
+        // 统计s1中所有每个字符出现的次数到count中
+        for (int i = 0; i < n1; i++) {
+            char c = s1.charAt(i);
+            count[c]++;
+        }
 
-            if (Character.isDigit(c)) { // 如果遍历的字符是数字
-                // 则探索出之后连续的所有数字
-                StringBuilder num = new StringBuilder();
-                while (i < s.length && Character.isDigit(s[i])) {
-                    num.append(s[i]);
-                    i++;
-                }
+        // s1字符总数
+        int total = n1;
 
-                // 以及跟着的一个小写字母
-                if (i < s.length && Character.isLowerCase(s[i])) {
-                    int repeatCount = Integer.parseInt(num.toString());
-                    char repeatLetter = s[i];
+        // 滑动窗口的左边界从0开始，最大maxI；滑动窗口长度len
+        int maxI = n2 - n1 - k;
+        // s2子串长度
+        int len = n1 + k;
 
-                    // 必须超过连续两个相同小写字母才能进行压缩
-                    if (repeatCount <= 2) return "!error";
+        // 统计s2的0~len范围内出现的s1中字符的次数
+        for (int j = 0; j < len; j++) {
+            char c = s2.charAt(j);
 
-                    // 解压
-                    for (int k = 0; k < repeatCount; k++) {
-                        unZipStr.append(repeatLetter);
-                    }
-                } else {
-                    // 数字后面没有跟着小写字母, 则不合法
-                    return "!error";
-                }
-
-            } else if (Character.isLowerCase(c)) {
-                // 单独的小写字母直接并入解压串
-                unZipStr.append(c);
-            } else {
-                // 压缩串中含有数字,小写字母以外的字符, 则不合法
-                return "!error";
+            // 如果s2的0~len范围内的字符c，在count[c]存在，则说明c是s1内有的字符，
+            // 此时我们需要count[c]--，如果自减之前，count[c] > 0，则自减时，total也应该--,否则total不--
+            if (count[c]-- > 0) {
+                total--;
             }
 
-            i++;
-        }
-
-        return unZipStr.toString();
-    }
-
-    // 压缩
-    public static String zip(String unZipStr) {
-        StringBuilder zipStr = new StringBuilder();
-
-        // 加一个空格不影响压缩结果, 同时可以避免收尾操作
-        unZipStr += " ";
-
-        // 记录上一个字母, 以及它的出现次数
-        char last = unZipStr.charAt(0);
-        int count = 1;
-
-        for (int i = 1; i < unZipStr.length(); i++) {
-            char curt = unZipStr.charAt(i);
-
-            if (curt == last) {
-                // 当前字母和上一个字母相同, 则连续相同该字母数量++
-                count++;
-            } else {
-                // 当前字母和上一个字母不相同, 则连续相同字母被打断
-                if (count > 2) {
-                    // 超过两个连续相同字母, 则进行压缩
-                    zipStr.append(count);
-                    zipStr.append(last);
-                } else if (count == 2) {
-                    // 两个连续相同字母
-                    zipStr.append(last);
-                    zipStr.append(last);
-                } else {
-                    // 一个字母
-                    zipStr.append(last);
-                }
-
-                // 更新last和count
-                last = curt;
-                count = 1;
+            // 如果total为0了，则说明在s2的0~len范围内找到了所有s1中字符
+            if (total == 0) {
+                // 此时可以直接返回起始索引0
+                return 0;
             }
         }
 
-        return zipStr.toString();
+        // 下面是从左边界1开始的滑动窗口，利用差异思想，避免重复部分求解
+        for (int i = 1; i <= maxI; i++) {
+            // 滑动窗口右移一格后，失去了s2[i - 1]，得到了s2[i - 1 + len]，其余部分不变
+            char remove = s2.charAt(i - 1);
+            char add = s2.charAt(i - 1 + len);
+
+            if (count[remove]++ >= 0) {
+                total++;
+            }
+
+            if (count[add]-- > 0) {
+                total--;
+            }
+
+            if (total == 0) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

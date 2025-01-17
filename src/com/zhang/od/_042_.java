@@ -13,15 +13,6 @@ import java.util.Scanner;
  */
 public class _042_ {
     public static void main(String[] args) {
-        //int[] w = {2,3,4};
-        //int[] v = {3,5,6};
-        //int bag = 6;
-        //int bag = 8;
-        //int[] w = {3, 5, 1, 2, 2};
-        //int[] v = {4, 5, 2, 1, 3};
-
-
-        //System.out.println(p(w,v,0,0,0,bag));
         Scanner sc = new Scanner(System.in);
         int T = sc.nextInt();
         int n = sc.nextInt();
