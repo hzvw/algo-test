@@ -1,0 +1,56 @@
+package com.zhang.od;
+
+import java.util.LinkedList;
+import java.util.Scanner;
+
+/**
+ * ClassName: _053_
+ * Package: com.zhang.od
+ * Description:
+ *
+ * @Author 张汉至
+ * @Create 2025/1/18 23:01
+ * @Version 1.0
+ */
+public class _053_ {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int M = sc.nextInt();
+
+        if(M <= 1 || M >= 100){
+            System.out.println("ERROR!");
+            return;
+        }
+
+        LinkedList<Integer> buffer = new LinkedList<>();
+        for(int i = 1; i<=100; i++){
+            buffer.addLast(i);
+        }
+
+        int cnt = 0;
+        while(buffer.size() >= M){
+             int t = buffer.removeFirst();
+             cnt++;
+
+             if(cnt == M){
+                 cnt = 0;
+             }else{
+                 buffer.addLast(t);
+             }
+        }
+
+        buffer.sort((x,y)->x-y);
+        for(int i = 0; i<buffer.size(); i++){
+            System.out.print(buffer.get(i));
+            if(i != buffer.size()-1){
+                System.out.print(",");
+            }
+        }
+
+
+
+
+
+    }
+
+}

@@ -2,81 +2,79 @@ package com.zhang.od;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main01(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-//        String s1 = sc.next();
-//        String s2 = sc.next();
-//        int k = sc.nextInt();
-//        String s1 = "ab";
-//        String s2 = "aabcd";
-//        int k = 1 ;
-//
-//        System.out.println(solution(s1, s2, k));
-        for(int i = 0; i<100000; i++){
+        int n = sc.nextInt();
+        int m = sc.nextInt();
 
+        int[][] msgs = new int[m][3];
+        for (int i = 0; i < m; i++) {
+            msgs[i][0] = sc.nextInt();
+            msgs[i][1] = sc.nextInt();
+            msgs[i][2] = sc.nextInt();
         }
 
+        getResult(msgs, n, m);
     }
 
-    public static int solution(String s1, String s2, int k) {
-        // 在s2中选一个子串，满足:该子串长度为 n1+k
-        int n1 = s1.length();
-        int n2 = s2.length();
-        if (n2 < n1 + k) return -1;
-
-        // 由于字符串s1中都是小写字母，因此每个字母的ASCII码范围是97~122，因此这里初始化128长度数组来作为统计容器
-        int[] count = new int[128];
-
-        // 统计s1中所有每个字符出现的次数到count中
-        for (int i = 0; i < n1; i++) {
-            char c = s1.charAt(i);
-            count[c]++;
+    public static void getResult(int[][] msgs, int n, int m) {
+        // 如果第一行 n 和 m 的值超出约定的范围时，输出字符串”Null“。
+        // 1<=n,m<100000
+        if (n < 1 || n >= 100000 || m < 1 || m >= 100000) {
+            System.out.println("NULL");
+            return;
         }
 
-        // s1字符总数
-        int total = n1;
+        UnionFindSet ufs = new UnionFindSet(n + 1);
 
-        // 滑动窗口的左边界从0开始，最大maxI；滑动窗口长度len
-        int maxI = n2 - n1 - k;
-        // s2子串长度
-        int len = n1 + k;
+        for (int[] msg : msgs) {
+            int a = msg[0], b = msg[1], c = msg[2];
 
-        // 统计s2的0~len范围内出现的s1中字符的次数
-        for (int j = 0; j < len; j++) {
-            char c = s2.charAt(j);
-
-            // 如果s2的0~len范围内的字符c，在count[c]存在，则说明c是s1内有的字符，
-            // 此时我们需要count[c]--，如果自减之前，count[c] > 0，则自减时，total也应该--,否则total不--
-            if (count[c]-- > 0) {
-                total--;
+            if (a < 1 || a > n || b < 1 || b > n) {
+                // 当前行 a 或 b 的标号小于 1 或者大于 n 时，输出字符串‘da pian zi‘
+                System.out.println("da pian zi");
+                continue;
             }
 
-            // 如果total为0了，则说明在s2的0~len范围内找到了所有s1中字符
-            if (total == 0) {
-                // 此时可以直接返回起始索引0
-                return 0;
+            if (c == 0) {
+                // c == 0 代表 a 和 b 在一个团队内
+                ufs.union(a, b);
+            } else if (c == 1) {
+                // c == 1 代表需要判定 a 和 b 的关系，如果 a 和 b 是一个团队，输出一行’we are a team’,如果不是，输出一行’we are not a team’
+                System.out.println(ufs.find(a) == ufs.find(b) ? "we are a team" : "we are not a team");
+            } else {
+                // c 为其他值，输出字符串‘da pian zi‘
+                System.out.println("da pian zi");
             }
         }
+    }
+}
 
-        // 下面是从左边界1开始的滑动窗口，利用差异思想，避免重复部分求解
-        for (int i = 1; i <= maxI; i++) {
-            // 滑动窗口右移一格后，失去了s2[i - 1]，得到了s2[i - 1 + len]，其余部分不变
-            char remove = s2.charAt(i - 1);
-            char add = s2.charAt(i - 1 + len);
+// 并查集实现
+class UnionFindSet {
+    int[] fa;
 
-            if (count[remove]++ >= 0) {
-                total++;
-            }
-
-            if (count[add]-- > 0) {
-                total--;
-            }
-
-            if (total == 0) {
-                return i;
-            }
+    public UnionFindSet(int n) {
+        this.fa = new int[n];
+        for (int i = 0; i < n; i++){
+            fa[i] = i;
         }
-        return -1;
+    }
+
+    public int find(int x) {
+        if (fa[x] != x) {
+            return find(fa[x]);
+        }
+        return x;
+    }
+
+    public void union(int x, int y) {
+        int x_fa = find(x);
+        int y_fa = find(y);
+
+        if (x_fa != y_fa) {
+            fa[y_fa] = x_fa;
+        }
     }
 }
