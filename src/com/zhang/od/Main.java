@@ -1,80 +1,59 @@
 package com.zhang.od;
+
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Main {
-    public static void main01(String[] args) {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
-        int n = sc.nextInt();
-        int m = sc.nextInt();
-
-        int[][] msgs = new int[m][3];
-        for (int i = 0; i < m; i++) {
-            msgs[i][0] = sc.nextInt();
-            msgs[i][1] = sc.nextInt();
-            msgs[i][2] = sc.nextInt();
-        }
-
-        getResult(msgs, n, m);
+        int[] nums = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        System.out.println(getResult(nums));
     }
 
-    public static void getResult(int[][] msgs, int n, int m) {
-        // 如果第一行 n 和 m 的值超出约定的范围时，输出字符串”Null“。
-        // 1<=n,m<100000
-        if (n < 1 || n >= 100000 || m < 1 || m >= 100000) {
-            System.out.println("NULL");
-            return;
-        }
+    public static int getResult(int[] nums) {
+        // 负数逃生的总人数
+        int negative = 0;
 
-        UnionFindSet ufs = new UnionFindSet(n + 1);
+        // 正数缓冲栈，注意该栈只缓存正数
+        LinkedList<Integer> positive = new LinkedList<>();
 
-        for (int[] msg : msgs) {
-            int a = msg[0], b = msg[1], c = msg[2];
+        // 正序遍历nums，遍历出来的num，相当于从左边逃生
+        for (int num : nums) {
+            // 输入异常时输出-1
+            if (num == 0) return -1;
 
-            if (a < 1 || a > n || b < 1 || b > n) {
-                // 当前行 a 或 b 的标号小于 1 或者大于 n 时，输出字符串‘da pian zi‘
-                System.out.println("da pian zi");
-                continue;
-            }
-
-            if (c == 0) {
-                // c == 0 代表 a 和 b 在一个团队内
-                ufs.union(a, b);
-            } else if (c == 1) {
-                // c == 1 代表需要判定 a 和 b 的关系，如果 a 和 b 是一个团队，输出一行’we are a team’,如果不是，输出一行’we are not a team’
-                System.out.println(ufs.find(a) == ufs.find(b) ? "we are a team" : "we are not a team");
+            if (num > 0) {
+                // 如果左边逃出来的是正数，则缓冲到栈中
+                positive.addLast(num);
             } else {
-                // c 为其他值，输出字符串‘da pian zi‘
-                System.out.println("da pian zi");
+                // 如果左边逃出来的是负数
+                while (true) {
+                    if (positive.size() == 0) {
+                        // 如果栈为空，即没有正数，此时左边逃出来的负数直接逃生成功
+                        negative++;
+                        break;
+                    }
+
+                    // 如果栈不为空，则栈中有缓冲的正数，此时负数需要和栈顶正数进行pk
+                    int pk = num + positive.removeLast();
+
+                    if (pk > 0) {
+                        // 如果pk结果大于0，则负数逃生失败，栈顶的正数减少战斗力
+                        positive.addLast(pk);
+                        break;
+                    } else if (pk < 0) {
+                        // 如果pk结果小于0，则负数pk成功，此时需要继续和新栈顶正数pk，即进入下一轮
+                        num = pk;
+                    } else {
+                        // 如果pk结果为0，则同归于尽
+                        break;
+                    }
+                }
             }
         }
-    }
-}
 
-// 并查集实现
-class UnionFindSet {
-    int[] fa;
-
-    public UnionFindSet(int n) {
-        this.fa = new int[n];
-        for (int i = 0; i < n; i++){
-            fa[i] = i;
-        }
-    }
-
-    public int find(int x) {
-        if (fa[x] != x) {
-            return find(fa[x]);
-        }
-        return x;
-    }
-
-    public void union(int x, int y) {
-        int x_fa = find(x);
-        int y_fa = find(y);
-
-        if (x_fa != y_fa) {
-            fa[y_fa] = x_fa;
-        }
+        // 最终逃生成功的人数：negative即负数逃生成功个数，positive.size()即正数逃生成功个数
+        return negative + positive.size();
     }
 }

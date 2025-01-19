@@ -21,14 +21,12 @@ public class _058_ {
         String[] words1 = s1.split(";");
         String[] words2 = s2.split(";");
 
-        //Set<String> set = new HashSet<>();
         HashMap<String, P> map = new HashMap<>();
         for(String s : words1){
             String[] t = s.split(",");
             String stu_id = t[0];
             int score1 = Integer.parseInt(t[1]);
 
-            //set.add(stu_id);
             map.put(stu_id, new P(stu_id.substring(0, 5), stu_id, score1, 0));;
         }
 
@@ -45,33 +43,65 @@ public class _058_ {
                 buffer.add(p);
             }
         }
+        if(buffer.size() == 0){
+            System.out.println("NULL");
+            return ;
+        }
+
 
         buffer.sort(new Comparator<P>() {
             @Override
             public int compare(P o1, P o2) {
-                if(o1.score1 + o1.score2 > o2.score1 + o2.score2){
-                    return -1;
-                }else if(o1.score1 + o1.score2 == o2.score1 + o2.score2){
-                    return o1.stu_id.compareTo(o2.stu_id);
+                if(o1.clazz.equals(o2.clazz) ){
+                    if(o1.score1 + o1.score2 == o2.score1 + o2.score2){
+                        return o1.stu_id.compareTo(o2.stu_id);
+                    }else if(o1.score1 + o1.score2 > o2.score1 + o2.score2){
+                        return -1;
+                    }else{
+                        return 1;
+                    }
                 }else{
-                    return 1;
+                    return o1.clazz.compareTo(o2.clazz);
                 }
+
+
             }
         });
 
-        List<Integer> tmp = new ArrayList<>();
-        String clazz1 = buffer.get(0).clazz;
-        String clazz2 = null;
-        for(int i = 0; i<buffer.size();i++){
-            if(!clazz1.equals(buffer.get(i).clazz)){
-                clazz2 = buffer.get(i).clazz;
-                tmp.add(i);
+        List<Integer> tag = new ArrayList<>();
+        tag.add(0);
+        String last_clazz = buffer.get(0).clazz;
+        for(int i = 0; i<buffer.size(); i++){
+            if(!buffer.get(i).clazz.equals(last_clazz)){
+                last_clazz = buffer.get(i).clazz;
+                tag.add(i);
             }
         }
 
+        tag.add(buffer.size());
 
+        for(int i = 0; i<tag.size()-1; i++){
+            int start = tag.get(i);
+            int end = tag.get(i+1);
 
+            List<P> i1 = buffer.subList(start, end);
 
+            if(i1.size() != 0){
+                my_print(i1);
+            }
+        }
+    }
+
+    static void my_print(List<P> i1){
+        System.out.println(i1.get(0).clazz);
+        for(int i = 0; i<i1.size(); i++){
+            P p = i1.get(i);
+            System.out.print(p.stu_id);
+            if(i != i1.size()-1){
+                System.out.print(";");
+            }
+        }
+        System.out.println();
     }
 
     static class P{
