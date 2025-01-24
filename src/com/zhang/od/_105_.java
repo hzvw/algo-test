@@ -1,5 +1,7 @@
 package com.zhang.od;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -41,16 +43,23 @@ public class _105_ {
                 }
             }
         }
+        List<Integer> i1 = new ArrayList<>();
+        for(int i = 1; i<100; i++){
+            if(mem[i-1] != 0 && mem[i] == 0){
+                i1.add(i);
+            }
+        }
 
         int min_i = -1;
         int diff = -1;
-        for(int i = 0; i<100; i++){
-            if(mem[i] == 0){
-                int cnt = check(mem, i, n);
-                if(cnt != -1){
-                    if(diff == -1){
-                        diff = cnt - n;
-                    }else if(cnt - n < diff){
+        for(int i : i1){
+            int cnt = check(mem, i, n);
+            if(cnt != -1 &&cnt >=n){
+                if(diff == -1){
+                    diff = cnt - n;
+                    min_i = i;
+                }else {
+                    if(cnt -n < diff){
                         diff = cnt - n;
                         min_i = i;
                     }
