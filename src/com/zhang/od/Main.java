@@ -1,76 +1,70 @@
 package com.zhang.od;
-import java.util.*;
+
+import java.util.Arrays;
+
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static void dijkstra(int[][] graph, int src) {
+        int n = graph.length;  // 获取节点数
 
-        // 输入获取
-        int[] array = Arrays.stream(sc.nextLine().replaceAll("[\\[\\]]", "").split(", ")).filter(s -> !s.isEmpty()).mapToInt(Integer::parseInt).toArray();
-        int num = sc.nextInt();
+        int[] dist = new int[n];  // 存储源点到各个节点的最短路径
+        boolean[] visited = new boolean[n];  // 标记已访问的节点
 
-        // 本题没有规定输出组合内部顺序要求，但是最好排序一下
-        Arrays.sort(array);
+        // 初始化距离数组，所有距离设为 "无穷大"，源点到自身距离设为 0
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[src] = 0;
 
-        // 将处理器编号数组array分为链路1和链路2
-        ArrayList<Integer> link1 = new ArrayList<>();
-        ArrayList<Integer> link2 = new ArrayList<>();
+        // 处理所有节点
+        for (int i = 0; i < n; i++) {
+            // 1. 找到当前未访问节点中距离最短的节点
+            int u = findMinDistance(dist, visited);
 
-        for (int i : array) {
-            // 编号0-3的处理器处于同一个链路中，编号4-7的处理器处于另外一个链路中
-            if (i < 4) {
-                link1.add(i);
-            } else {
-                link2.add(i);
-            }
-        }
+            // 如果找不到可达节点（即所有节点已访问或剩余节点不可达），跳出循环
+            if (u == -1) break;
 
-        // 记录本题结果
-        ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+            // 2. 标记该节点为已访问
+            visited[u] = true;
 
-        if (num == 8) {
-            // 如果申请8个处理器，则链路1，链路2都要有4个
-            if (link1.size() == 4 && link2.size() == 4) {
-                link1.addAll(link2);
-                res.add(link1);
-            }
-        } else {
-            // 构建亲和性调度原则,构建映射关系, key=申请处理器数量，val=最佳数量选择数组
-            HashMap<Integer, int[]> map = new HashMap<>();
-            map.put(1, new int[]{1, 3, 2, 4});
-            map.put(2, new int[]{2, 4, 3});
-            map.put(4, new int[]{4});
-
-            for (int i : map.get(num)) {
-                if (link1.size() == i || link2.size() == i) {
-                    if (link1.size() == i) {
-                        dfs(link1, num, 0, new ArrayList<>(), res);
+            // 3. 更新邻接节点的最短路径
+            for (int v = 0; v < n; v++) {
+                if (graph[u][v] > 0 && !visited[v]) {  // 存在边，并且节点未访问
+                    int newDist = dist[u] + graph[u][v];
+                    if (newDist < dist[v]) {
+                        dist[v] = newDist;  // 更新到 v 的最短距离
                     }
-
-                    if (link2.size() == i) {
-                        dfs(link2, num, 0, new ArrayList<>(), res);
-                    }
-
-                    break; // 找到最优选择策略了，所以无需继续
                 }
             }
         }
 
-        // 输出打印
-        System.out.println(res);
+        // 输出结果
+        System.out.println("Node\tDistance from Source");
+        for (int i = 0; i < n; i++) {
+            System.out.println(i + "\t\t" + (dist[i] == Integer.MAX_VALUE ? "INF" : dist[i]));
+        }
     }
 
-    // 在link中选取level个元素的组合
-    public static void dfs(ArrayList<Integer> link, int level, int index, ArrayList<Integer> path, ArrayList<ArrayList<Integer>> res) {
-        if (path.size() == level) {
-            res.add(new ArrayList<>(path));
-            return;
-        }
+    // 找到未访问节点中最小距离的索引
+    private static int findMinDistance(int[] dist, boolean[] visited) {
+        int minDist = Integer.MAX_VALUE;
+        int minIndex = -1;
 
-        for (int i = index; i < link.size(); i++) {
-            path.add(link.get(i));
-            dfs(link, level, i + 1, path, res);
-            path.remove(path.size() - 1);
+        for (int i = 0; i < dist.length; i++) {
+            if (!visited[i] && dist[i] < minDist) {
+                minDist = dist[i];
+                minIndex = i;
+            }
         }
+        return minIndex;
+    }
+
+    public static void main(String[] args) {
+        int[][] graph = {
+                {0, 10, 0, 30, 0},
+                {10, 0, 50, 0, 0},
+                {0, 50, 0, 20, 10},
+                {30, 0, 20, 0, 60},
+                {0, 0, 10, 60, 0}
+        };
+        dijkstra(graph, 0);  // 源点为 0
     }
 }
