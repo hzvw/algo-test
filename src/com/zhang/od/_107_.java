@@ -12,7 +12,7 @@ import java.util.*;
  * @Version 1.0
  */
 public class _107_ {
-    public static void main(String[] args) {
+    public static void main01(String[] args) {
         Scanner sc = new Scanner(System.in);
         String line = sc.nextLine();
         int[] arr = Arrays.stream(line.replaceAll("[\\[\\]]", "")
@@ -72,16 +72,33 @@ public class _107_ {
 
     // 求组合
     static void p(List<Integer> list1, List<List<Integer>> res, int i, int k, LinkedList<Integer> path){
-        if(path.size() == k){
-            res.add(new LinkedList<>(path));
-            return;
+//        if(path.size() == k){
+//            res.add(new LinkedList<>(path));
+//            return;
+//        }
+//
+//        for(int j = i; j<list1.size(); j++){
+//            path.addLast(list1.get(j));
+//            p(list1, res, j+1, k, path);
+//            path.removeLast();
+//        }
+        if(i == list1.size()){
+            res.add(new LinkedList<>());
         }
 
-        for(int j = i; j<list1.size(); j++){
-            path.addLast(list1.get(j));
-            p(list1, res, j+1, k, path);
-            path.removeLast();
-        }
+    }
+
+    public static void main(String[] args) {
+        List<Integer> list1 = new ArrayList<>();
+        List<List<Integer>> res = new ArrayList<>();
+        list1.add(1);
+        list1.add(2);
+        list1.add(3);
+        list1.add(4);
+
+        int k = 2;
+
+
     }
     /*
     static void swap(char[] s, int i, int j) {
