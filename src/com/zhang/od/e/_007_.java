@@ -27,6 +27,12 @@ public class _007_ {
 
     static HashSet<Integer> reaches = new HashSet<>();
 
+
+//    public static void main(String[] args) {
+//        System.out.println(Character.isDigit('1'));
+//
+//
+//    }
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int[] arr = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
@@ -36,25 +42,23 @@ public class _007_ {
         stepMap = new int[m][n];
 
         for(int i = 0; i<m; i++){
+            for(int j = 0; j<n; j++){
+                reaches.add(i * n + j);
+            }
+        }
+
+        for(int i = 0; i<m; i++){
             String s = sc.nextLine();
             for(int j = 0; j<n; j++){
                 char c = s.charAt(j);
                 if(Character.isDigit(c)){
                     map[i][j] = c - '0';
-                    reaches.add(i * n + j);
                     bfs(i, j, map[i][j]);
                 }
             }
         }
 
         int min = Integer.MAX_VALUE;
-//        for(int i = 0; i<m; i++){
-//            for(int j = 0; j<n; j++){
-//                if(reaches.contains(i * n + j)){
-//                    min = Math.min(min,stepMap[i][j]);
-//                }
-//            }
-//        }
         for(int pos : reaches){
             int x = pos / n;
             int y = pos % n;
@@ -68,9 +72,9 @@ public class _007_ {
         vis.add(i * n + j);
 
         LinkedList<int[]> queue = new LinkedList<>();
-        queue.addFirst(new int[]{i, j ,0});
+        queue.add(new int[]{i, j ,0});
 
-        while(!queue.isEmpty() && k>0){
+        while(queue.size()>0 && k>0){
             LinkedList<int[]> n_qu = new LinkedList<>();
 
             for(int[] t : queue){
@@ -84,7 +88,7 @@ public class _007_ {
                     if(n_x < 0 || n_x >=m || n_y < 0 || n_y >= n || vis.contains(n_x * n + n_y)){
                         continue;
                     }
-                    n_qu.addFirst(new int[]{n_x, n_y, n_step});
+                    n_qu.add(new int[]{n_x, n_y, n_step});
                     stepMap[n_x][n_y] += n_step;
                     vis.add(n_x * n + n_y);
                 }

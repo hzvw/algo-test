@@ -1,127 +1,159 @@
 package com.zhang.od;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Main {
-    // 棋盘行数
     static int m;
-    // 棋盘列数
     static int n;
-    // 棋盘矩阵
-    static char[][] map;
-    // 最小步数和矩阵，stepMap[i][j]记录所有马走到棋盘(i,j)位置的最小步数之和
-    static int[][] stepMap;
-    // 记录所有马都可达的公共位置坐标
-    static HashSet<Integer> reach;
-
-    // 马走日的偏移量
-    //static int[][] offsets = {{1, 2}, {1, -2}, {2, 1}, {2, -1}, {-1, 2}, {-1, -2}, {-2, 1}, {-2, -1}};
-
-    static int[][] offsets = {{1, 2}, {1, -2},{2, 1}, {2, -1},{-1, 2}, {-1, -2}, {-2, 1}, {-2, -1}};
+    static int[][] arr;
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in).useDelimiter("[,\n]"); // 将逗号和换行符作为一次读取的截止符
 
         m = sc.nextInt();
         n = sc.nextInt();
 
-        map = new char[m][n];
-        stepMap = new int[m][n];
-        reach = new HashSet<>();
-
+        arr = new int[m][n];
         for (int i = 0; i < m; i++) {
-            map[i] = sc.next().toCharArray();
-
-            // 初始时假设所有位置都是各个马可达的
             for (int j = 0; j < n; j++) {
-                reach.add(i * n + j);
+                arr[i][j] = sc.nextInt();
             }
         }
 
-        System.out.println(getResult());
+        System.out.println(bfs());
     }
 
-    public static int getResult() {
-        // 遍历棋盘
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                // 如果棋盘(i,j)位置是马
-                if (map[i][j] != '.') {
-                    // 马的等级
-                    int k = map[i][j] - '0';
-                    // 对该马进行BFS走日
-                    bfs(i, j, k);
-                }
-            }
-        }
+    // 上下左右四个方向对应的偏移量
+    static int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
-        // 如果所有马走完，发现没有公共可达位置
-        if (reach.size() == 0) {
+    // 记录路径中位置的几个状态
+    static class Node {
+        int x; // 位置横坐标
+        int y; // 位置纵坐标
+        int init; // 到达此位置所需的最少初始油量
+        int remain; // 到达此位置时剩余可用油量
+        boolean flag; // 到达此位置前有没有加过油
+
+        public Node(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
+    public static int bfs() {
+        // 如果左上角和右下角不可达，则直接返回-1
+        if (arr[0][0] == 0 || arr[m - 1][n - 1] == 0) {
             return -1;
         }
 
-        // 记录所有马都可达位置的最小步数和
-        int minStep = Integer.MAX_VALUE;
+        // 广搜队列
+        LinkedList<Node> queue = new LinkedList<>();
 
-        for (int pos : reach) {
-            int x = pos / n;
-            int y = pos % n;
-            // (x,y)是所有马都可达的位置，stepMap[x][y]记录所有马到达此位置的步数和
-            minStep = Math.min(minStep, stepMap[x][y]);
+        // 起始位置
+        Node src = new Node(0, 0);
+
+        if (arr[0][0] == -1) {
+            // 如果起始位置就是加油站，则到达(0,0)位置所需初始油量为0，且剩余可用油量为100，且需要标记已加油
+            src.init = 0;
+            src.remain = 100;
+            src.flag = true;
+        } else {
+            // 如果起始位置不是加油站，则到达(0,0)位置所需的初始油量至少为matrix[0][0], 剩余可用油量为0，未加油状态
+            src.init = arr[0][0];
+            src.remain = 0;
+            src.flag = false;
         }
 
-        return minStep;
-    }
+        queue.add(src);
 
-    // 广搜
-    public static void bfs(int sx, int sy, int k) {
-        // 广搜队列
-        LinkedList<int[]> queue = new LinkedList<>();
-        // (sx,sy)为马所在初始位置，马到达初始位置需要0步
-        queue.add(new int[] {sx, sy, 0});
+        // dist_init[x][y] 用于记录起点 (0, 0) 到达 (x, y) 的所有可达路径中最优路径（即初始油量需求最少的路径）的初始油量
+        int[][] dist_init = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                // 由于需要记录每个位置的最少需要的初始油量，因此每个位置所需的初始油量初始化为一个较大值
+                dist_init[i][j] = Integer.MAX_VALUE;
+            }
+        }
 
-        // 记录该马可以访问(sx,sy)位置
-        HashSet<Integer> vis = new HashSet<>();
-        vis.add(sx * n + sy); // 二维坐标一维化
+        // dist_remain 用于记录起点 (0,0) 到达 (x,y) 的所有可达路径中最优路径（即初始油量需求最少的路径）的最大剩余可用油量
+        // 即如果存在多条最优路径，我们应该选这些路径中到达此位置剩余油量最多的
+        int[][] dist_remain = new int[m][n];
 
-        // k记录该马剩余可走步数
-        while (queue.size() > 0 && k > 0) {
-            // newQueue记录该马花费相同步数的可达的位置（即BFS按层遍历的层）
-            LinkedList<int[]> newQueue = new LinkedList<>();
+        // 起点（0,0）到达自身位置（0,0）所需的最少初始油量和最多剩余油量
+        dist_init[0][0] = src.init;
+        dist_remain[0][0] = src.remain;
 
-            // 按层BFS
-            for (int[] tmp : queue) {
-                // 当前马所在位置(x,y)，以及马到达该位置的步数step
-                int x = tmp[0];
-                int y = tmp[1];
-                int step = tmp[2];
+        // 广搜
+        while (queue.size() > 0) {
+            Node cur = queue.removeFirst();
 
-                for (int[] offset : offsets) {
-                    // 马走日到达的新位置
-                    int newX = x + offset[0];
-                    int newY = y + offset[1];
+            // 从当前位置cur开始向上下左右四个方向探路
+            for (int[] offset : directions) {
+                // 新位置
+                int newX = cur.x + offset[0];
+                int newY = cur.y + offset[1];
 
-                    int pos = newX * n + newY;
+                // 新位置越界 或者 新位置是障碍，则新位置不可达，继续探索其他方向
+                if (newX < 0 || newX >= m || newY < 0 || newY >= n || arr[newX][newY] == 0) continue;
 
-                    // 如果新位置越界或者已访问过，则不能访问
-                    if (newX < 0 || newX >= m || newY < 0 || newY >= n || vis.contains(pos)) continue;
+                // 如果新位置可达，则计算到达新位置的三个状态数据
+                int init = cur.init; // 到达新位置所需的最少初始油量
+                int remain = cur.remain; // 到达新位置时还剩余的最多可用油量
+                boolean flag = cur.flag; // 是否加油了
 
-                    // 将新位置加入新层
-                    newQueue.add(new int[] {newX, newY, step + 1});
-                    // 该马到达(newX, newY)位置最小步数为step+1, 由于该马首次到达(newX, newY)位置，因此step+1就是最小步数
-                    stepMap[newX][newY] += step + 1;
-                    // 记录该马访问过该位置，后续如果该马再次访问该位置，则不是最小步数
-                    vis.add(pos);
+                if (arr[newX][newY] == -1) {
+                    // 如果新位置是加油站，则加满油
+                    remain = 100;
+                    // 标记加过油了
+                    flag = true;
+                } else {
+                    // 如果新位置不是加油站，则需要消耗matrix[newX][newY]个油
+                    remain -= arr[newX][newY];
+                }
+
+                // 如果到达新位置后，剩余油量为负数
+                if (remain < 0) {
+                    if (flag) {
+                        // 如果之前已经加过油了，则说明到达此路径前是满油状态，因此我们无法从初始油量里面"借"油
+                        continue;
+                    } else {
+                        // 如果之前没有加过油，则超出的油量（-remain），可以从初始油量里面"借"，即需要初始油量 init + (-remain) 才能到达新位置
+                        init -= remain;
+                        // 由于初始油量 init + (-remain) 刚好只能支持汽车到达新位置，因此汽车到达新位置后剩余可用油量为0
+                        remain = 0;
+                    }
+                }
+
+                // 如果到达新位置所需的初始油量超过了满油100，则无法到达新位置
+                if (init > 100) {
+                    continue;
+                }
+
+                // 如果可达新位置，则继续检查当前路径策略到达新位置(newX, newY)所需的初始油量init是否比其他路径策略更少
+                if (init > dist_init[newX][newY]) {
+                    // 如果不是，则无需探索新位置(newX, newY)
+                    continue;
+                }
+
+                // 当前路径策略到达新位置(newX,newY)所需初始油量init更少，或者，init和前面路径策略相同，但是当前路径策略剩余可用油量remain更多
+                if (init < dist_init[newX][newY] || remain > dist_remain[newX][newY]) {
+                    // 则当前路径策略更优，记录更优路径的状态
+                    dist_init[newX][newY] = init;
+                    dist_remain[newX][newY] = remain;
+
+                    // 将当前新位置加入BFS队列
+                    Node next = new Node(newX, newY);
+                    next.init = init;
+                    next.remain = remain;
+                    next.flag = flag;
+
+                    queue.add(next);
                 }
             }
-
-            queue = newQueue;
-            k--; // 剩余步数减1
         }
 
-        // BFS完后，将公共可达位置reach和当前马可达位置取交集，交集部分就是新的公共可达位置
-        reach.retainAll(vis);
+        // dist_init[m - 1][n - 1] 记录的是到达右下角终点位置所需的最少初始油量
+        return dist_init[m - 1][n - 1] == Integer.MAX_VALUE ? -1 : dist_init[m - 1][n - 1];
     }
 }
