@@ -48,43 +48,45 @@ public class _079_ {
             int id1 = name_id.get(split[0]);
             int id2 = name_id.get(split[1]);
 
-            map.get(id1).dep.add(map.get(id2));
+            map.get(id1).dep.add(map.get(id2).id);
         }
 
-//        p(map, );
-        List<Integer> res = new ArrayList<>();
-        bad.stream().forEach(x-> {res.add(name_id.get(x));});
+        Set<Integer> res = new HashSet<>();
+        for(String name : bad){
+            int i = name_id.get(name);
+            p(map, i, res);
+            res.add(i);
+        }
 
-        Set<Integer> res_set = res.stream().collect(Collectors.toSet());
         ArrayList<String> res_list = new ArrayList<>();
         for(int i : id_name.keySet()){
-            if(!res_set.contains(i)){
+            if(!res.contains(i)){
                 res_list.add(id_name.get(i));
             }
         }
         System.out.print(res_list.size() != 0 ? String.join(",", res_list) : ",");
     }
 
-    static void p(Map<Integer, Node> map, int root, List<Integer> res){
-        List<Integer> list = new ArrayList<>();
+    static void p(Map<Integer, Node> map, int root, Set<Integer> res){
+        Set<Integer> set = new HashSet<>();
         for (int i : map.keySet()) {
             if(map.get(i).dep.contains(root)){
-                list.add(i);
+                set.add(i);
                 p(map, i, res);
             }
         }
-        if(list.size() == 0){
+        if(set.size() == 0){
             return;
         }
-        res.addAll(list);
+        res.addAll(set);
     }
 
     static class Node{
         int id;
         String name;
-        Set<Node> dep;
+        Set<Integer> dep;
 
-        public Node(int id, String name, Set<Node> dep){
+        public Node(int id, String name, Set<Integer> dep){
             this.id = id;
             this.name = name;
             this.dep = dep;
