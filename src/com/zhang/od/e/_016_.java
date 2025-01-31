@@ -23,7 +23,10 @@ public class _016_ {
 
     static LinkedList<int[]> queue;
 
-    static int max = 0;
+    static int max_h = 0;
+    static int min_step = 0;
+
+    static boolean[][] visited;
 
 
     public static void main(String[] args) {
@@ -33,6 +36,7 @@ public class _016_ {
         k = sc.nextInt();
 
         arr = new int[m][n];
+        visited = new boolean[m][n];
         for(int i = 0; i<m; i++){
             for(int j = 0; j<n; j++){
                 arr[i][j] = sc.nextInt();
@@ -41,40 +45,46 @@ public class _016_ {
 
         queue = new LinkedList<>();
         queue.offer(new int[]{0,0});
-        bfs(0,0);
+        max_h = arr[0][0];
+        min_step = 0;
+        visited[0][0] = true;
 
-        if(end_x != 0){
-            System.out.println(max + " " + (end_x + end_y));
-        }else{
-            System.out.println(0 + " " + 0);
-        }
+        bfs(0,0);
+        System.out.println(max_h + " " + min_step);
     }
 
-    static int end_x = 0;
-    static int end_y = 0;
     static void bfs(int i, int j){
+        int step = 0;
         while (!queue.isEmpty()){
-            int[] ints = queue.poll();
+            LinkedList<int[]> n_queue = new LinkedList<>();
+            step++;
+            int x = 0;
+            int y = 0;
+            for(int[] ints : queue){
+                visited[ints[0]][ints[1]] = true;
 
-            for(int[] dir : directions){
+                for(int[] dir : directions){
 
-                int x = ints[0] + dir[0];
-                int y = ints[1] + dir[1];
+                    x = ints[0] + dir[0];
+                    y = ints[1] + dir[1];
 
-                if(x<0 || x>= m || y<0 || y>= n){
-                    continue;
-                }
-                if(Math.abs(arr[x][y] - arr[ints[0]][ints[1]]) > k){
-                    continue;
-                }
-                if(arr[x][y] > max){
-                    max = arr[x][y];
-                    end_x = x;
-                    end_y = y;
-                    queue.offer(new int[]{x,y});
-                    bfs(x,y);
+                    if(x<0 || x>= m || y<0 || y>= n){
+                        continue;
+                    }
+                    if(Math.abs(arr[x][y] - arr[ints[0]][ints[1]]) > k){
+                        continue;
+                    }
+                    if(visited[x][y]){
+                        continue;
+                    }
+                    if(arr[x][y] > max_h){
+                        max_h = arr[x][y];
+                        min_step = step;
+                    }
+                    n_queue.offer(new int[]{x,y});
                 }
             }
+            queue = n_queue;
         }
     }
 
