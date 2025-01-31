@@ -5,109 +5,61 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String s = sc.nextLine();
-        System.out.println(getResult(s));
-    }
  
-    public static String getResult(String s) {
-        // 主体字符容器
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder(); // 记录文件内容
  
-        // 等效字符容器
-        ArrayList<Character> list = new ArrayList<>();
+        // 注意：字符串的成对引号不一定限制在一行内
+        boolean isSingleOpen = false; // 单引号是否处于闭合状态
+        boolean isDoubleOpen = false; // 双引号是否处于闭合状态
  
-        UnionFindSet ufs = new UnionFindSet(128);
-        HashSet<Character> set = new HashSet<>();
+        while (sc.hasNextLine()) {
+            char[] s = sc.nextLine().toCharArray(); // 获取一行
  
-        //  isOpen标志，表示有没有遇到 '(' 字符
-        boolean isOpen = false;
+            for (int i = 0; i < s.length; i++) { // 遍历一行中每个字符
+                char c = s[i];
  
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
- 
-            if (c == '(') {
-                isOpen = true; // 接下来将开始收集等效字符
-            } else if (c == ')') {
-                isOpen = false; // 某个()内的等效字符收集完成
- 
-                if (list.isEmpty()) continue;
- 
-                char base = list.get(0);
- 
-                // 等效传递（利用并查集）
-                for (Character letter : list) {
-                    // 不同括号间的大小写字母可以形成等效传递, 比如括号1中 (abc), 括号2中 (AXY), 则两个括号的a,A形成等效传递，最终:a,b,c,A,X,Y互相等效
-                    char upper = Character.toUpperCase(letter);
-                    char lower = Character.toLowerCase(letter);
- 
-                    // set记录的是之前括号里面出现过的字母
-                    if (set.contains(lower)) {
-                        ufs.union(letter, lower); // 括号间等效传递（利用并查集）
+                if (i == 0 || s[i - 1] != '\\') { // 如果当前字符是单引号或双引号，且前面一个字符不是斜杠，那么对应引号就是字符串标识，对应引号状态取反
+                    switch (c) {
+                        case '\'':
+                            isSingleOpen = !isSingleOpen;
+                            break;
+                        case '"':
+                            isDoubleOpen = !isDoubleOpen;
+                            break;
                     }
- 
-                    if (set.contains(upper)) {
-                        ufs.union(letter, upper); // 括号间等效传递（利用并查集）
-                    }
- 
-                    ufs.union(letter, base); // 括号内等效传递
                 }
  
-                // 将当前()内字符加入set
-                set.addAll(list);
-                // 清空list, 用于收集下个()内的字母
-                list.clear();
-            } else if (isOpen) {
-                list.add(c); // 等效字符容器
-            } else {
-                sb.append(c); // 主体字符容器
-            }
-        }
+                // 如果当前处于引号开启状态，那么当前字符属于字符串内容，为了避免字符串内容影响逻辑，我们可以忽略字符串内容
+                if (isSingleOpen || isDoubleOpen) {
+                    continue;
+                }
  
-        // 等效替换
-        char[] cArr = sb.toString().toCharArray();
-        for (int i = 0; i < 128; i++) {
-            char ch = ((char) i);
-            char fa = ((char) ufs.find(i)); // 找到ch字母的等效的字典序最小的字母fa
+                // 如果当前字符不是字符串内容，且当前字符和前一个字符都是 - 则为注释，后续所有内容都可以忽略
+                if (c == '-' && i + 1 < s.length && s[i + 1] == '-') {
+                    break;
+                }
  
-            // 将ch替换为fa
-            for (int j = 0; j < cArr.length; j++) {
-                if (cArr[j] == ch) {
-                    cArr[j] = fa;
+                // 空白字符和制表符忽略
+                if (c != ' ' && c != '\t') {
+                    sb.append(c);
                 }
             }
         }
  
-        String res = new String(cArr);
-        return res.isEmpty() ? "0" : res; // 如果简化后的字符串为空，请输出为"0"。
-    }
-}
+        sb.append(";"); // 最后一条可以没有 ";" , 这里追加一个
  
-// 并查集实现
-class UnionFindSet {
-    int[] fa;
+        int ans = 0;
  
-    public UnionFindSet(int n) {
-        this.fa = new int[n];
-        for (int i = 0; i < n; i++) fa[i] = i;
-    }
- 
-    public int find(int x) {
-        if (x != this.fa[x]) {
-            this.fa[x] = this.find(this.fa[x]);
-            return this.fa[x];
+        int last = -1; // 上一个分号位置
+        for (int i = 0; i < sb.length(); i++) {
+            if (sb.charAt(i) == ';') { // 当前位置是分号
+                if (i - last > 1) {
+                    ans++; // 如果两个分号不相邻，则有效文本数量+1
+                }
+                last = i;
+            }
         }
-        return x;
-    }
  
-    public void union(int x, int y) {
-        int x_fa = this.find(x);
-        int y_fa = this.find(y);
- 
-        // 保证字典序小的字符优先为根
-        if (x_fa < y_fa) {
-            this.fa[y_fa] = x_fa;
-        } else {
-            this.fa[x_fa] = y_fa;
-        }
+        System.out.println(ans);
     }
 }

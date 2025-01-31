@@ -95,10 +95,24 @@ public class _040_ {/* //匈牙利算法
         List<List<Integer>> res = new ArrayList<>();
         p(nums, N, 0, new LinkedList<>(), res, new boolean[M]);
 
+
+        List<List<Integer>> res2 = new ArrayList<>();
+
+        for(int i =0; i<N; i++){
+            List<Integer> list = new ArrayList<>();
+            for(int j : res.get(i)){
+                list.add(arr[i][j]);
+            }
+            res2.add(list);
+        }
+
         res.forEach(x -> {x.forEach( a -> System.out.print(a + " "));
             System.out.println();});
 
 //        System.out.println(res.stream().map(x -> x.get(K-1)).min((a,b) -> a-b).get());;
+
+//        res2.stream().forEach(x -> x.sort((a,b)->a-b));
+//        System.out.println(res2.stream().map(x -> x.get(K-1)).min((a,b) -> a-b).get());;
 
 
     }
