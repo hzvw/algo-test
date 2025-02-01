@@ -47,26 +47,26 @@ public class _016_ {
         queue.offer(new int[]{0,0});
         max_h = arr[0][0];
         min_step = 0;
-        visited[0][0] = true;
 
-        bfs(0,0);
-        System.out.println(max_h + " " + min_step);
+        bfs();
+        if(min_step == 0){
+            System.out.print("0 0");
+        }else{
+            System.out.println(max_h + " " + min_step);
+        }
     }
 
-    static void bfs(int i, int j){
+    static void bfs(){
         int step = 0;
         while (!queue.isEmpty()){
             LinkedList<int[]> n_queue = new LinkedList<>();
             step++;
-            int x = 0;
-            int y = 0;
-            for(int[] ints : queue){
-                visited[ints[0]][ints[1]] = true;
 
+            for(int[] ints : queue){
                 for(int[] dir : directions){
 
-                    x = ints[0] + dir[0];
-                    y = ints[1] + dir[1];
+                    int x = ints[0] + dir[0];
+                    int y = ints[1] + dir[1];
 
                     if(x<0 || x>= m || y<0 || y>= n){
                         continue;
@@ -77,6 +77,7 @@ public class _016_ {
                     if(visited[x][y]){
                         continue;
                     }
+                    visited[x][y] = true;
                     if(arr[x][y] > max_h){
                         max_h = arr[x][y];
                         min_step = step;
