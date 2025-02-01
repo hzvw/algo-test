@@ -29,28 +29,27 @@ public class _022_ {
         while(j < str.length()){
             char c = str.charAt(j);
             if(c == bad){
-                int len = j-i;
-                maxLen = Math.max(maxLen, len);
+                maxLen = Math.max(maxLen, j-i);
                 i = j+1;
+                j = i;
                 Arrays.fill(count, 0);
             }else{
-                if(count[c] <= 1){
-                    count[c] ++;
-                }else{
-                    int len = j-i+1;
-                    maxLen = Math.max(maxLen, len);
-                    for(int k = i;k<=j-1 ;k++){
-                        if(str.charAt(k) == c){
-                            i = k;
-                            break;
-                        }
-                        count[k]--;
-                    }
+                count[c]++;
+
+                if(count[c] > 2){
+                    maxLen = Math.max(maxLen, j-i);
                 }
+
+                while(count[c] > 2){
+                    char t = str.charAt(i);
+                    count[t]--;
+                    i++;
+                }
+                j++;
             }
-            j++;
+
         }
-        int len = j-i+1;
+        int len = j-i;
         maxLen = Math.max(maxLen, len);
         System.out.println(maxLen);
     }
