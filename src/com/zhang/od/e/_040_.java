@@ -1,9 +1,6 @@
 package com.zhang.od.e;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * ClassName: _040_
@@ -14,107 +11,88 @@ import java.util.Scanner;
  * @Create 2025/1/30 21:22
  * @Version 1.0
  */
-public class _040_ {/* //匈牙利算法
-    static boolean[][] arr ;
-    static int m = 0;
-    static int n = 0;
+public class _040_ {
 
-    static boolean[] visited= null;
-
-    static int[] match;
-
+    static int N;
+    static int M;
+    static int K;
+    static int[][] arr;
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        m = sc.nextInt();//女
-        n = sc.nextInt();//男
-        int k = sc.nextInt();
+        N = sc.nextInt();
+        M = sc.nextInt();
+        K = sc.nextInt();
 
-        arr = new boolean[m][n];
-
-        for(int i = 0; i<k; i++){
-            int x = sc.nextInt();
-            int y = sc.nextInt();
-            arr[x][y] = true;
-        }
-
-        visited = new boolean[n];
-        match = new int[n];
-        Arrays.fill(match, -1);
-
-        int result = 0;
-        for(int i = 0; i<m; i++){
-            Arrays.fill(visited, false);
-
-            if(dfs(i)){
-                result++;
-            }
-        }
-
-        System.out.println(result);
-
-
-    }
-
-
-    // 给第i个女生找对象，找对象算法
-    static boolean dfs(int i){
-        // 从m个男生里面找
-        for(int j = 0; j<n; j++){
-            //两个人互相还有好感
-            if(arr[i][j] && !visited[j]){
-                visited[j] = true;
-
-                //如果这个男生还没对象，或者说有对象，但是其现在的对象能找到他之外的人配对
-                if(match[j] == -1 || dfs(match[j])){
-                    match[j] = i;
-                    return true;//找到了一个，拜拜
-                }
-            }
-        }
-
-        return false;
-    }*/
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
-        int M = sc.nextInt();
-        int K = sc.nextInt();
-
-        int[][] arr = new int[N][M];
+        arr = new int[N][M];
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
         for(int i = 0; i<N; i++){
             for(int j = 0; j<M; j++){
                 arr[i][j] = sc.nextInt();
+                min = Math.min(min, arr[i][j]);
+                max = Math.max(max, arr[i][j]);
             }
         }
 
-        int[] nums = new int[M];
-        for(int i = 0; i<M; i++){
-            nums[i] = i;
-        }
-        List<List<Integer>> res = new ArrayList<>();
-        p(nums, N, 0, new LinkedList<>(), res, new boolean[M]);
-
-
-        List<List<Integer>> res2 = new ArrayList<>();
-
-        for(int i =0; i<N; i++){
-            List<Integer> list = new ArrayList<>();
-            for(int j : res.get(i)){
-                list.add(arr[i][j]);
+        int left = min;
+        int right = max;
+        while(left <= right){
+            int mid = left + (right - left ) / 2;
+            boolean isFound = check(mid);
+            if(isFound){
+                right = mid-1;
+            }else{
+                left = mid+1;
             }
-            res2.add(list);
         }
+        System.out.println(left);
+    }
 
-        res.forEach(x -> {x.forEach( a -> System.out.print(a + " "));
-            System.out.println();});
+    static boolean check(int mid){
+        int[] match = new int[M];
+        Arrays.fill(match, -1);
+        int cnt = 0;
+        for (int i = 0; i < N; i++) {
+            boolean isFound = dfs(i, mid, new boolean[M], match);
+            if(isFound){
+                cnt++;
+            }
+        }
+        return cnt >= N-K+1;
+    }
 
-//        System.out.println(res.stream().map(x -> x.get(K-1)).min((a,b) -> a-b).get());;
+    static boolean dfs(int i, int kth, boolean[] visited, int[] match){
+        for (int j = 0; j < M; j++) {
+            if(arr[i][j] <= kth && !visited[j]){
+                visited[j] = true;
 
-//        res2.stream().forEach(x -> x.sort((a,b)->a-b));
-//        System.out.println(res2.stream().map(x -> x.get(K-1)).min((a,b) -> a-b).get());;
+                if(match[j] == -1 || dfs(match[j],kth, visited, match)){
+                    match[j] = i;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
 
+
+
+
+    static int binary(int[] nums, int target){
+        int left = 0;
+        int right = nums.length-1;
+        while(left < right){
+            int mid = left + (right - left) / 2;
+            if(nums[mid] < target){
+                left = mid+1;
+            }else if(nums[mid] > target){
+                right = mid-1;
+            }else{
+                return mid;
+            }
+        }
+        return -1;
     }
 
     static void p(int[] nums, int n, int level, LinkedList<Integer> buckets, List<List<Integer>> res, boolean[] visited){
