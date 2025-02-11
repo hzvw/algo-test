@@ -5,6 +5,8 @@ import java.util.PriorityQueue;
 import java.util.Scanner;
 
 public class _041_ {
+//    AtomicInteger
+
     static class R{
         int start;
         int end;
