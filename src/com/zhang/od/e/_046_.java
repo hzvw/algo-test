@@ -37,7 +37,7 @@ public class _046_ {
                 arr[idx] = lists.get(level).remove(0);
                 idx++;
 
-                if(lists.get(level).size() == 0){
+                if(lists.get(level).size() == 0 && lists.size() > 1){
                     lists.remove(level);
                     level = level % lists.size();
                     flag = true;
