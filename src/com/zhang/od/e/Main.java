@@ -1,85 +1,88 @@
 package com.zhang.od.e;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
-
+ 
 public class Main {
-    static int n;
-    static int m;
-    static int k;
-    static int[][] matrix;
-
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
-        n = sc.nextInt();
-        m = sc.nextInt();
-        k = sc.nextInt();
-
-        int min = 1;
-        int max = Integer.MIN_VALUE;
-
-        matrix = new int[n][m];
+ 
+        int n = sc.nextInt();
+        int d = sc.nextInt();
+ 
+        int[] arr = new int[n];
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                matrix[i][j] = sc.nextInt();
-                max = Math.max(max, matrix[i][j]);
-            }
+            arr[i] = sc.nextInt();
         }
-
-        // 二分枚举第K大值
-        while (min <= max) {
-            // mid就是被枚举出来的N个数中的第K大值
-            int mid = (min + max) >> 1;
-
-            // 检查mid作为N个数中第K大值时，是否存在N-K+1个不大于它的值
-            if (check(mid)) {
-                max = mid - 1;
-            } else {
-                min = mid + 1;
-            }
-        }
-
-        System.out.println(min);
+ 
+        System.out.println(solution(n, d, arr));
     }
-
-    public static boolean check(int kth) {
-        // 利用二分图最大匹配来求解，小于等于kth（第K大值）的元素个数（即二分图最大匹配）
-        int smallerCount = 0;
-
-        // 记录每个列号的匹配成功的行号
-        int[] match = new int[m];
-        // 初始时每个列号都处于未配对状态，此时将列号配对的行号赋值为-1
-        Arrays.fill(match, -1);
-
-        // 遍历行号，每个行号对互相心仪的列号发起配对请求
-        //n 个女的里面，有多少个配对成功，如果其数量
-        for (int i = 0; i < n; i++) {
-            // 记录增广路访问过的列号
-            boolean[] vis = new boolean[m];
-            if (dfs(i, kth, match, vis)) smallerCount++;
-        }
-
-        return smallerCount >= n - k + 1;
-    }
-
-    public static boolean dfs(int i, int kth, int[] match, boolean[] vis) {
-        // 行号 i 发起了配对请求
-
-        // 遍历每一个列号j
-        for (int j = 0; j < m; j++) {
-            // 如果当前列号j未被增广路探索过 && 当前列j行i可以配对（如果行列号位置(i,j)对应矩阵元素值小于等于kth（第K大值），则可以配对）
-            if (!vis[j] && matrix[i][j] <= kth) {
-                vis[j] = true;
-
-                // 如果对应列号j未配对，或者，已配对但是配对的行号match[j]可以找到其他列号重新配对
-                if (match[j] == -1 || dfs(match[j], kth, match, vis)) {
-                    // 则当前行号i 和 列号j 可以配对
-                    match[j] = i;
-                    return true;
-                }
+ 
+    public static int solution(int n, int d, int[] arr) {
+        // 实力数组升序
+        Arrays.sort(arr);
+ 
+        // segments用于记录所有分段
+        ArrayList<ArrayList<Integer>> segments = new ArrayList<>();
+ 
+        // segment用于记录某个分段
+        ArrayList<Integer> segment = new ArrayList<>();
+ 
+        for (int i = 1; i < n; i++) {
+            // 相邻两队的实力差diff
+            int diff = arr[i] - arr[i - 1];
+ 
+            if (diff <= d) {
+                segment.add(diff);
+            } else if (!segment.isEmpty()) { // 如果diff > d，则当前分段截止, 如果当前分段不为空，则加入segments
+                segments.add(segment);
+                segment = new ArrayList<>();
             }
         }
-        return false;
+ 
+        // 收尾
+        if (!segment.isEmpty()) {
+            segments.add(segment);
+        }
+ 
+        if (segments.isEmpty()) {
+            // 若没有队伍可以匹配，则输出-1。
+            return -1;
+        } else {
+            // 若有队伍可以匹配，则输出匹配队伍最多的情况下匹配出的各组实力差距的最小总和
+            return segments.stream().map(x -> p(x, 0, x.size() % 2 == 0, 0)).reduce(Integer::sum).get();
+        }
+    }
+ 
+    /**
+     * 相邻元素不能选，且要实现最多选择的情况下，所有选中元素的最小和
+     *
+     * @param list       元素集合
+     * @param index      当前可选位置
+     * @param canAbandon 是否还有两跳的机会
+     * @param sum        所有选中元素的和
+     * @return 相邻元素不能选，且要实现最多选择的情况下，所有选中元素的最小和
+     */
+    public static int p(ArrayList<Integer> list, int index, boolean canAbandon, int sum) {
+        if (index >= list.size()) {
+            return sum;
+        }
+ 
+        // 记录最小和
+        int minSum = Integer.MAX_VALUE;
+ 
+        // 一跳
+        // 选择index位置元素后，跳过index+1位置，下次从index+2位置开始选
+        minSum = Math.min(minSum, p(list, index + 2, canAbandon, sum + list.get(index)));
+ 
+        // 两跳
+        // index位置是可选的，而index位置可选的前提是index-1必未被选择，因此index不选的话，
+        // 那么就形成了两跳，即跳过了index-1，index两个位置，下次可以从index+1开始选
+        if (canAbandon) { // 两跳的机会只有一次
+            minSum = Math.min(minSum, p(list, index + 1, false, sum));
+        }
+ 
+        return minSum;
     }
 }
