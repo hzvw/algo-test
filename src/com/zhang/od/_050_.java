@@ -9,7 +9,7 @@ import java.util.Scanner;
  * Package: com.zhang.od
  * Description: 排列组合
  *
- * @Author 张汉至
+ * @Author Harizon
  * @Create 2025/1/6 21:34
  * @Version 1.0
  */

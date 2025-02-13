@@ -5,7 +5,7 @@ package com.zhang.hot100;
  * Package: com.zhang.hot100
  * Description:相交链表
  *
- * @Author 张汉至
+ * @Author Harizon
  * @Create 2025/1/8 23:14
  * @Version 1.0
  */

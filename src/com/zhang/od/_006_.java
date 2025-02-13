@@ -7,7 +7,7 @@ import java.util.Scanner;
  * Package: com.zhang.od
  * Description:分披萨
  *
- * @Author 张汉至
+ * @Author Harizon
  * @Create 2025/1/14 0:39
  * @Version 1.0
  */

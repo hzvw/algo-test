@@ -9,7 +9,7 @@ import java.util.Scanner;
  * Package: com.zhang.od
  * Description:手机app防沉迷系统
  *
- * @Author 张汉至
+ * @Author Harizon
  * @Create 2025/1/14 14:04
  * @Version 1.0
  */
