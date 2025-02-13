@@ -11,6 +11,7 @@ import java.util.*;
  * @Version 1.0
  */
 public class _007_ {
+
     // id 收入
     static Map<String, Integer> id_income = new HashMap<>();
     // id 上级id
