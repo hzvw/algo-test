@@ -22,10 +22,6 @@ package algo;
  *
  */
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.util.*;
 
 public class _02_three_sum {

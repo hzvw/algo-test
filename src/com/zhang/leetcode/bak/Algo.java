@@ -1,3 +1,5 @@
+package com.zhang.leetcode.bak;
+
 public class Algo {
     public int solution(int[] A){
         int length = A.length;
