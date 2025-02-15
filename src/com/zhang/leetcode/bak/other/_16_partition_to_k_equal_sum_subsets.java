@@ -1,4 +1,4 @@
-package other;
+package com.zhang.leetcode.bak.other;
 
 import java.util.*;
 /*

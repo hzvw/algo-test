@@ -1,4 +1,4 @@
-package common;
+package com.zhang.leetcode.bak.common;
 
 public class ListNode {
     public int val;

@@ -1,6 +1,6 @@
-package link;
+package com.zhang.leetcode.bak.link;
 
-import common.ListNode;
+import com.zhang.leetcode.bak.common.ListNode;
 
 public class _04_intersection_of_two_linked_lists {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {

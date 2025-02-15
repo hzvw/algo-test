@@ -1,6 +1,6 @@
-package link;
+package com.zhang.leetcode.bak.link;
 
-import common.RandomListNode;
+import com.zhang.leetcode.bak.common.RandomListNode;
 
 /**
  * 输入一个复杂链表（每个节点中有节点值，以及两个指针，

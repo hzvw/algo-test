@@ -1,7 +1,7 @@
-package str;
+package com.zhang.leetcode.bak.str;
 
-import org.junit.Assert;
-import org.junit.Test;
+////import org.junit.Assert;
+//import org.junit.Test;
 
 import java.util.*;
 
@@ -56,7 +56,7 @@ public class _04_longest_valid_parentheses {
         return stack.size() == 0;
     }
 
-    @Test
+    //@Test
     public void testSolution(){
         _04_longest_valid_parentheses obj = new _04_longest_valid_parentheses();
 

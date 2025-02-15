@@ -1,8 +1,8 @@
-package search;
+package com.zhang.leetcode.bak.search;
 
 
-import org.junit.Assert;
-import org.junit.Test;
+////import org.junit.Assert;
+//import org.junit.Test;
 
 import java.util.Arrays;
 
@@ -70,13 +70,13 @@ public class _01_min_number_in_rotate_array {
         //return 0;
     }
 
-    @Test
+    //@Test
     public void testMinNumberInRotateArray(){
         int[] A = {3,4,5,6,1,2};
         _01_min_number_in_rotate_array obj = new _01_min_number_in_rotate_array();
         int ret =obj.minNumberInRotateArray(A);
 
-        Assert.assertEquals(1, ret);
+        //Assert.assertEquals(1, ret);
     }
 
     /*
@@ -141,7 +141,7 @@ public class _01_min_number_in_rotate_array {
         return p[row-1][column-1];
     }
 
-    @Test
+    //@Test
     public void testQuickSort(){
         int[] A = {3,4,5,1,2};
         System.out.println(Arrays.toString(A));

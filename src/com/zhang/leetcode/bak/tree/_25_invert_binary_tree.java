@@ -1,6 +1,6 @@
-package tree;
+package com.zhang.leetcode.bak.tree;
 
-import common.TreeNode;
+import com.zhang.leetcode.bak.common.TreeNode;
 
 public class _25_invert_binary_tree {
 

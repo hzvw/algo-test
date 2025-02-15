@@ -1,7 +1,7 @@
-package tree;
+package com.zhang.leetcode.bak.tree;
 
 import java.util.*;
-import common.TreeNode;
+import com.zhang.leetcode.bak.common.TreeNode;
 
 public class _26_er_cha_sou_suo_shu_de_di_kda_jie_dian_lcof {
     List<Integer> buffer = new ArrayList<Integer>();

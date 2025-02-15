@@ -1,4 +1,4 @@
-package search;
+package com.zhang.leetcode.bak.search;
 
 public class _01_binary_search {
     int binarySearch(int[] nums, int target) {

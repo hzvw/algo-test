@@ -1,6 +1,6 @@
-package tree;
+package com.zhang.leetcode.bak.tree;
 
-import common.TreeNode;
+import com.zhang.leetcode.bak.common.TreeNode;
 
 /**
  * 给定一个二叉树和一个值sum，判断是否有从根节点到叶子节点的节点值之和等于sum的路径，

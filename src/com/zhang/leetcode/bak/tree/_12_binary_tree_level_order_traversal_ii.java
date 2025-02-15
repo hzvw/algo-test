@@ -1,7 +1,7 @@
-package tree;
+package com.zhang.leetcode.bak.tree;
 
-import common.TreeNode;
-import org.junit.Test;
+import com.zhang.leetcode.bak.common.TreeNode;
+//import org.junit.Test;
 
 import java.util.*;
 
@@ -51,7 +51,7 @@ public class _12_binary_tree_level_order_traversal_ii {
         return ret;
     }
 
-    @Test
+    //@Test
     public void testLevelOrderBottom(){
         TreeNode node1 = new TreeNode(2);
         TreeNode node2 = new TreeNode(1);

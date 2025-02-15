@@ -1,6 +1,6 @@
-package binary_tree;
+package com.zhang.leetcode.bak.binary_tree;
 
-import common.TreeNode;
+import com.zhang.leetcode.bak.common.TreeNode;
 import java.util.*;
 
 public class BinaryTree {

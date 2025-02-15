@@ -1,6 +1,6 @@
-package link;
+package com.zhang.leetcode.bak.link;
 
-import common.ListNode;
+import com.zhang.leetcode.bak.common.ListNode;
 
 /**
  * 合并两个排序的链表

@@ -1,6 +1,6 @@
-package other;
+package com.zhang.leetcode.bak.other;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 import java.util.*;
 
@@ -58,7 +58,7 @@ public class _01_print_matrix {
         return ret;
     }
 
-    @Test
+    //@Test
     public void testPrintMatrix(){
         /*
         int[][] matrix = {

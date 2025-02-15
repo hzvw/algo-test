@@ -1,6 +1,6 @@
-package tree;
+package com.zhang.leetcode.bak.tree;
 
-import common.TreeNode;
+import com.zhang.leetcode.bak.common.TreeNode;
 
 public class _30_serialize_and_deserialize_binary_tree {
 

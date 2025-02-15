@@ -1,6 +1,6 @@
-package algo;
+package com.zhang.leetcode.bak.algo;
 
-import common.ListNode;
+import com.zhang.leetcode.bak.common.ListNode;
 
 import java.util.*;
 

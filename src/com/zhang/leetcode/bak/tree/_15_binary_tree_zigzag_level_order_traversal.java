@@ -1,10 +1,10 @@
-package tree;
+package com.zhang.leetcode.bak.tree;
 
 /**
  * 给定一个二叉树，返回该二叉树的之字形层序遍历，（从左向右，下一层从右向左，一直这样交替）
  */
 
-import common.TreeNode;
+import com.zhang.leetcode.bak.common.TreeNode;
 
 import java.util.*;
 public class _15_binary_tree_zigzag_level_order_traversal {

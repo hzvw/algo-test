@@ -1,4 +1,4 @@
-package dp;
+package com.zhang.leetcode.bak.dp;
 
 /**
  * 有N个小朋友站在一排，每个小朋友都有一个评分

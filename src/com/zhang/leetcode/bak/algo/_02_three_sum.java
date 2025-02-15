@@ -1,4 +1,4 @@
-package algo;
+package com.zhang.leetcode.bak.algo;
 
 /**
  *
@@ -159,19 +159,19 @@ public class _02_three_sum {
     private long l;
     private _02_three_sum obj;
 
-    @Before
+    //@Before
     public void set(){
         obj = new _02_three_sum();
         l = System.currentTimeMillis();
     }
 
-    @After
+    //@After
     public void clean(){
         l=System.currentTimeMillis()-l;
         System.out.println("运行时间是 " + l);
     }
 
-    @Test
+    //@Test
     public void testThreeSum(){
         int[] sums = {-1,0,1,2,-1,-4};
         List<List<Integer>> ret = obj.threeSum(sums);

@@ -1,7 +1,7 @@
-package tree;
+package com.zhang.leetcode.bak.tree;
 
 
-import common.TreeNode;
+import com.zhang.leetcode.bak.common.TreeNode;
 
 /**
  * 求给定二叉树的最小深度。最小深度是指树的根结点到最近叶子结点的最短路径上结点的数量。

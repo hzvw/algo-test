@@ -1,6 +1,6 @@
-package tree;
+package com.zhang.leetcode.bak.tree;
 
-import common.TreeNode;
+import com.zhang.leetcode.bak.common.TreeNode;
 
 import java.util.*;
 /**

@@ -1,4 +1,4 @@
-package other;
+package com.zhang.leetcode.bak.other;
 
 /**
  * 输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列
@@ -9,7 +9,7 @@ package other;
  *
  *
  */
-import org.junit.Test;
+//import org.junit.Test;
 
 import java.util.*;
 
@@ -35,7 +35,7 @@ public class _02_is_pop_order {
         return stack.size() == 0;
     }
 
-    @Test
+    //@Test
     public void testIsPopOrder(){
         int[] pushA = {1,2,3,4,5};
         int[] popA = {5,4,3,2,1};

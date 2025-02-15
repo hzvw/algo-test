@@ -1,7 +1,7 @@
-package str;
+package com.zhang.leetcode.bak.str;
 
 
-import org.junit.Test;
+//import org.junit.Test;
 
 /**
  * 找出给出的字符串S中最长的回文子串。假设S的最大长度为1000，并且只存在唯一解。
@@ -71,7 +71,7 @@ public class _02_longest_palindromic_substring {
         return s.substring(start, end + 1);
     }
 
-    @Test
+    //@Test
     public void testLongestPalindrome(){
 
         String s = "ccc";

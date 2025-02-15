@@ -1,4 +1,4 @@
-package other;
+package com.zhang.leetcode.bak.other;
 
 public class _06_sqrtx {
 

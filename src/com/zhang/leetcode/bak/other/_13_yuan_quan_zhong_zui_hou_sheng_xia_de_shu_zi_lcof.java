@@ -1,4 +1,4 @@
-package other;
+package com.zhang.leetcode.bak.other;
 
 public class _13_yuan_quan_zhong_zui_hou_sheng_xia_de_shu_zi_lcof {
 

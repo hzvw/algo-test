@@ -1,4 +1,4 @@
-package other;
+package com.zhang.leetcode.bak.other;
 /* leetcode 303 */
 public class _19_range_sum_query_immutable {
     static class NumArray {

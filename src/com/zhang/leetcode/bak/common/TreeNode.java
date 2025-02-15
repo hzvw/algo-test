@@ -1,4 +1,4 @@
-package common;
+package com.zhang.leetcode.bak.common;
 
 import java.util.*;
 

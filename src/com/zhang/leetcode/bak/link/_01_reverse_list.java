@@ -1,7 +1,7 @@
-package link;
+package com.zhang.leetcode.bak.link;
 
-import common.ListNode;
-import common.TreeNode;
+import com.zhang.leetcode.bak.common.ListNode;
+import com.zhang.leetcode.bak.common.TreeNode;
 
 /**
  * 反转链表

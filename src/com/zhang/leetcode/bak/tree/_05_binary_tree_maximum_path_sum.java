@@ -1,6 +1,6 @@
-package tree;
+package com.zhang.leetcode.bak.tree;
 
-import common.TreeNode;
+import com.zhang.leetcode.bak.common.TreeNode;
 
 /**
  * 给定一个二叉树，请计算节点值之和最大的路径的节点值之和是多少。

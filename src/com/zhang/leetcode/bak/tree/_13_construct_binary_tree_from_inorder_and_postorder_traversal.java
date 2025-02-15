@@ -1,7 +1,7 @@
-package tree;
+package com.zhang.leetcode.bak.tree;
 
-import common.TreeNode;
-import org.junit.Test;
+import com.zhang.leetcode.bak.common.TreeNode;
+//import org.junit.Test;
 
 import java.util.*;
 

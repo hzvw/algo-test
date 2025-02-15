@@ -1,4 +1,4 @@
-package other;
+package com.zhang.leetcode.bak.other;
 
 public class _10_majority_element {
     public int majorityElement(int[] nums) {

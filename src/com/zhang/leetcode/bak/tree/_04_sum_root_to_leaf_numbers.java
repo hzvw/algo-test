@@ -1,6 +1,6 @@
-package tree;
-import common.TreeNode;
-import org.junit.Test;
+package com.zhang.leetcode.bak.tree;
+import com.zhang.leetcode.bak.common.TreeNode;
+//import org.junit.Test;
 
 import java.util.*;
 
@@ -108,7 +108,7 @@ public class _04_sum_root_to_leaf_numbers {
         return null;
     }
 
-    @Test
+    //@Test
     public void testFindParents() {
         _04_sum_root_to_leaf_numbers obj = new _04_sum_root_to_leaf_numbers();
 

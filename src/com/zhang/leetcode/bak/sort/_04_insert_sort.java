@@ -1,4 +1,4 @@
-package sort;
+package com.zhang.leetcode.bak.sort;
 
 public class _04_insert_sort {
     void insert_sort(int[] A, int length)

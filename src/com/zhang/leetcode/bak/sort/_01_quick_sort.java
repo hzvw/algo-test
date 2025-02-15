@@ -1,4 +1,4 @@
-package sort;
+package com.zhang.leetcode.bak.sort;
 
 public class _01_quick_sort {
     void swap(int[] A, int i, int j){

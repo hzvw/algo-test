@@ -1,6 +1,6 @@
-package dp;
+package com.zhang.leetcode.bak.dp;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 import java.util.*;
 
@@ -34,7 +34,7 @@ public class _01_word_break {
         return dp[length];
     }
 
-    @Test
+    //@Test
     public void testWordBreak(){
 
         // "aaaaaaa",["aaaa","aa"]

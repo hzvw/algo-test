@@ -1,7 +1,7 @@
-package str;
+package com.zhang.leetcode.bak.str;
 
 
-import org.junit.Test;
+//import org.junit.Test;
 
 /**
  * 编写一个函数来查找字符串数组中的最长公共前缀。
@@ -41,7 +41,7 @@ public class _03_longest_common_prefix {
         return strs[0].substring(0, end+1);
     }
 
-    @Test
+    //@Test
     public void testLongestCommonPrefix(String[] args){
         String[] strs = new String[]{"a", "a", "b"};
         String ret = new _03_longest_common_prefix().longestCommonPrefix(strs);

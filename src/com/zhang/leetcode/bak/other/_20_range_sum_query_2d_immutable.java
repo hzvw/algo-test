@@ -1,4 +1,4 @@
-package other;
+package com.zhang.leetcode.bak.other;
 /* leetcode 304 */
 public class _20_range_sum_query_2d_immutable {
     static class NumMatrix {

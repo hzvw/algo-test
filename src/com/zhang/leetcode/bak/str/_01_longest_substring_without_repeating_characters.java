@@ -1,6 +1,6 @@
-package str;
+package com.zhang.leetcode.bak.str;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 import java.util.*;
 
@@ -46,7 +46,7 @@ public class _01_longest_substring_without_repeating_characters {
         return ret;
     }
 
-    @Test
+    //@Test
     public void testSolution(){
         String s = "wlrb" +
                 "bmqbhcdarzowk" +

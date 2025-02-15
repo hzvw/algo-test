@@ -1,6 +1,6 @@
-package link;
+package com.zhang.leetcode.bak.link;
 
-import common.ListNode;
+import com.zhang.leetcode.bak.common.ListNode;
 
 public class _09_add_two_numbers {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {

@@ -1,8 +1,8 @@
-package tree;
+package com.zhang.leetcode.bak.tree;
 
-import common.TreeNode;
-import org.junit.Assert;
-import org.junit.Test;
+import com.zhang.leetcode.bak.common.TreeNode;
+//import org.junit.Assert;
+//import org.junit.Test;
 
 /**
  * 判断给定的二叉树是否是平衡的

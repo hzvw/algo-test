@@ -1,4 +1,4 @@
-package sort;
+package com.zhang.leetcode.bak.sort;
 
 public class _06_merge_sort {
     private static void merge(int[] A, int start, int mid, int end){

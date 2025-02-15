@@ -1,6 +1,6 @@
-package link;
+package com.zhang.leetcode.bak.link;
 
-import common.ListNode;
+import com.zhang.leetcode.bak.common.ListNode;
 
 public class _07_palindrome_linked_list {
 

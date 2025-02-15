@@ -1,4 +1,4 @@
-package search;
+package com.zhang.leetcode.bak.search;
 
 import java.util.HashMap;
 import java.util.Map;

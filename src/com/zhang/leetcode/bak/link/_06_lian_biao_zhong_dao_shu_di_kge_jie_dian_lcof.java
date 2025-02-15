@@ -1,6 +1,6 @@
-package link;
+package com.zhang.leetcode.bak.link;
 
-import common.ListNode;
+import com.zhang.leetcode.bak.common.ListNode;
 
 public class _06_lian_biao_zhong_dao_shu_di_kge_jie_dian_lcof {
 

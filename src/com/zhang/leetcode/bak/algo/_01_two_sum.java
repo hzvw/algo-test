@@ -1,4 +1,4 @@
-package algo;
+package com.zhang.leetcode.bak.algo;
 
 /**
  *
