@@ -42,7 +42,7 @@ public class _076_ {
         }
 
         int count = 0;
-        int max = limit ? (str.charAt(level)) : 1;
+        int max = limit ? (str.charAt(level) - '0') : 1;
         for (int i = 0; i <= max; i++) {
             if(i == 1 && pre == 0 && prepre == 1){
                 continue;
