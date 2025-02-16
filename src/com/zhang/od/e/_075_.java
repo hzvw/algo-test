@@ -49,22 +49,24 @@ public class _075_ {
         List<String> res = new ArrayList<>();
         while (queue.size() > 0){
             Collections.sort(queue, (a,b) -> a.compareTo(b));
-            String s = queue.poll();
 
-            res.add(s);
-
-            List<String> list = out.get(s);
-            if(list == null || list.size() == 0){
-                continue;
-            }
-
-            for (String s1 : list) {
-                in.put(s1, in.get(s1)-1);
-                if(in.get(s1) == 0){
-                    queue.offer(s1);
+            LinkedList<String> n_queue = new LinkedList<>();
+            for (String s : queue) {
+                res.add(s);
+                List<String> list = out.get(s);
+                if(list == null || list.size() == 0){
+                    continue;
                 }
-            }
 
+                for (String s1 : list) {
+                    in.put(s1, in.get(s1)-1);
+                    if(in.get(s1) == 0){
+                        n_queue.add(s1);
+                    }
+                }
+
+            }
+            queue = n_queue;
         }
         StringJoiner sj = new StringJoiner(" ");
         res.forEach(x -> sj.add(x));
