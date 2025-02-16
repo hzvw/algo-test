@@ -1,5 +1,8 @@
 package com.zhang.od.e;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 /**
  * ClassName: _083_
  * Package: com.zhang.od.e
@@ -11,7 +14,95 @@ package com.zhang.od.e;
  */
 public class _083_ {
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int ca = sc.nextInt();
+        int n = sc.nextInt();
+        LFU l = new LFU(ca);
+        for (int i = 0; i < n; i++) {
+            String op = sc.next();
+            if(op.equals("put")){
+                l.put(sc.next(), sc.nextInt());
+            }else{
+                l.get(sc.next());
+            }
+        }
+        System.out.println(l.print());
+    }
 
+    static class LFU{
+        static class Node{
+            String key;
+            int value;
+            int fre;
+
+            public Node(String key, int value, int fre) {
+                this.key = key;
+                this.value = value;
+                this.fre = fre;
+            }
+        }
+
+        HashMap<String, Node> map = new HashMap<>();
+        TreeMap<Integer, LinkedList<Node>> fr = new TreeMap<>();
+
+        int capacity;
+
+        public LFU(int capacity){
+            this.capacity = capacity;
+        }
+        int get(String key){
+            if(map.get(key) != null){
+                Node node = map.get(key);
+                node.fre++;
+                increaseFr(true, node);
+                return node.value;
+            }
+            return -1;
+        }
+
+        void put(String key, int value){
+            if(map.containsKey(key)){
+                Node node = map.get(key);
+                node.value = value;
+                node.fre ++;
+                increaseFr(true, node);
+            }else{
+                if(map.size() == capacity){
+
+                    int first_key = fr.firstKey();
+                    LinkedList<Node> list = fr.get(first_key);
+                    map.remove(list.getFirst().key);
+                    list.removeFirst();
+                }
+                Node node = new Node(key, value, 1);
+                map.put(key, node);
+                increaseFr(false, node);
+            }
+        }
+
+        void increaseFr(boolean isExists, Node node){
+            if(isExists){
+                int before_fre= node.fre-1;
+                fr.get(before_fre).remove(node);
+                if(fr.get(before_fre).size() == 0){
+                    fr.remove(before_fre);
+                }
+
+                fr.putIfAbsent(node.fre, new LinkedList<>());
+                fr.get(node.fre).add(node);
+            }else{
+                fr.putIfAbsent(node.fre, new LinkedList<>());
+                fr.get(node.fre).add(node);
+            }
+        }
+
+        String print(){
+            List<String>  list = map.keySet().stream().collect(Collectors.toList());
+            StringJoiner sj = new StringJoiner(",");
+            list.forEach(x-> sj.add(x));
+
+            return sj.toString();
+        }
 
 
     }
