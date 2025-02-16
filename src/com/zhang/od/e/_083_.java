@@ -47,6 +47,8 @@ public class _083_ {
 
         int capacity;
 
+        int currentCapacity = 0;
+
         public LFU(int capacity){
             this.capacity = capacity;
         }
@@ -61,22 +63,30 @@ public class _083_ {
         }
 
         void put(String key, int value){
+            while(currentCapacity + value > capacity){
+                del();
+            }
+
             if(map.containsKey(key)){
                 Node node = map.get(key);
                 node.value = value;
                 node.fre ++;
                 increaseFr(true, node);
             }else{
-                if(map.size() == capacity){
-
-                    int first_key = fr.firstKey();
-                    LinkedList<Node> list = fr.get(first_key);
-                    map.remove(list.getFirst().key);
-                    list.removeFirst();
-                }
                 Node node = new Node(key, value, 1);
                 map.put(key, node);
                 increaseFr(false, node);
+            }
+        }
+
+        void del(){
+            int first_key = fr.firstKey();
+            LinkedList<Node> list = fr.get(first_key);
+            map.remove(list.getFirst().key);
+            currentCapacity -= list.getFirst().value;
+            list.removeFirst();
+            if(list.isEmpty()){
+                fr.remove(first_key);
             }
         }
 
