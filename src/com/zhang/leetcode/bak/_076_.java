@@ -56,6 +56,6 @@ public class _076_ {
             }
             j++;
         }
-        return "";
+        return min_len == s.length()+1 ? "" : s.substring(start, start+min_len);
     }
 }
