@@ -18,24 +18,38 @@ public class _081_ {
         Scanner sc = new Scanner(System.in);
         int[] arr = Arrays.stream(sc.nextLine().split(",")).mapToInt(Integer::parseInt).toArray();
         int k = Integer.parseInt(sc.nextLine());
-        HashSet<Integer> idx = new HashSet<>();
 
+        HashSet<Integer> idx = new HashSet<>();
         compute(arr, idx, true, k);
         rev(arr);
         compute(arr, idx, false, k);
-
         System.out.println(idx.size());
     }
 
-    private static void compute(int[] arr, HashSet<Integer> idx, boolean b,int  k) {
+    private static void rev(int[] arr) {
+        int i = 0;
+        int j = arr.length-1;
+        while(i < j){
+            swap(arr, i,j);
+            i++;
+            j--;
+        }
+    }
+
+    private static void swap(int[] arr, int i, int j) {
+        int t = arr[i];
+        arr[i] = arr[j];
+        arr[j] = t;
+    }
+
+    private static void compute(int[] arr, HashSet<Integer> idx, boolean b, int k) {
         int j = 0;
         int n = arr.length;
-        while(j < n && arr[j] != 0){
+        while(j<n && arr[j] != 0){
             j++;
         }
 
         int cost = 0;
-
         for (int i = j+1; i < n; i++) {
             if(arr[i] == 0){
                 cost = 0;
@@ -54,8 +68,6 @@ public class _081_ {
                         }
                     }
                 }
-            }else if(diff == 0){
-
             }else{
                 cost -= 3 * diff;
             }
@@ -63,21 +75,5 @@ public class _081_ {
 
     }
 
-    static void rev(int[] arr){
-        int i = 0;
-        int j = arr.length - 1;
-
-        while(i<j){
-            swap(arr, i, j);
-            i++;
-            j--;
-        }
-    }
-
-    static void swap(int[] arr, int i, int j){
-        int t = arr[i];
-        arr[i] = arr[j];
-        arr[j] = t;
-    }
 
 }
