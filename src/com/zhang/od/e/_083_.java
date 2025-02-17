@@ -33,7 +33,7 @@ public class _083_ {
         static class Node{
             String key;
             int value;
-            int fre;
+            int fre;//总的访问次数
 
             public Node(String key, int value, int fre) {
                 this.key = key;
@@ -42,7 +42,7 @@ public class _083_ {
             }
         }
 
-        HashMap<String, Node> map = new HashMap<>();
+        TreeMap<String, Node> map = new TreeMap<>();
         TreeMap<Integer, LinkedList<Node>> fr = new TreeMap<>();
 
         int capacity;
@@ -53,7 +53,7 @@ public class _083_ {
             this.capacity = capacity;
         }
         int get(String key){
-            if(map.get(key) != null){
+            if(map.containsKey(key)){
                 Node node = map.get(key);
                 node.fre++;
                 increaseFr(true, node);
@@ -63,18 +63,23 @@ public class _083_ {
         }
 
         void put(String key, int value){
-            while(currentCapacity + value > capacity){
-                del();
+            if(value > capacity){
+                return;
             }
 
             if(map.containsKey(key)){
-                Node node = map.get(key);
-                node.value = value;
-                node.fre ++;
-                increaseFr(true, node);
+//                Node node = map.get(key);
+//                node.value = value;
+//                node.fre ++;
+//                currentCapacity += value;
+//                increaseFr(true, node);
             }else{
+                while(currentCapacity + value > capacity){
+                    del();
+                }
                 Node node = new Node(key, value, 1);
                 map.put(key, node);
+                currentCapacity += value;
                 increaseFr(false, node);
             }
         }
@@ -107,6 +112,9 @@ public class _083_ {
         }
 
         String print(){
+            if(map.keySet().size() == 0){
+                return "NONE";
+            }
             List<String>  list = map.keySet().stream().collect(Collectors.toList());
             StringJoiner sj = new StringJoiner(",");
             list.forEach(x-> sj.add(x));
