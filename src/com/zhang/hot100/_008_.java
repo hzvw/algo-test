@@ -19,7 +19,7 @@ public class _008_ {
     }
 
     public int lengthOfLongestSubstring(String s) {
-        HashMap<Character, Integer> map = new HashMap<>();
+        int[] count = new int[128];
         int n = s.length();
 
         int max_len = 0;
@@ -27,18 +27,15 @@ public class _008_ {
         int j = 0;
         while (j < n){
             char c = s.charAt(j);
-            if(!map.containsKey(c)){
-                map.put(c, j);
+            if(count[c] == 0){
                 max_len = Math.max(max_len, j-i+1);
+                count[c]++;
                 j++;
             }else{
-                //重复了
-                int last_id = map.get(c);
-                i = last_id + 1;
-                map.put(c, j);
-                max_len = Math.max(max_len, j-i+1);
-                j++;
+                count[s.charAt(i)]--;
+                i++;
             }
+            //max_len = Math.max(max_len, j-i+1);
         }
         return max_len;
     }
