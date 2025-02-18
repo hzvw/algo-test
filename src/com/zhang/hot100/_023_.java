@@ -13,7 +13,7 @@ public class _023_ {
     public static void main(String[] args) {
         int[] A = {4,1,8,4,5};
         ListNode head = generateListNode(A);
-        ListNode  cur = reverseList(head);
+        ListNode  cur = reverse(head);
         //ListNode cur = head;
         while(cur != null){
             System.out.println(cur.val);
@@ -34,7 +34,7 @@ public class _023_ {
         return head;
     }
 
-    public static ListNode reverseList(ListNode head) {
+    static ListNode reverse(ListNode head) {
         if(head == null){
             return null;
         }
