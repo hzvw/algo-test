@@ -29,25 +29,6 @@ public class _029_ {
             }
         }
 
-        int len = 0;
-        ListNode cur = head;
-        while (cur != null){
-            cur = cur.next;
-            len++;
-        }
-        if(len == 1 && n == 1){
-            return null;
-        }
-
-        if(len == 2 && n == 1){
-            head.next = null;
-            return head;
-        }
-
-        if(len == 2 && n == 2){
-            return head.next;
-        }
-
         ListNode pre = null;
         while (l2 != null && l2.next != null){
             pre = l1;
