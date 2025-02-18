@@ -10,6 +10,15 @@ package com.zhang.hot100;
  * @Version 1.0
  */
 public class _028_ {
+    public static void main(String[] args) {
+        int[] arr1 = {3,7};
+        int[] arr2 = {9,2};
+        ListNode l1 = _027_.generateListNode(arr1);
+        ListNode l2 = _027_.generateListNode(arr2);
+
+        new _028_().addTwoNumbers(l1, l2);
+    }
+
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         if(l1 == null){
             return l2;
@@ -26,7 +35,7 @@ public class _028_ {
         ListNode p = n_head;
         while (p1 != null && p2 != null) {
             ListNode node = new ListNode((p1.val + p2.val + last) % 10);
-            last = (p1.val + p2.val) >= 10 ? (p1.val + p2.val) / 10 : 0;
+            last = (p1.val + p2.val + last) >= 10 ? (p1.val + p2.val + last) / 10 : 0;
             p.next = node;
             p = p.next;
             p1 = p1.next;
