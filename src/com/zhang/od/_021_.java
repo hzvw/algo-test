@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * ClassName: _021_
  * Package: com.zhang.od
- * Description:
+ * Description:计算三叉搜索树的高度
  *
  * @Author Harizon
  * @Create 2025/1/15 19:07

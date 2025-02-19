@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * ClassName: _013_
  * Package: com.zhang.od
- * Description:
+ * Description:字符串变换最小字符串
  *
  * @Author Harizon
  * @Create 2025/1/14 19:10

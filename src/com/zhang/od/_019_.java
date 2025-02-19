@@ -3,7 +3,7 @@ package com.zhang.od;
 /**
  * ClassName: _019_
  * Package: com.zhang.od
- * Description:
+ * Description:增强的strstr
  *
  * @Author Harizon
  * @Create 2025/1/15 1:18

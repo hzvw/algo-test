@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * ClassName: _024_
  * Package: com.zhang.od
- * Description:
+ * Description:分糖果
  *
  * @Author Harizon
  * @Create 2025/1/16 19:28

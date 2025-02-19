@@ -8,7 +8,7 @@ import java.util.Scanner;
 /**
  * ClassName: _011_
  * Package: com.zhang.od
- * Description:
+ * Description:连续字母长度
  *
  * @Author Harizon
  * @Create 2025/1/14 17:13

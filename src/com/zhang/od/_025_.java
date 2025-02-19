@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * ClassName: _025_
  * Package: com.zhang.od
- * Description:
+ * Description:判断一组不等式是否满足约束并输出最大差
  *
  * @Author Harizon
  * @Create 2025/1/16 19:36

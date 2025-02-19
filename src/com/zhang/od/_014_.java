@@ -7,7 +7,7 @@ import java.util.Scanner;
 /**
  * ClassName: _014_
  * Package: com.zhang.od
- * Description:
+ * Description:整数对最小和
  *
  * @Author Harizon
  * @Create 2025/1/14 19:41

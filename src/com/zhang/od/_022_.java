@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * ClassName: _022_
  * Package: com.zhang.od
- * Description:
+ * Description:数组拼接
  *
  * @Author Harizon
  * @Create 2025/1/16 18:57

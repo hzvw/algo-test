@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * ClassName: _026_
  * Package: com.zhang.od
- * Description:
+ * Description:高矮个子排队
  *
  * @Author Harizon
  * @Create 2025/1/16 20:26
