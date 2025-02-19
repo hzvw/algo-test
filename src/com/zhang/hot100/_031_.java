@@ -1,5 +1,7 @@
 package com.zhang.hot100;
 
+import java.util.List;
+
 /**
  * ClassName: _031_
  * Package: com.zhang.hot100
@@ -16,58 +18,42 @@ public class _031_ {
 
     }
 
-    public ListNode reverseKGroup(ListNode head, int k) {
+    public ListNode reverseKGroup(ListNode head, int k){
+        ListNode n_head = new ListNode(-1);
+        n_head.next = head;
         int len = 0;
         ListNode p = head;
         while (p != null){
-            len ++;
+            len++;
             p = p.next;
         }
 
         int n = len / k;
-        ListNode n_head = new ListNode(-1);
-        n_head.next = head;
         ListNode pre = n_head;
         ListNode start = head;
-        while (n > 0){
-            int count = k;
+        while (n-- > 0){
             ListNode tail = start;
             p = start;
-            ListNode q = start.next;
-            while(--count > 0){
+            ListNode q = p.next;
+
+            int count = k;
+            while (--count > 0){
                 ListNode next = q.next;
                 q.next = p;
                 p = q;
                 q = next;
             }
-            pre.next = p;
-            start = q;
-            tail.next = start;
-            pre = tail;
 
-            n--;
+            pre.next = p;
+            tail.next = q;
+
+            start = q;
+            pre = tail;
         }
         return n_head.next;
     }
 
-    static ListNode reverse(ListNode head){
-        if(head == null){
-            return null;
-        }
-        if(head.next == null){
-            return head;
-        }
-        ListNode pre = null;
-        ListNode p = head;
-        while (p != null){
-            ListNode next = p.next;
-            p.next = pre;
-            pre = p;
 
-            p = next;
-        }
 
-        return pre;
-    }
 
 }
