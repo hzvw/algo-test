@@ -1,7 +1,5 @@
 package com.zhang.hot100;
 
-import javax.swing.*;
-import java.lang.classfile.instruction.ReturnInstruction;
 
 /**
  * ClassName: _040_
