@@ -1,5 +1,7 @@
 package com.zhang.hot100;
 
+import java.security.DrbgParameters;
+
 /**
  * ClassName: _030_
  * Package: com.zhang.hot100
@@ -17,27 +19,19 @@ public class _030_ {
     }
 
     public ListNode swapPairs(ListNode head) {
-        ListNode pre = new ListNode(-1);
-        ListNode n_head = pre;
-        ListNode left = head;
-        ListNode right = null;
-        if(left != null){
-            right = left.next;
-        }
-        ListNode next = null;
-        if(right != null){
-            next = right.next;
-        }
+        ListNode n_head = new ListNode(-1);
+        n_head.next = head;
+        ListNode p = n_head;
+        while (p.next != null && p.next.next != null){
+            ListNode n1 = p.next;
+            ListNode n2 = p.next.next;
+            ListNode next = n2.next;
 
-        while (next != null){
-            pre.next = right;
-            right.next = left;
-            left.next = next;
+            p.next = n2;
+            n2.next = n1;
+            n1.next = next;
 
-            pre = left;
-            left = next;
-            right = next.next;
-            next = next.next.next;
+            p = n1;
         }
         return n_head.next;
     }
