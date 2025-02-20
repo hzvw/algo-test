@@ -34,7 +34,7 @@ public class _057_ {
 
     List<String> res = new ArrayList<>();
 
-    void dfs(int level, int n, List<String> list, List<Character> buckets){
+    void dfs(int level, int n, List<String> list, LinkedList<Character> buckets){
         if(n == level){
             if(!buckets.isEmpty()){
                 res.add(buckets.stream().map(x -> x+"").reduce("", String::concat));
@@ -49,7 +49,7 @@ public class _057_ {
 
             char[] cs = list.get(i).toCharArray();
             for (int j = 0; j < cs.length; j++) {
-                buckets.addLast(cs[j]);
+                buckets.addLast(Character.valueOf(cs[j]));
                 visited[i] = true;
 
                 dfs(level+1, n, list, buckets);
