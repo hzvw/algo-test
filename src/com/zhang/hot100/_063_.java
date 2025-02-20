@@ -20,7 +20,7 @@ public class _063_ {
     public int searchInsert(int[] nums, int target) {
         int left = 0;
         int right = nums.length-1;
-
+        int result = -1;
         while (left <= right){
             int mid = (left + right)/2;
             if(nums[mid] > target){
@@ -28,10 +28,12 @@ public class _063_ {
             }else if(nums[mid] < target){
                 left = mid+1;
             }else{
-                return mid;
+                result = mid;
+                return result;
             }
         }
-        return left;
+        result = left ;
+        return result;
     }
 
 }
