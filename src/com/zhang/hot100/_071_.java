@@ -33,7 +33,6 @@ public class _071_ {
                 num += c;
             }else if(c >= 'a' && c <= 'z'){
                 sb.append(c);
-                //str += c;
             }else if(c == '['){
                 // 数字结束的标志
                 if(!"".equals(num)){
@@ -47,10 +46,8 @@ public class _071_ {
                 //字符串结束的标志
                 int start = ids.pop();
                 int count = nums.pop();
-                //StringBuilder sb2 = new StringBuilder();
                 for (int j = 0; j < count; j++) {
                     str += sb.substring(start) ;
-                    //sb2.append(str);
                 }
                 sb.replace(start, sb.length(), str);
                 str = "";
