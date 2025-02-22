@@ -23,6 +23,7 @@ public class _087_ {
         int[] dp = new int[n];
         Arrays.fill(dp, 1);
 
+        //dp[i]表示i之前包括i的以nums[i]结尾的最长递增子序列的长度
         for (int i = 1; i < n ; i++) {
             for (int j = 0; j < i; j++) {
                 if(nums[i] > nums[j]){
