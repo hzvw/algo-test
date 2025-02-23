@@ -1,4 +1,4 @@
-package com.zhang.day01;
+package com.zhang.datastruct;
 
 /**
  * 可变参数

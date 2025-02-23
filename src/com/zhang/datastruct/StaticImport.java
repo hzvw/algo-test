@@ -1,4 +1,4 @@
-package com.zhang.day01;
+package com.zhang.datastruct;
 
 import static java.lang.Math.*;
 /**

@@ -1,4 +1,4 @@
-package com.zhang.day01;
+package com.zhang.datastruct;
 
 /**
  * 自动装箱与拆箱
