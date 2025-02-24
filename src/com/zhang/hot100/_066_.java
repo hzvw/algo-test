@@ -1,5 +1,7 @@
 package com.zhang.hot100;
 
+import com.sun.source.tree.ReturnTree;
+
 /**
  * ClassName: _066_
  * Package: com.zhang.hot100
@@ -15,33 +17,64 @@ public class _066_ {
         if(n == 0){
             return -1;
         }
+        return search(nums, 0, n-1, target);
+    }
 
-        int left = 0;
-        int right = n-1;
-        while (left < right){
-            int mid = (left + right) >> 1;
-            if(nums[mid] > nums[right]){
-                // 前有序，包括中间数
-                // 6 7 8 9 1 2
-                if(nums[left] <= target && target <= nums[mid]){
-                    right = mid;
-                }else{
-                    left = mid+1;
-                }
-            }else{
-                // 后有序，包括中间数
-                // 6 7 1 2 3 4 5 6
-                if(nums[mid] < target && target <= nums[right]){
-                    left = mid+1;
-                }else{
-                    right = mid;
-                }
-            }
+    int search(int[] nums, int left, int right, int target){
+        if(left > right){
+            return -1;
         }
-        if(target == nums[left]){
+
+        if(left == right && nums[left] == target){
             return left;
         }
-        return  -1;
+
+        int mid = left + (right - left)/2;
+        if(nums[mid] > nums[right]){
+            //左边有序
+            if(target >= nums[left] && target < nums[mid]){
+                // 在左边区间
+                //普通的二分搜索
+                return bs(nums, left, mid-1, target);
+            }else if(target>=nums[left] && target == nums[mid]){
+                return mid;
+
+            }else{
+                // 在右边区间
+                //
+                return search(nums, mid+1, right, target);
+            }
+
+        }else{
+            //右边有序
+            if(target <= nums[right] && target > nums[mid]){
+                return bs(nums, mid+1, right, target);
+            }else if(target <= nums[right] && target == nums[mid]){
+                return mid;
+            }else{
+                return search(nums, left, mid-1, target);
+            }
+
+        }
     }
+
+
+    int bs(int[] nums, int left, int right, int target){
+        if(left == right && nums[left] == target){
+            return left;
+        }
+        if(left > right){
+            return -1;
+        }
+        int mid = left + (right - left)/2;
+        if(nums[mid] > target){
+            return bs(nums, left, mid-1, target);
+        }else if(nums[mid] < target){
+            return bs(nums, mid+1, right, target);
+        }else{
+            return mid;
+        }
+    }
+
 
 }
