@@ -29,9 +29,9 @@ public class _073_ {
         Deque<Integer> stack = new LinkedList<>();
         for (int i = 0; i < n+2; i++) {
             while (!stack.isEmpty() && nums[i] < nums[stack.peek()]){
+                int right = i;
                 int mid = stack.pop();
                 int left = stack.peek();
-                int right = i;
                 res = Math.max(res, (right - left -1) * nums[mid]);
             }
             stack.push(i);
