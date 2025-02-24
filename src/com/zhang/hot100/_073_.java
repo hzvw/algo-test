@@ -18,65 +18,27 @@ public class _073_ {
         System.out.println(new _073_().largestRectangleArea(nums));
     }
 
-    public int largestRectangleArea2(int[] heights) {
+    public int largestRectangleArea(int[] heights) {
         int res = 0;
-        Deque<Integer> stack = new LinkedList<>();
-
         int n = heights.length;
+        int[] nums = new int[n+2];
         for (int i = 0; i < n; i++) {
-            int h = heights[i];
-            while (!stack.isEmpty() && h < heights[stack.peek()]){
-                res = Math.max(res, heights[stack.pop()] * (stack.isEmpty() ? i : (i - stack.peek() - 1)));
+            nums[i+1] = heights[i];
+        }
+
+        Deque<Integer> stack = new LinkedList<>();
+        for (int i = 0; i < n+2; i++) {
+            while (!stack.isEmpty() && nums[i] < nums[stack.peek()]){
+                int mid = stack.pop();
+                int left = stack.peek();
+                int right = i;
+                res = Math.max(res, (right - left -1) * nums[mid]);
             }
             stack.push(i);
         }
 
-        while (!stack.isEmpty()){
-            res = Math.max(res, heights[stack.pop()] * (stack.isEmpty() ? n : n - stack.peek() - 1));
-        }
         return res;
     }
 
 
-    public int largestRectangleArea(int[] heights) {
-        int n = heights.length;
-        Deque<Integer> stack = new LinkedList<>();// 维护单调递增栈
-        int maxs = Integer.MIN_VALUE;
-        // 从左往右考虑
-        for(int i=0; i<n; i++){
-            // 从右往左考虑可以出栈的元素
-            while(!stack.isEmpty() && heights[stack.peek()] > heights[i]){
-                int curh = heights[stack.pop()];
-                // 处理相同高度的情况，相同高度的矩形一起考虑
-                while(!stack.isEmpty() && heights[stack.peek()] == curh){
-                    stack.pop();
-                }
-                int width = 0;
-                if(stack.isEmpty()){// 当前高度是目前为止所有矩形中最低的，计算整个宽度
-                    width = i;
-                }else{
-                    width = i - stack.peek() - 1;// 计算矩形的宽度
-                }
-                maxs = Math.max(maxs, width * curh);
-            }
-            // 最新高度进栈
-            stack.push(i);
-        }
-        // 假设数组中有第n个矩形，它的高度为0
-        while(!stack.isEmpty()){
-            int curh = heights[stack.pop()];
-            // 处理相同高度
-            while(!stack.isEmpty() && heights[stack.peek()] == curh){
-                stack.pop();
-            }
-            int width = 0;
-            if(stack.isEmpty()){// 当前高度是目前为止所有矩形中最低的，计算整个宽度
-                width = n;
-            }else{
-                width = n - stack.peek() - 1;// 计算矩形的宽度
-            }
-            maxs = Math.max(maxs, width * curh);
-        }
-        return maxs;
-    }
 }
