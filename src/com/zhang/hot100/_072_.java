@@ -14,22 +14,17 @@ import java.util.LinkedList;
  * @Version 1.0
  */
 public class _072_ {
-    public int[] dailyTemperatures(int[] temperatures) {
-        int n = temperatures.length;
-        int[] res = new int[n];
-        HashMap<Integer, Integer> map = new HashMap<>();
-        Deque<Integer> stack = new LinkedList<>();
-        for (int i = 0; i < n; i++) {
-            int num = temperatures[i];
+    public int[] dailyTemperatures(int[] nums) {
+        Deque<Integer> st = new LinkedList<>();
+        int[] result = new int[nums.length];
 
-            while (!stack.isEmpty() && temperatures[stack.peek()] < num){
-                map.put(stack.pop(), i);
+        for (int i = 0; i < nums.length; i++) {
+            while(!st.isEmpty() && nums[i] > nums[st.peek()]){
+                int left = st.pop();
+                result[left] = i - left;
             }
-            stack.push(i);
+            st.push(i);
         }
-        for (int i = 0; i < n; i++) {
-            res[i] = map.get(i) == null ? 0 : map.get(i) - i;
-        }
-        return res;
+        return result;
     }
 }
