@@ -1,9 +1,6 @@
 package com.zhang.hot100;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * ClassName: __068
@@ -16,7 +13,7 @@ import java.util.Stack;
  */
 public class _069_ {
     public boolean isValid(String s) {
-        Stack<Character> stack = new Stack<>();
+        Deque<Character> stack = new LinkedList<>();
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
 
