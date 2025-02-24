@@ -10,38 +10,58 @@ package com.zhang.hot100;
  * @Version 1.0
  */
 public class _068_ {
-    //
-    public static double findMedianSortedArrays2(int[] nums1, int[] nums2) {
-        if(nums1.length>nums2.length)//保证num1长度小，如果不小我交换一下
-        {
-            int team[]=nums2.clone();
-            nums2=nums1;
-            nums1=team;
-        }
-        int k=(nums1.length+nums2.length+1)/2;//理论中位数满足的位置
-        int left=0,right=nums1.length;//二分查找短的
+    public static void main(String[] args) {
+        System.out.println(new _068_().findMedianSortedArrays(new int[]{1, 3}, new int[]{2}));
 
-        while (left<right) {//找到对应位置
-            int m1=(left+right)/2;//在短的位置
-            int m2=k-m1;//在长的第几个
-            //System.out.println(m1+" "+m2);
-            if(nums1[m1]<nums2[m2-1])//left右移
-                left=m1+1;
-            else {//right左移
-                right=m1;
+
+    }
+
+
+    //
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int m = nums1.length;
+        int n = nums2.length;
+
+        if (m > n){
+            int[] t = nums1;
+            nums1 = nums2;
+            nums2 = t;
+        }
+
+        m = nums1.length;
+        n = nums2.length;
+
+        if(m == 0){
+            if(n % 2 == 0){
+                return (double) (nums2[n/2] + nums2[n/2 - 1])/2;
+            }else{
+                return (double) (nums2[(n)/2]);
             }
         }
-        //System.out.println(left+" "+k);
-        //左侧最大和右侧最小那个先算出来再说，根据奇偶再使用
-        double leftbig= Math.max(left==0?Integer.MIN_VALUE:nums1[left-1], k-left==0?Integer.MIN_VALUE:nums2[k-left-1]);
-        double rightsmall=Math.min(left==nums1.length?Integer.MAX_VALUE:nums1[left],k-left==nums2.length?Integer.MAX_VALUE:nums2[k-left]);
-        //System.out.println(rightsmall);
-        if((nums1.length+nums2.length)%2==0)
-        {
-            return (leftbig+rightsmall)/2;
+
+        int total = (m+n+1)/2;
+        int left = 0;
+        int right = m;
+        int mid1 = 0;
+        int mid2 = 0;
+        while (left <= right){
+            int i = (left + right)/2;
+            int j = total - i;
+
+            int a = i == 0 ? Integer.MIN_VALUE : nums1[i-1];
+            int b = i == m ? Integer.MAX_VALUE : nums1[i];
+            int c = j == 0 ? Integer.MIN_VALUE: nums2[j-1];
+            int d = j == n ? Integer.MAX_VALUE : nums2[j];
+            if(a < d){
+                // a < d
+                // c < b
+                mid1 = Math.max(a,c);
+                mid2 = Math.min(b,d);
+                left = i+1;
+            }else{
+                right = i-1;
+            }
         }
-        else {
-            return leftbig;
-        }
+        return (m+n) % 2 == 0 ? (mid1+mid2)/ 2.0 : mid1/1.0;
     }
 }
