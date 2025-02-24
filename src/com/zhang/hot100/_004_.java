@@ -16,6 +16,7 @@ public class _004_ {
     }
 
     public void moveZeroes(int[] nums) {
+        // 从0-i一共有多少个0
         int[] count = new int[nums.length];
 
         int n = nums.length;

@@ -11,8 +11,8 @@ package com.zhang.hot100;
  */
 public class _016_ {
     public static void main(String[] args) {
-
-
+        int[] nums = {1,2,3,4};
+        new _016_().productExceptSelf(nums);
     }
 
     public int[] productExceptSelf(int[] nums) {

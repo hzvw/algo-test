@@ -11,7 +11,7 @@ package com.zhang.hot100;
  */
 public class _017_ {
     public static void main(String[] args) {
-        int[] nums = {1,1};
+        int[] nums = {3,4,-1,1};
         System.out.println(new _017_().firstMissingPositive(nums));
     }
 
@@ -19,6 +19,11 @@ public class _017_ {
         int n = nums.length;
         for (int i = 0; i < n; i++) {
             while (nums[i] >= 1 && nums[i] <= n && nums[nums[i]-1] != nums[i]){
+
+                System.out.println("i = " + i);
+                System.out.println("nums[i] = " + nums[i]);
+                System.out.println("nums[i]-1=" + (nums[i] - 1));
+                System.out.println("nums[nums[i]-1] = " + nums[nums[i]-1]);
                 swap(nums, i, nums[i]-1);
             }
         }
@@ -32,6 +37,7 @@ public class _017_ {
     }
 
     static void swap(int[] nums, int i, int j){
+        System.out.println("交换" + i + "--" + j);
         int t = nums[i];
         nums[i] = nums[j];
         nums[j] = t;
