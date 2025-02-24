@@ -21,13 +21,10 @@ public class _062_ {
 
     List<List<String>> res = new ArrayList<>();
     LinkedList<Integer> buckets = new LinkedList<>();
-    boolean[][] visited;
-
     int n;
 
     public List<List<String>> solveNQueens(int n) {
         this.n = n;
-        visited = new boolean[n][n];
 
         dfs(0);
         return res;
@@ -35,23 +32,18 @@ public class _062_ {
 
     void dfs(int level){
         if(level == n){
-            res.add(m1());
+            res.add(print());
             return;
         }
 
         for (int j = 0; j < n; j++) {
-            if(visited[level][j]){
-               continue;
-            }
 
             if(check(level, j)){
                 buckets.addLast(j);
-                visited[level][j] = true;
 
                 dfs(level+1);
 
                 buckets.removeLast();
-                visited[level][j] = false;
             }
         }
     }
@@ -68,7 +60,7 @@ public class _062_ {
         return true;
     }
 
-    List<String> m1(){
+    List<String> print(){
         List<String> list = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
 
