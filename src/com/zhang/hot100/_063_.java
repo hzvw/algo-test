@@ -12,6 +12,12 @@ package com.zhang.hot100;
 public class _063_ {
     public static void main(String[] args) {
 
+        int[] nums = {1,2,4,5};
+//        int target = -1;
+//        int target = 2;
+//        int target = 3;
+        int target = 6;
+        System.out.println(new _063_().searchInsert(nums, target));
 
 
     }
