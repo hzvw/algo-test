@@ -16,16 +16,17 @@ import java.util.List;
 public class _061_ {
     List<List<String>> res = new ArrayList<>();
 
+    LinkedList<String> buckets = new LinkedList<>();
     String s;
 
     public List<List<String>> partition(String s) {
         this.s = s;
 
-        dfs(0, new LinkedList<>(), new StringBuilder());
+        dfs(0,  new StringBuilder());
         return res;
     }
 
-    void dfs(int level ,LinkedList<String> buckets, StringBuilder sb){
+    void dfs(int level , StringBuilder sb){
         if(level == s.length()){
             res.add(new ArrayList<>(buckets));
             return;
@@ -36,7 +37,7 @@ public class _061_ {
             if(check(sb)){
                 buckets.addLast(sb.toString());
 
-                dfs(i+1, buckets, new StringBuilder());
+                dfs(i+1,  new StringBuilder());
 
                 buckets.removeLast();
             }

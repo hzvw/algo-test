@@ -27,7 +27,7 @@ public class _056_ {
         visited = new boolean[nums.length];
         for (int i = 0; i <= nums.length; i++) {
             Arrays.fill(visited, false);
-            dfs(0, i, new LinkedList<>() );
+            dfs(0, i );
         }
         return res;
     }
@@ -36,8 +36,9 @@ public class _056_ {
 
     List<List<Integer>> res = new ArrayList<>();
 
+    LinkedList<Integer> buckets = new LinkedList<>();
     boolean[] visited ;
-    void dfs(int level, int n, LinkedList<Integer> buckets){
+    void dfs(int level, int n ){
         if(buckets.size() == n){
             res.add(new ArrayList<>(buckets));
             return;
@@ -51,7 +52,7 @@ public class _056_ {
             buckets.addLast(nums[i]);
             visited[i] = true;
 
-            dfs(i+1, n, buckets);
+            dfs(i+1, n);
 
             buckets.removeLast();
             visited[i] = false;

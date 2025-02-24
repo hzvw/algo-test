@@ -15,13 +15,14 @@ import java.util.List;
  */
 public class _059_ {
     public List<String> generateParenthesis(int n) {
-        dfs( new LinkedList<>(), n, 0, 0);
+        dfs( n, 0, 0);
         return res;
     }
 
     List<String> res = new ArrayList<>();
+    LinkedList<Character> buckets = new LinkedList<>();
 
-    void dfs(LinkedList<Character> buckets, int n, int p, int q){
+    void dfs( int n, int p, int q){
         if(p < q){
             return;
         }
@@ -36,11 +37,11 @@ public class _059_ {
         }
 
         buckets.addLast('(');
-        dfs( buckets, n, p+1, q);
+        dfs( n, p+1, q);
         buckets.removeLast();
 
         buckets.addLast(')');
-        dfs( buckets, n, p, q+1);
+        dfs( n, p, q+1);
         buckets.removeLast();
     }
 }

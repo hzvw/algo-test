@@ -40,15 +40,14 @@ public class _051_ {
             for (int j = 0; j < n; j++) {
                 if(grid[i][j] == '1' && !visited[i][j]){
                     ans ++;
-                    dfs(i,j);
+                    bfs(i,j);
                 }
             }
         }
         return ans;
     }
 
-    void dfs(int i, int j){
-        boolean flag = false;
+    void bfs(int i, int j){
         LinkedList<int[]> queue = new LinkedList<>();
         queue.offer(new int[]{i,j});
         visited[i][j] = true;

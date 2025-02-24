@@ -20,17 +20,18 @@ public class _058_ {
         Arrays.sort(candidates);
         this.target = target;
         this.can = candidates;
-        dfs(0, new LinkedList<>(), 0);
+        dfs(0, 0);
         return res;
     }
 
     List<List<Integer>> res = new LinkedList<>();
 
+    LinkedList<Integer> buckets = new LinkedList<>();
     int target;
 
     int[] can;
 
-    void dfs(int level, LinkedList<Integer> buckets,  int sum){
+    void dfs(int level,   int sum){
         if(sum == target){
             res.add(new ArrayList<>(buckets));
             return;
@@ -43,7 +44,7 @@ public class _058_ {
             buckets.addLast(can[i]);
             sum += can[i];
 
-            dfs(i,buckets, sum);
+            dfs(i, sum);
 
             buckets.removeLast();
             sum -= can[i];

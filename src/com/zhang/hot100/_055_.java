@@ -18,16 +18,17 @@ public class _055_ {
     public List<List<Integer>> permute(int[] nums) {
         this.nums = nums;
         visited = new boolean[nums.length];
-        dfs(0, nums.length, new LinkedList<>());
+        dfs(0, nums.length);
         return res;
     }
 
     int[] nums;
     List<List<Integer>> res = new ArrayList<>();
 
+    LinkedList<Integer> buckets = new LinkedList<>();
     boolean[] visited;
 
-    void dfs(int level, int n, LinkedList<Integer> buckets){
+    void dfs(int level, int n){
         if(level == n){
             res.add(new ArrayList<>(buckets));
             return;
@@ -40,7 +41,7 @@ public class _055_ {
             buckets.addLast(nums[i]);
             visited[i] = true;
 
-            dfs(level+1, n, buckets);
+            dfs(level+1, n);
 
             buckets.removeLast();
             visited[i] = false;
