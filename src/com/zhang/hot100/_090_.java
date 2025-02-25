@@ -56,8 +56,6 @@ public class _090_ {
                 right = 0;
             }
         }
-
-
         return max_len;
     }
 

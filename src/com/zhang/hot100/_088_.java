@@ -35,10 +35,6 @@ public class _088_ {
             dp[i][0] = min(c, a * c, b * c);
             dp[i][1] = max(c, a * c, b * c);
         }
-
-//        for (int i = 0; i < n; i++) {
-//            System.out.println(dp[i][0] + " " +  dp[i][1]);
-//        }
         int res = Integer.MIN_VALUE;
         for (int i = 0; i < n; i++) {
             res = Math.max(res, dp[i][1]);

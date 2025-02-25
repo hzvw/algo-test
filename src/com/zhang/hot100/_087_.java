@@ -31,10 +31,6 @@ public class _087_ {
                 }
             }
         }
-
-//        for (int i = 0; i < n; i++) {
-//            System.out.print(dp[i] + " ");
-//        }
         return Arrays.stream(dp).max().getAsInt();
     }
 }

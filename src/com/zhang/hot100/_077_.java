@@ -37,13 +37,6 @@ public class _077_ {
             //dp[i][0] = Math.max(dp[i-1][0], dp[i-1][1]-prices[i]);
             //dp[i][1] = Math.max(dp[i-1][1], dp[i-1][0] + prices[i]);
         }
-
-//        for (int i = 0; i < n; i++) {
-//            for (int j = 0; j < 2; j++) {
-//                System.out.print(dp[i][j] +" ");
-//            }
-//            System.out.println();
-//        }
         return Math.max(dp[n-1][0], dp[n-1][1]);
     }
 
