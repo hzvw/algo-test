@@ -18,18 +18,24 @@ public class _075_ {
         for (int i = 0; i < n; i++) {
             count.put(nums[i], count.getOrDefault(nums[i], 0) + 1);
         }
-        List<int[]> list = new ArrayList<>();
+
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[1] - b[1]);
         for (Integer key : count.keySet()) {
-            list.add(new int[]{key, count.get(key)});
+            int value = count.get(key);
+            if(pq.size() < k){
+                pq.offer(new int[]{key, value});
+            }else{
+                int[] top = pq.peek();
+                if(value > top[1]){
+                    pq.poll();
+                    pq.offer(new int[]{key, value});
+                }
+            }
         }
-
-        list.sort((a,b) -> b[1]-a[1]);
-
         int[] res = new int[k];
         for (int i = 0; i < k; i++) {
-            res[i] = list.get(i)[0];
+            res[i] = pq.poll()[0];
         }
-
         return res;
     }
 }
