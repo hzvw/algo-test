@@ -1,6 +1,9 @@
 package com.zhang.hot100;
 
+import java.net.PortUnreachableException;
 import java.util.Arrays;
+import java.util.Deque;
+import java.util.LinkedList;
 
 /**
  * ClassName: _090_
@@ -82,6 +85,31 @@ public class _090_ {
             }
         }
         return max_len;
+    }
+
+
+    public int longestValidParentheses3(String s){
+        if(s == null || s.length() == 0){
+            return 0;
+        }
+        int[] dp = new int[s.length()];
+        dp[0] = 0;
+
+        int res = 0;
+        for (int i = 1; i < s.length(); i++) {
+            if(s.charAt(i) == ')'){
+                if(s.charAt(i-1) == '('){
+                    dp[i] = (i-2>=0 ? dp[i-2]: 0) + 2;
+                }else{
+                    if(i-dp[i-1]-1 >= 0 && s.charAt(i-dp[i-1]-1) == '('){
+                        dp[i] = dp[i-1] + 2 + (i-dp[i-1]-2>=0 ? dp[i-dp[i-1]-2] : 0);
+                    }
+                }
+            }
+
+            res = Math.max(res, dp[i]);
+        }
+        return res;
     }
 
 }

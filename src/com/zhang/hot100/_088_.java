@@ -49,4 +49,27 @@ public class _088_ {
     int min(int a, int b, int c){
         return Math.min(Math.min(a,b), c);
     }
+
+
+    public int maxProduct2(int[] nums) {
+        int[][] dp = new int[nums.length][2];
+
+        dp[0][0] = nums[0];
+        dp[0][1] = nums[0];
+
+        for (int i = 1; i < nums.length; i++) {
+            int a = dp[i-1][0];
+            int b = dp[i-1][1];
+            int c = nums[i];
+
+            dp[i][0] = max(c, a * c , b * c);
+            dp[i][1] = min(c, a * c, b * c);
+        }
+        int res = Integer.MIN_VALUE;
+        for (int i = 0; i < nums.length; i++) {
+            res = Math.max(res, dp[i][0]);
+        }
+        return res;
+    }
+
 }

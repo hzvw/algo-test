@@ -1,5 +1,6 @@
 package com.zhang.hot100;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,5 +36,23 @@ public class _086_ {
             }
         }
         return dp[n];
+    }
+
+    public boolean wordBreak2(String s, List<String> wordDict) {
+        Set<String> set = new HashSet<>();
+        for (String s1 : wordDict) {
+            set.add(s1);
+        }
+
+        boolean[] dp = new boolean[s.length() + 1];
+        dp[0] = true;
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = 0; j < i; j++) {
+                if(set.contains(s.substring(j,i)) && dp[j]){
+                    dp[i] = true;
+                }
+            }
+        }
+        return dp[s.length()];
     }
 }
