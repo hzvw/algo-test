@@ -69,7 +69,7 @@ public class _074_ {
             swap(0, size-1);
             size--;
             heapify(0);
-            buffer.removeLast();
+            buffer.remove(size);
             return res;
         }
 
