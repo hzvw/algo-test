@@ -10,6 +10,11 @@ package com.zhang.hot100;
  * @Version 1.0
  */
 public class _093_ {
+    public static void main(String[] args) {
+
+        new _093_().longestPalindrome("babad");
+    }
+
     public String longestPalindrome(String s) {
         int n = s.length();
         boolean[][] dp = new boolean[n][n];
@@ -25,7 +30,17 @@ public class _093_ {
                         dp[i][j] = dp[i+1][j-1];
                     }
                 }
+                System.out.println("i = " + i);
+                System.out.println("j = " + j);
+                System.out.println("dp[i][j] = " + dp[i][j]);
             }
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(dp[i][j] + " ");
+            }
+            System.out.println();
         }
 
         int res = 0;

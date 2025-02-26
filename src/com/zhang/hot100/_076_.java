@@ -47,7 +47,7 @@ public class _076_ {
             return min.size() == max.size() ? (min.peek() + max.peek())/ 2.0 : min.peek();
         }
 
-        static class MyPQ<T>{
+        class MyPQ<T>{
             int size = 0;
             ArrayList<T> buffer = new ArrayList<>();
 
