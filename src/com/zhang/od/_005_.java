@@ -13,28 +13,22 @@ import java.util.Scanner;
  */
 public class _005_ {
     public static void main(String[] args) {
-        //System.out.println(Integer.parseInt("11", 16));;
         Scanner sc = new Scanner(System.in);
         String tag = sc.nextLine();
         String input = sc.nextLine();
-
         String[] words = input.split(" ");
-        for(int i = 0; i<words.length; ){
-            //System.out.println(i);
+        for (int i = 0; i < words.length;) {
             String t = words[i];
             int len = Integer.parseInt(words[i+2] + words[i+1], 16);
-            //System.out.println("len = " + len);
-            int j = i +3;
-            if(words[i].equals(tag)){
-                for(int k = j; k<j+len; k++){
-                    System.out.print(words[k] + " ");
+
+            if(t.equals(tag)){
+                for (int j = 0; j < len; j++) {
+                    System.out.print(words[i+3+j] + " ");
                 }
                 System.out.println();
             }
             i += len + 3;
         }
-
-
 
     }
 

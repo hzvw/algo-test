@@ -50,33 +50,5 @@ public class _004_ {
 
     }
 
-    static void fullrank(StringBuilder sb){
-
-    }
-
-
-    //求全排列
-    static void p(char[] chars, int i, ArrayList<String> ret){
-        if(i == chars.length){
-            ret.add(String.valueOf(chars));
-            return;
-        }
-
-        for(int j = i; j<chars.length; j++){
-            swap(chars, i , j);
-            p(chars, i+1, ret);
-            swap(chars, i, j);
-        }
-
-
-    }
-
-    static void swap(char[] chars , int i, int j){
-        char tmp = chars[i];
-        chars[i] = chars[j];
-        chars[j] = tmp;
-    }
-
-
 
 }

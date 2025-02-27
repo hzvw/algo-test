@@ -12,54 +12,54 @@ import java.util.Scanner;
  * @Version 1.0
  */
 public class _006_ {
-    static long[] A;
-    static long[][] buffer;
+    static long[] nums;
+    static long[][] cache;
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
-        A = new long[N];
-        buffer = new long[N][N];
+        int n = sc.nextInt();
+        nums = new long[n];
+        cache = new long[n][n];
 
-        for(int i = 0; i<N; i++){
-            A[i] = sc.nextInt();
+        for(int i = 0; i<n; i++){
+            nums[i] = sc.nextInt();
         }
 
         long max = 0;
-        for(int i = 0; i<N; i++){
-            max = Math.max(max, A[i] + p(check(i-1),check(i+1)));
+        for(int i = 0; i<n; i++){
+            max = Math.max(max, nums[i] + p(check(i-1),check(i+1)));
         }
         System.out.println(max);
     }
 
 
     static long p(int i, int j){
-        if(A[i] > A[j]){
+        if(nums[i] > nums[j]){
             i = check(i-1);
         }else{
             j = check(j+1);
         }
-        if(buffer[i][j] > 0){
-            return buffer[i][j];
+        if(cache[i][j] > 0){
+            return cache[i][j];
         }
 
         if(i == j){
-            buffer[i][j] = A[i];
-            return A[i];
+            cache[i][j] = nums[i];
+            return nums[i];
         }
 
-        long i1 = A[i] + p( check(i-1), j);
-        long i2 = A[j] + p( i, check(j+1));
+        long i1 = nums[i] + p( check(i-1), j);
+        long i2 = nums[j] + p( i, check(j+1));
 
-        buffer[i][j] = i1 > i2 ? i1:i2;
-        return buffer[i][j];
+        cache[i][j] = i1 > i2 ? i1:i2;
+        return cache[i][j];
     }
 
     static int check(int i){
         if(i < 0){
-            return A.length -1;
+            return nums.length -1;
         }
-        if(i > A.length-1){
+        if(i > nums.length-1){
             return 0;
         }
         return i;

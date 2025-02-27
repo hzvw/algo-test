@@ -35,21 +35,9 @@ public class _007_ {
              id_set.add(words[1]);
 
              low_high.put(words[0], words[1]);
+             high_low.putIfAbsent(words[1], new HashSet<>());
+             high_low.get(words[1]).add(words[0]);
              id_income.put(words[0], Integer.parseInt(words[2]));
-        }
-
-        // 建立low_high映射
-        for(String id : low_high.keySet()){
-            //上级id
-            String high_id = low_high.get(id);
-
-            if(high_low.get(high_id) != null){
-                high_low.get(high_id).add(id);
-            }else{
-                Set<String> tmp = new HashSet<>();
-                tmp.add(id);
-                high_low.put(high_id, tmp);
-            }
         }
 
         //建立入度
@@ -75,7 +63,8 @@ public class _007_ {
 
         int cnt = 0;
         while (queue.size() > 0){
-            String id = queue.pop(); cnt++;
+            String id = queue.pop();
+            cnt++;
             if(cnt == id_set.size()){
                 System.out.println(id + " "+id_income.get(id));
                 return;
@@ -95,17 +84,6 @@ public class _007_ {
             }
         }
 
-
-
-        //寻找根节点
-//        String top_id = null;
-//        for(String str : set){
-//            if(map2.get(str) == null){
-//                top_id = str;
-//            }
-//        }
-//
-//        System.out.println(top_id + " " + p(top_id));
     }
 
     //暴力递归
