@@ -14,72 +14,66 @@ import java.util.Scanner;
  * @Version 1.0
  */
 public class _008_ {
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int N = Integer.parseInt(sc.nextLine());
-
-        List<App> input_list = new ArrayList<>();
-        for(int i = 0; i<N; i++){
-            String line = sc.nextLine();
-            String[] words = line.split(" ");
-            input_list.add(new App(words[0], Integer.parseInt(words[1]), convert(words[2]), convert(words[3])));
+        int n = Integer.parseInt(sc.nextLine());
+        List<App> list = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            String[] words = sc.nextLine().split(" ");
+            list.add(new App(words[0], Integer.parseInt(words[1]), words[2], words[3]));
         }
-        int t1 = convert(sc.nextLine());
 
+        String time = sc.nextLine();
         List<App> registered = new ArrayList<>();
+
         outer:
-        for(int i = 0; i<N; i++){
-            App app = input_list.get(i);
-            if(app.start >= app.end){
+        for (int i = 0; i < n; i++) {
+            App app = list.get(i);
+            if(app.start.compareTo(app.end) >= 0){
                 continue;
             }
 
-            //待删除的app的列表
             List<Integer> to_delete = new ArrayList<>();
-            for(int j = 0; j<registered.size(); j++){
-                if(app.start>=registered.get(j).end || app.end <=registered.get(j).start){
+            for (int j = 0; j < registered.size(); j++) {
+                if(app.end.compareTo(registered.get(j).start) <= 0 || app.start.compareTo(registered.get(j).end) >= 0){
                     continue;
                 }
-                if(app.i1 > registered.get(j).i1){
+//                if(app.priority <= registered.get(j).priority){
+//                    continue outer;
+//                }
+//                to_delete.add(j);
+                if(app.priority > registered.get(j).priority){
                     to_delete.add(j);
                 }else{
                     continue outer;
                 }
             }
-
-            //清除异己
-            for(int k = to_delete.size()-1; k>=0; k--){
-                int index = to_delete.get(k);
-                registered.remove(index);
-                //registered.remove(to_delete.get(k));
+            for (int j = to_delete.size()-1; j >= 0 ; j--) {
+                registered.remove(to_delete.get(j).intValue());
+                //int index = to_delete.get(j);
+                //registered.remove(index);
             }
             registered.add(app);
         }
-
-        String res = "NA";
-        for(int i = 0; i<registered.size(); i++){
-            if(t1 >=registered.get(i).start && t1 < registered.get(i).end){
-                res = registered.get(i).name;
-                break;
+        for (App app : registered) {
+            if(app.start.compareTo(time) <= 0 && app.end.compareTo(time) > 0){
+                System.out.println(app.name);
+                return;
             }
         }
-        System.out.println(res);
-    }
-
-    static int convert(String t){
-        String[] words = t.split(":");
-        return 60 * Integer.parseInt(words[0]) + Integer.parseInt(words[1]);
+        System.out.println("NA");
     }
 
     static class App{
         String name;
-        int i1;
-        int start;
-        int end;
+        int priority;
+        String start;
+        String end;
 
-        public App(String name,int i1,int start,int end){
+        public App(String name, int priority, String start, String end) {
             this.name = name;
-            this.i1 = i1;
+            this.priority = priority;
             this.start = start;
             this.end = end;
         }
