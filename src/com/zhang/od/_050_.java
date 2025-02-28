@@ -1,7 +1,5 @@
 package com.zhang.od;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -59,18 +57,18 @@ public class _050_ {
     }
 
     static class UnionSet{
-        int[] arr ;
+        int[] fa;
 
         public UnionSet(int n){
-            this.arr = new int[n];
+            this.fa = new int[n];
             for(int i = 0; i<n; i++){
-                arr[i] = i;
+                fa[i] = i;
             }
         }
 
         public int find(int x){
-            if(arr[x] != x){
-                return find(arr[x]);
+            if(fa[x] != x){
+                return find(fa[x]);
             }
             return x;
         }
@@ -79,13 +77,13 @@ public class _050_ {
             int fa_a = find(a);
             int fa_b = find(b);
 
-            if(fa_a < fa_b){
-                arr[fa_b] = fa_a;
+            if(fa_a != fa_b){
+                fa[fa_b] = fa_a;
             }
         }
 
     }
-
+    
 
 
 
