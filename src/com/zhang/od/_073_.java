@@ -18,39 +18,40 @@ public class _073_ {
 
         BigInteger num = sc.nextBigInteger();
 
-        System.out.println(p(num));
+        System.out.println(solve(num));
     }
 
-    static String p(BigInteger num){
+    static String solve(BigInteger num){
         String str = num.toString(2);
+//        System.out.println(str);
         int index = str.length()-1;
 
         StringBuilder sb = new StringBuilder();
 
-        while(index > 6){
+        while(index >= 7){
             String s = str.substring(index-6, index+1);
             s = "1" + s;
-            sb.append(p1(s));
+            sb.append(convert16(s));
             index = index - 7;
         }
 
         if(index >= 0){
             String s = str.substring(0, index+1);
             s = "0" + s;
-            sb.append(p1(s));
+            sb.append(convert16(s));
         }
 
         return sb.toString();
     }
 
     //将一个8位的二进制数字转为16进制
-    static String p1(String s){
-        String i1 = Integer.toHexString(Integer.parseInt(s, 2));
+    static String convert16(String s){
+        String tmp = Integer.toHexString(Integer.parseInt(s, 2));
 
-        if(i1.length() == 1){
-            i1 = "0" + i1;
+        if(tmp.length() == 1){
+            tmp = "0" + tmp;
         }
-        return i1.toUpperCase();
+        return tmp.toUpperCase();
     }
 
 }
