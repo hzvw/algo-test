@@ -23,9 +23,19 @@ public class _042_ {
             w[i] = sc.nextInt();
             v[i] = sc.nextInt();
         }
-        System.out.println(p(w,v,0,0,0,T));
+        //System.out.println(p(w,v,0,0,0,T));
         //System.out.println(process(w,v,0,T));
+
+        int bag = T;
+        int[] dp = new int[T+1];
+        for (int i = 0; i < n; i++) {
+            for (int j = bag; j >= w[i] ; j--) {
+                dp[j] = Math.max(dp[j], dp[j-w[i]] + v[i]);
+            }
+        }
+        System.out.println(dp[bag]);
     }
+
 
     static int p(int[] w, int[] v, int i,int current_v, int current_w, int bag){
         if(i == w.length){
