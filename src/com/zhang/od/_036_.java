@@ -23,16 +23,16 @@ public class _036_ {
 
         int sum = Integer.parseInt(sc.nextLine());
 
-        int[] sum_1 = new int[N+1];
+        int[] pre = new int[N+1];
         for(int i = 1; i<N+1; i++){
-            sum_1[i] = sum_1[i-1] + arr[i-1];
+            pre[i] = pre[i-1] + arr[i-1];
         }
 
         int max_len = -1;
-        for(int i = 1; i<N+1; i++){
-            for(int j = i; j<N+1; j++){
-                if(sum_1[j] - sum_1[i-1] == sum){
-                    max_len = Math.max(max_len, j - i + 1);
+        for(int i = 0; i<N+1; i++){
+            for(int j = i+1; j<N+1; j++){
+                if(pre[j] - pre[i] == sum){
+                    max_len = Math.max(max_len, j - i);
                 }
             }
         }

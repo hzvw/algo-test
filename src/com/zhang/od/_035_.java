@@ -16,21 +16,21 @@ public class _035_ {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int N = sc.nextInt();
-        PriorityQueue<TreeNode> queue = new PriorityQueue<>((x,y)->x.val != y.val ? x.val-y.val : x.h - y.h);
+        PriorityQueue<TreeNode> pq = new PriorityQueue<>((x,y)->x.val != y.val ? x.val-y.val : x.h - y.h);
         for(int i = 0; i<N; i++){
-            queue.add(new TreeNode(sc.nextInt(), 0, null, null));
+            pq.add(new TreeNode(sc.nextInt(), 0, null, null));
         }
 
-        while(queue.size() > 1){
-            TreeNode l = queue.poll();
-            TreeNode r = queue.poll();
+        while(pq.size() > 1){
+            TreeNode l = pq.poll();
+            TreeNode r = pq.poll();
 
             TreeNode t = new TreeNode(l.val + r.val, 1+Math.max(l.h, r.h), l, r);
 
-            queue.offer(t);
+            pq.offer(t);
         }
 
-        p(queue.poll());
+        p(pq.poll());
     }
 
     static void p(TreeNode root){

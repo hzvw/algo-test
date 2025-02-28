@@ -19,19 +19,19 @@ public class _033_ {
         String line = sc.nextLine();
         String[] words = line.split(" ");
 
-        List<Integer> i1 = new ArrayList<>();
+        List<Integer> nums = new ArrayList<>();
         for(int i = 0; i<words.length; i++){
-            i1.add(Integer.parseInt(words[i]));
+            nums.add(Integer.parseInt(words[i]));
         }
 
         int min = Integer.MAX_VALUE;
-        int len = i1.size();
+        int len = nums.size();
         for(int i = 1; i<len/2; i++){
-            int j = i + i1.get(i);
+            int j = i + nums.get(i);
             int st = 2;
 
             while(j<len - 1){
-                j += i1.get(j);
+                j += nums.get(j);
                 st++;
             }
 
