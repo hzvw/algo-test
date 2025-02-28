@@ -26,7 +26,7 @@ public class _063_ {
     static int p(int[] arr){
         LinkedList<Integer> stack = new LinkedList<>();
 
-        int i1 = 0;//负数逃生人数
+        int negative = 0;//负数逃生人数
         for(int num : arr){
             if(num == 0 ){
                 return -1;
@@ -37,7 +37,7 @@ public class _063_ {
             }else{
                 while(true){
                     if(stack.size() == 0){
-                        i1++;
+                        negative++;
                         break;
                     }else{
                         int pk = stack.removeLast() + num;
@@ -58,7 +58,7 @@ public class _063_ {
             }
         }
 
-        return i1 + stack.size();
+        return negative + stack.size();
     }
 
 }
