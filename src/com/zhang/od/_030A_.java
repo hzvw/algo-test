@@ -50,7 +50,6 @@ public class _030A_ {
         for(int j=0; j<=i;  j++){
             sum1 += arr[j];
         }
-        int tmp = sum1;
         sum1 = Math.min(100, sum1);
 
         int sum2 = 0;
