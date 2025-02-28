@@ -1,5 +1,6 @@
 package com.zhang.od;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -16,31 +17,25 @@ public class _013_ {
         Scanner sc = new Scanner(System.in);
         String str = sc.nextLine();
         char[] cs = str.toCharArray();
-        for(int i = 0; i<cs.length; i++){
-            int index = cs.length-1;
-            for(int j = cs.length-1;j>=i;j--){
-                if(cs[j] < cs[index]){
-                    index = j;
-                }
-            }
-            if(cs[index] < cs[i]){
-                swap(cs, index, i);
-                break;
-            }else{
-                continue;
-            }
-
+        Arrays.sort(cs);
+        String n_str = new String(cs);
+        if(n_str.equals(str)){
+            System.out.println(str);
+            return;
         }
 
-        System.out.println(String.valueOf(cs));
-
-
+        char[] cs2 = str.toCharArray();
+        for (int i = 0; i < cs2.length; i++) {
+            if(cs2[i] != cs[i]){
+                char tmp = cs2[i];
+                cs2[i] = cs[i];
+                int index = str.lastIndexOf(cs[i]);
+                cs2[index] = tmp;
+                break;
+            }
+        }
+        System.out.println(new String(cs2));
     }
 
-    static void swap(char[] cs, int i, int j){
-        char tmp = cs[i];
-        cs[i] = cs[j];
-        cs[j] = tmp;
-    }
 
 }
