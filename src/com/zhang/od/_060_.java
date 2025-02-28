@@ -1,6 +1,6 @@
 package com.zhang.od;
 
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * ClassName: _060_
@@ -8,35 +8,38 @@ import java.util.Scanner;
  * Description:
  *
  * @Author Harizon
- * @Create 2025/1/19 17:47
+ * @Create 2025/3/1 0:56
  * @Version 1.0
  */
 public class _060_ {
+    static int[] arr;
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        arr = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
 
-        int n = sc.nextInt();
-        long[] arr = new long[n];
-        for(int i = 0; i<n; i++){
-            arr[i] = sc.nextLong();
+        int sum = Arrays.stream(arr).sum();
+        dfs(0);
+        int minDiff = Integer.MAX_VALUE;
+        for (Integer ele : res) {
+            minDiff = Math.min(minDiff, Math.abs(sum-ele-ele));
+        }
+        System.out.println(minDiff);
+    }
+
+    static List<Integer> res = new ArrayList<>();
+    static LinkedList<Integer> buckets = new LinkedList<>();
+
+    static void dfs(int level){
+        if(buckets.size() == 5){
+            res.add(buckets.stream().reduce(0, Integer::sum));
+            return;
         }
 
-        long sum = 0;
-        for(int i = 0; i<n; i++){
-            sum += arr[i];
+        for (int i = level; i < 10; i++) {
+            buckets.addLast(arr[i]);
+            dfs(i+1);
+            buckets.removeLast();
         }
-
-        long sum1 = 0;
-        long sum2 = sum;
-        long max = Math.abs(arr[0] - (sum - arr[0]));
-
-        for(int i = 0; i<arr.length-1; i++){
-            sum1 += arr[i];
-            sum2 -= arr[i];
-
-            max = Math.max(max, Math.abs(sum1 - sum2));
-        }
-        System.out.println(max);
     }
 
 }

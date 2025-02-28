@@ -1,6 +1,8 @@
 package com.zhang.od;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -13,43 +15,53 @@ import java.util.Scanner;
  * @Version 1.0
  */
 public class _055_ {
+    static int n;
+
+    static char[] cs;
+
+    static boolean[] visited;
+
+    static LinkedList<Character> buckets = new LinkedList<>();
+
+    static List<String> res = new ArrayList<>();
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
+        n = sc.nextInt();
         int k = sc.nextInt();
 
-        char[] cs = new char[n];
+        cs = new char[n];
         for(int i = 0; i<n; i++){
             cs[i] = (char)('0' + (i+1));
         }
-
-        res = new ArrayList<>();
-        p(cs, 0);
-        res.sort((x,y)->x.compareTo(y));
+        visited = new boolean[n];
+        dfs(0);
+        res.sort((a,b) -> a.compareTo(b));
         System.out.println(res.get(k-1));
-
-        //res.forEach(System.out::println);
-
     }
 
-    static ArrayList<String> res;
-
-    static void p(char[] cs, int i){
-        if(i == cs.length){
-            res.add(String.valueOf(cs));
+    static void dfs(int level){
+        if(level == n){
+            StringBuilder sb = new StringBuilder();
+            buckets.forEach(x->sb.append(x));
+            res.add(sb.toString());
+            return;
         }
 
-        for(int j = i; j<cs.length; j++){
-            swap(cs, i, j);
-            p(cs, i+1);
-            swap(cs, i, j);
+        for (int i = 0; i < n; i++) {
+            if(visited[i]){
+                continue;
+            }
+
+            buckets.addLast(cs[i]);
+            visited[i] = true;
+            dfs(level+1);
+            buckets.removeLast();
+            visited[i] = false;
         }
+
+
     }
 
-    static void swap(char[] cs, int i, int j){
-        char t = cs[i];
-        cs[i] = cs[j];
-        cs[j] = t;
-    }
 
 }
