@@ -15,7 +15,7 @@ import java.util.Scanner;
  * @Version 1.0
  */
 public class _030_ {
-    public static void main(String[] args) {
+    public static void main01(String[] args) {
         Scanner sc = new Scanner(System.in);
         String s = sc.nextLine();
 
@@ -73,6 +73,40 @@ public class _030_ {
         System.out.println(max);
 
     }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+        int count = 0;
+        char[] cs = s.toCharArray();
+        while (find(cs)){
+            count++;
+        }
+        System.out.println(count == 0 ? -1 : count);
+    }
+
+    static boolean find(char[] cs){
+        boolean res = false;
+        int index = 0;
+        int[] ids = new int[5];
+        for (int i = 0; i < cs.length; i++) {
+            if(cs[i] == "quack".charAt(index)){
+                ids[index] = i;
+                index++;
+            }
+
+            if(index == 5){
+                res = true;
+
+                for (int j = 0; j < 5; j++) {
+                    cs[ids[j]] = ' ';
+                }
+                index = 0;
+            }
+        }
+        return res;
+    }
+
 
 
 
