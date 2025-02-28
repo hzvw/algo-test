@@ -29,16 +29,16 @@ public class _064_ {
 
     static void p(int minA, int[] arr){
         int n = arr.length;
-        int[] t = new int[n+1];
+        int[] pre = new int[n+1];
         for(int i = 1; i<n+1; i++){
-            t[i] = t[i-1] + arr[i-1];
+            pre[i] = pre[i-1] + arr[i-1];
         }
 
         List<int[]> buffer = new ArrayList<>();
         int min_length = 0;
         for(int i = 0; i<n; i++){
             for(int j = i; j<n; j++){
-                int sum = t[j+1] - t[i];
+                int sum = pre[j+1] - pre[i];
                 int i1 = minA * (j-i+1);
 
                 int len = j-i+1;
