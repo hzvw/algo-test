@@ -28,13 +28,13 @@ public class _069_ {
                     public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
                         if(o1.getValue() == o2.getValue()){
                             return o1.getKey().compareTo(o2.getKey());
-                        }else if(o1.getValue() >= o2.getValue()){
+                        }else if(o1.getValue() > o2.getValue()){
                             return -1;
                         }else{
                             return 1;
                         }
                     }
-                }).limit(n).map(Map.Entry::getKey).collect(Collectors.toList());
+                }).limit(n).map(x -> x.getKey()).collect(Collectors.toList());
                 System.out.println(String.join(",", buffer));
             }catch(Exception e){
                 map.put(line, map.getOrDefault(line , 0) + 1);
