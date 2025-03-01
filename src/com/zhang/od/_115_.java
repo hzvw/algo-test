@@ -66,7 +66,8 @@ public class _115_ {
             int fa_x = find(x);
             int fa_y = find(y);
             if(fa_x != fa_y){
-                fa[y] = fa_x;
+                //fa[y] = fa_x;
+                fa[fa_y] = fa_x;
             }
         }
 
