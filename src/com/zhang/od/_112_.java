@@ -19,16 +19,16 @@ public class _112_ {
         Arrays.sort(words, (a,b) -> b.length() - a.length());
         String res = "";
         for(String str : words){
-            boolean ret = true;
+            boolean flag = true;
             int j = str.length();
             while(j > 1){
                 String sub = str.substring(0, j-1);
                 if(!set.contains(sub)){
-                    ret = false;
+                    flag = false;
                 }
                 j--;
             }
-            if(ret && str.length() >= res.length() && str.compareTo(res) > 0){
+            if(flag && str.length() >= res.length() && str.compareTo(res) > 0){
                 res = str;
             }
         }
