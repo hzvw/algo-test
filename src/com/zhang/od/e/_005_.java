@@ -17,9 +17,9 @@ public class _005_ {
         Scanner sc = new Scanner(System.in);
 
         int n = sc.nextInt();
-        int[] arr = new int[n];
+        int[] nums = new int[n];
         for(int i = 0; i<n; i++){
-            arr[i] = sc.nextInt();
+            nums[i] = sc.nextInt();
         }
 
         int k = sc.nextInt();
@@ -28,12 +28,11 @@ public class _005_ {
         int len = k+1;
 
         int[] dp = new int[n];
-        dp[0] = arr[0];
-
+        dp[0] = nums[0];
         myQueue.add(dp[0]);
 
-        for(int i = 1; i< Math.min(n, len); i++){
-            dp[i] = myQueue.getFirst() + arr[i];
+        for(int i = 1; i < len && i< n; i++){
+            dp[i] = myQueue.getFirst() + nums[i];
             myQueue.add(dp[i]);
         }
 
@@ -42,7 +41,7 @@ public class _005_ {
                 myQueue.removeFirst();
             }
 
-            dp[i] = myQueue.getFirst() + arr[i];
+            dp[i] = myQueue.getFirst() + nums[i];
             myQueue.add(dp[i]);
         }
 
@@ -53,7 +52,7 @@ public class _005_ {
         LinkedList<Integer> buffer = new LinkedList<>();
 
         public void add(int x){
-            while(!buffer.isEmpty() && buffer.getLast() < x){
+            while(!buffer.isEmpty() && x > buffer.getLast()){
                 buffer.removeLast();
             }
             buffer.addLast(x);

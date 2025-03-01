@@ -78,6 +78,7 @@ public class _003_ {
             }else{
                 isLeftVaild = check(i1, index-1, i2+1, i2+left_len);
             }
+
             boolean isRightVaild = false;
             if(right_len == 0){
                 isRightVaild = true;
@@ -93,8 +94,6 @@ public class _003_ {
         }
 
         TreeNode root = new TreeNode(root_index,rootNum);
-//        root.i = root_index;
-
         TreeNode left = build(i1,root_index-1, i2+1, i2+left_len);
         TreeNode right = build(root_index+1,j1, j2-right_len+1,j2);
 

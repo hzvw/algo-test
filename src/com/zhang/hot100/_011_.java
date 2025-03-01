@@ -42,11 +42,14 @@ public class _011_ {
         return res.stream().mapToInt(Integer::intValue).toArray();
     }
 
+    /**
+     * 单调减队列，从头到尾是减的，所以头放的是最大值
+     */
     static class MyQueue{
         LinkedList<Integer> buffer = new LinkedList<>();
 
         public void add(int ele){
-            while(!buffer.isEmpty() && buffer.getLast() < ele){
+            while(!buffer.isEmpty() && ele > buffer.getLast()){
                 buffer.removeLast();
             }
             buffer.add(ele);
