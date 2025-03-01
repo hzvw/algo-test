@@ -12,26 +12,26 @@ import java.util.*;
  * @Version 1.0
  */
 public class _003_ {
-    static int[] arr1 = null;//中序
-    static int[] arr2 = null;//先序
+    static int[] inOrder = null;//中序
+    static int[] preOrder = null;//先序
 
     static HashMap<Integer, ArrayList<Integer>> map = new HashMap<>();//存放中序遍历中，元素与位置的关系
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        arr1 = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-        arr2 = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        inOrder = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        preOrder = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
 
-        for(int i = 0; i<arr1.length; i++){
-            map.putIfAbsent(arr1[i], new ArrayList<Integer>());
-            map.get(arr1[i]).add(i);
+        for(int i = 0; i< inOrder.length; i++){
+            map.putIfAbsent(inOrder[i], new ArrayList<Integer>());
+            map.get(inOrder[i]).add(i);
         }
-        TreeNode root = build(0, arr1.length-1, 0, arr2.length-1);
+        TreeNode root = build(0, inOrder.length-1, 0, preOrder.length-1);
 
         p(root);
         res.sort((a,b) ->a.i - b.i);
         for(int i = 0; i<res.size(); i++){
-            System.out.print((res.get(i).sum - arr1[i]) + " ");
+            System.out.print((res.get(i).sum - inOrder[i]) + " ");
         }
     }
 
@@ -54,19 +54,6 @@ public class _003_ {
         return root.sum;
     };
 
-
-    static int convertToSumTree(TreeNode root) {
-        if (root == null) {
-            return 0;
-        }
-
-        int leftSum = convertToSumTree(root.left);
-        int rightSum = convertToSumTree(root.right);
-
-        root.val = leftSum + rightSum;
-        return root.val + (root.left == null && root.right == null ? root.val : 0);
-    }
-
     /*
      */
     static TreeNode build(int i1, int j1, int i2, int j2){
@@ -74,7 +61,7 @@ public class _003_ {
             return null;
         }
 
-        int rootNum = arr2[i2];
+        int rootNum = preOrder[i2];
         ArrayList<Integer> list = map.get(rootNum);
 
         int root_index = -1;
@@ -121,8 +108,8 @@ public class _003_ {
         int[] t2 = new int[j2-i2+1];
 
         for(int k = 0; k<j1-i1+1; k++){
-            t1[k] = arr1[k+i1];
-            t2[k] = arr2[k+i2];
+            t1[k] = inOrder[k+i1];
+            t2[k] = preOrder[k+i2];
         }
 
         int[] t11 = Arrays.stream(t1).sorted().toArray();

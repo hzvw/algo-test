@@ -35,10 +35,9 @@ public class _001_ {
         int max = Arrays.stream(arr).max().getAsInt();
         int left = 1;
         int right = max;
-        int mid = 0;
         int res = 0;
         while(left <= right){
-            mid = (left + right)/2;
+            int mid = (left + right)/2;
             if(check(arr, mid, H)){
                 res = mid;
                 right = mid-1;
