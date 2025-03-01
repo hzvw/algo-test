@@ -33,28 +33,28 @@ public class _116_ {
         while(buffer.getFirst().size() > 1){
             ArrayList<Integer> firstList = buffer.removeFirst();
 
-            ArrayList<Integer> i1 = new ArrayList<>();//获胜者分到这个组
-            ArrayList<Integer> i2 = new ArrayList<>();//失败者到这个组
+            ArrayList<Integer> win = new ArrayList<>();//获胜者分到这个组
+            ArrayList<Integer> lose = new ArrayList<>();//失败者到这个组
 
             for(int i = 1;  i< firstList.size(); i += 2){
                 int j1 = firstList.get(i-1);
                 int j2 = firstList.get(i);
 
                 if(arr[j1] >= arr[j2]){
-                    i1.add(j1);
-                    i2.add(j2);
+                    win.add(j1);
+                    lose.add(j2);
                 }else{
-                    i1.add(j2);
-                    i2.add(j1);
+                    win.add(j2);
+                    lose.add(j1);
                 }
             }
             if(firstList.size() % 2 == 1){
-                i1.add(firstList.get(firstList.size()-1));
+                win.add(firstList.get(firstList.size()-1));
             }
 
 
-            buffer.addFirst(i2);
-            buffer.addFirst(i1);
+            buffer.addFirst(lose);
+            buffer.addFirst(win);
         }
         int first = buffer.get(0).get(0);
         int second = buffer.get(1).get(0);
