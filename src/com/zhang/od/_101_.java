@@ -42,29 +42,14 @@ public class _101_ {
 
     }
 
-    public static int max_sub(int[] arr) {
-        int N = arr.length;
+    public static int max_sub(int[] nums) {
+        int[] dp = new int[nums.length];
+        dp[0] = nums[0];
 
-        if(Arrays.stream(arr).allMatch(x -> x<0)){
-            return Arrays.stream(arr).max().getAsInt();
+        for (int i = 1; i < nums.length; i++) {
+            dp[i] = Math.max(dp[i-1], 0) + nums[i];
         }
-
-        int current_cache = 0;
-        int max_cache = Integer.MIN_VALUE;
-        for(int i = 0; i<N; i++){
-            if(arr[i] >= 0){
-                current_cache += arr[i];
-            }else{
-                if(current_cache + arr[i] >= 0){
-                    current_cache += arr[i];
-                }else{
-                    current_cache = 0;
-                }
-            }
-            max_cache = Math.max(max_cache, current_cache);
-        }
-
-        return max_cache;
+        return Arrays.stream(dp).max().getAsInt();
     }
 
 }

@@ -20,69 +20,59 @@ public class _110_ {
         int N = s.length();
         int avg = N / 4;
 
-        HashMap<Character, Integer> s_map = new HashMap<>();
+        HashMap<Character, Integer> count = new HashMap<>();
         for(char c : s.toCharArray()){
-            s_map.put(c, s_map.getOrDefault(c,0) +1);
+            count.put(c, count.getOrDefault(c,0) +1);
         }
 
         StringBuilder sb = new StringBuilder();
-        for(char c: s_map.keySet()){
-            if(s_map.get(c) > avg){
-                int diff = s_map.get(c) - avg;
+        for(char c: count.keySet()){
+            if(count.get(c) > avg){
+                int diff = count.get(c) - avg;
                 for(int i =0; i<diff; i++){
                     sb.append(c);
                 }
             }
         }
 
-        System.out.println(minWindow(s, sb.toString()).length());
+        System.out.println(minWindow(s, sb.toString()));
     }
 
-    public static String minWindow(String s, String t) {
+    public static int minWindow(String s, String t) {
         if(s == null || s.length() == 0 || t == null || t.length() == 0){
-            return "";
+            return 0;
         }
 
-        HashMap<Character, Integer> t_map = new HashMap<>();
-        for(char c : t.toCharArray()){
-            t_map.put(c, t_map.getOrDefault(c, 0) + 1);
+        int[] count = new int[26];
+        for (int i = 0; i < t.length(); i++) {
+            count[t.charAt(i)-'A']++;
         }
-        //窗口内满足条件的字符
-        HashMap<Character, Integer> windowMap = new HashMap<>();
-        //满足条件的数量
-        int cnt = 0;
-
-        char[] cs = s.toCharArray();
-        int N = cs.length;
+        int min_len = s.length();
         int i = 0;
         int j = 0;
-        int min_len = Integer.MAX_VALUE;
-        String res = "";
-        while(j < N){
-            char c = cs[j];
-            if(t_map.containsKey(c) && windowMap.getOrDefault(c,0) < t_map.get(c)){
-                windowMap.put(c, windowMap.getOrDefault(c, 0) + 1);
-                cnt++;
-            }else if(t_map.containsKey(c)){
-                windowMap.put(c, windowMap.getOrDefault(c, 0) + 1);
+        //一共欠账
+        int n = t.length();
+        while (j < s.length()){
+            char c = s.charAt(j);
+            if(count[c-'A'] > 0){
+                n--;
             }
-            while(cnt == t.length()){
-                if(t_map.containsKey(cs[i]) && windowMap.get(cs[i]) <= t_map.get(cs[i])){
-                    windowMap.put(cs[i], windowMap.get(cs[i]) -1);
-                    cnt--;
-                }else if(t_map.containsKey(cs[i])){
-                    windowMap.put(cs[i], windowMap.get(cs[i]) -1);
-                }
+            count[c-'A']--;
 
-                int len = j-i+1;
-                if(len < min_len){
-                    min_len = len;
-                    res = s.substring(i, j+1);;
+            while (n == 0){
+                if(j-i+1 < min_len){
+                    min_len = j-i+1;
                 }
+                char c2 = s.charAt(i);
+                if(count[c2-'A'] == 0){
+                    n++;
+                }
+                count[c2-'A']++;
                 i++;
             }
+
             j++;
         }
-        return res;
+        return min_len;
     }
 }

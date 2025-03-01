@@ -18,12 +18,7 @@ public class _111_ {
         String s1 = sc.nextLine();
         String s2 = sc.nextLine();
 
-//        Pattern pattern = Pattern.compile("[0-9a-f]+");
-//        Matcher matcher = pattern.matcher(s1);
         List<String> buffer = new ArrayList<>();
-//        while(matcher.find()){
-//            buffer.add(matcher.group(1));
-//        }
         String[] words = s1.split("[0-9a-f]+");
         for (int i = 0; i < words.length; i++) {
             buffer.add(words[i]);
@@ -54,12 +49,7 @@ public class _111_ {
             }
 
         }
-        res.sort(new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                return o2.compareTo(o1);
-            }
-        });
+        res.sort((a,b)-> a.compareTo(b));
 
         if(res.size() == 0 || res.get(0) == null || "".equals(res.get(0)) ){
             System.out.println("Not Found");
