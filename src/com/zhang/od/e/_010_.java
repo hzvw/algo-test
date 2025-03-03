@@ -37,50 +37,6 @@ public class _010_ {
 
     }
 
-/*
-    static int[] dj(int[][] arr, int source){
-        int N = arr.length;
-        int[] dist = new int[N];
-        Arrays.fill(dist, Integer.MAX_VALUE);
-        dist[source] = 0;
-
-        boolean[] visited = new boolean[N];
-
-        for(int i = 0; i<N; i++){
-            int index = findShortestDisIndex(dist, visited);
-            if(index == -1){
-                //节点不可到达
-                continue;
-            }
-            visited[index] = true;
-            for(int j = 0; j<N; j++){
-                if(visited[j]){
-                    continue;
-                }
-
-                if(arr[index][j] != 0){
-                    int n_dist = arr[index][j] + dist[index];
-                    if(n_dist < dist[j]){
-                        dist[j] = n_dist;
-                    }
-                }
-            }
-        }
-        return dist;
-    }
-
-    static int findShortestDisIndex(int[] dist, boolean[] visited){
-        int index = -1;
-        int min_dist = Integer.MAX_VALUE;
-        for(int i = 0; i<dist.length; i++){
-            if(!visited[i] && dist[i] < min_dist){
-                min_dist = dist[i];
-                index = i;
-            }
-        }
-        return index;
-    }*/
-
     static void bfs(){
         int i = M-1;
         int j = N-1;
@@ -122,6 +78,13 @@ public class _010_ {
         System.out.println(min != Integer.MAX_VALUE ? min : -1);
     }
 
+    /**
+     * (x,y),val -> (n_x,n_y),n_val
+     * @param n_x
+     * @param n_y
+     * @param val
+     * @return
+     */
     static int computeVal(int n_x, int n_y, int val){
         // 从加油站出发，需要的油为0，因为加油站会加油100
         if(map[n_x][n_y] == -1) {
