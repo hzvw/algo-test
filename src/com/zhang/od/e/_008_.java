@@ -13,53 +13,60 @@ import java.util.stream.Stream;
  * @Version 1.0
  */
 public class _008_ {
+    static List<String> res = new ArrayList<>();
+    static boolean[] visited;
+    static LinkedList<Character> buckets = new LinkedList<>();
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String[] words = sc.nextLine().split(" ");
-        String str = words[0];
-        int N = Integer.parseInt(words[1]);
-
-        char[] arr = str.toCharArray();
-        Stream<Character> characterStream = new String(arr).chars().mapToObj(x -> (char) x);
-        if(characterStream.anyMatch(x -> !Character.isLowerCase(x))){
-            System.out.println(0);
-            return;
+        String s = words[0];
+        int n = Integer.parseInt(words[1]);
+        visited = new boolean[s.length()];
+        char[] cs = s.toCharArray();
+        for (int i = 0; i < cs.length; i++) {
+            if(!Character.isLowerCase(cs[i])){
+                System.out.println(0);
+                return;
+            }
         }
-        Arrays.sort(arr);
-        List<String> res = new ArrayList<>();
-        boolean[] visited = new boolean[arr.length];
-        p(arr, 0, -1, N, new LinkedList<Character>(), visited, res);
+
+        Arrays.sort(cs);
+        dfs(0, n, cs, -1);
+
         System.out.println(res.size());
     }
 
-    static void p(char[] arr, int level, int pre, int n, LinkedList<Character> buckets, boolean[] visited, List<String> res){
+    static void dfs(int level, int n, char[] cs, int pre){
         if(level == n){
-            res.add(buckets.stream().map(x -> x + "").reduce("", String::concat));
+            res.add((buckets.stream().map(x-> x+"").reduce("", String::concat)));
             return;
         }
 
-        for(int i = 0; i<arr.length; i++){
+        for (int i = 0; i < cs.length; i++) {
             if(visited[i]){
                 continue;
             }
-
-            if(pre >= 0 && arr[pre] == arr[i]){
+            if(pre >= 0 && cs[i] == cs[pre]){
                 continue;
             }
 
-            if(i > 0  && arr[i-1] == arr[i] && !visited[i-1]){
+            if(i-1>= 0 && cs[i-1] == cs[i] && !visited[i-1]){
                 continue;
             }
-            buckets.addLast(arr[i]);
+
+            buckets.addLast(cs[i]);
             visited[i] = true;
 
-            p(arr, level +1, i, n, buckets, visited, res);
+            dfs(level+1, n, cs, i);
 
             buckets.removeLast();
             visited[i] = false;
-        }
-    }
 
+        }
+
+
+    }
 
 
 
