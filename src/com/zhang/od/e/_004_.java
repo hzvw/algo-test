@@ -1,5 +1,6 @@
 package com.zhang.od.e;
 
+import java.sql.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -15,23 +16,23 @@ import java.util.stream.Collectors;
 public class _004_ {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        // 输入的句子，每个元素是一个待分词的句子
-        LinkedList<String> queue = Arrays.stream(sc.nextLine().split("[,.;]")).collect(Collectors.toCollection(LinkedList::new));
-        //词库
-        Set<String> set = Arrays.stream(sc.nextLine().split("[,]")).collect(Collectors.toSet());
+        // 句子集合
+        LinkedList<String> linkedList = Arrays.stream(sc.nextLine().split("[.;,]")).collect(Collectors.toCollection(LinkedList::new));
+        // 单词集合
+        Set<String> set = Arrays.stream(sc.nextLine().split(",")).collect(Collectors.toSet());
 
         ArrayList<String> res = new ArrayList<>();
-        while(queue.size() > 0){
-            String sen = queue.removeFirst();
+        while (!linkedList.isEmpty()){
+            String s = linkedList.pollFirst();
 
-            int j = sen.length();
-            while(j > 0){
-                String tmp = sen.substring(0, j);
+            int j = s.length();
+            while (j > 0){
+                String tmp = s.substring(0, j);
                 if(set.contains(tmp)){
                     res.add(tmp);
                     set.remove(tmp);
-                    if(j != sen.length()){
-                        queue.addFirst(sen.substring(j));
+                    if(j != s.length()){
+                        linkedList.addFirst(s.substring(j));
                     }
                     break;
                 }
@@ -39,15 +40,14 @@ public class _004_ {
             }
 
             if(j == 0){
-                res.add(sen.charAt(0) + "");
-                if(sen.length() > 1){
-                    queue.addFirst(sen.substring(1));
+                res.add(s.charAt(0) + "");
+                if(s.length() > 1){
+                    linkedList.addFirst(s.substring(1));
                 }
             }
+
         }
-
-        System.out.print(String.join(",", res));
-
+        System.out.println(String.join(",", res));
 
     }
 

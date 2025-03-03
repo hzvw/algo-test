@@ -12,88 +12,72 @@ import java.util.*;
  * @Version 1.0
  */
 public class _006_ {
+    static int n;
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        // nums.length个球，球的大小是nus[i]
+        int[] nums = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        Arrays.sort(nums);
+        reverse(nums);
+        // n个桶
+        n = Integer.parseInt(sc.nextLine());
 
-        int[] arr = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-        Arrays.sort(arr);
+        int left = Arrays.stream(nums).max().getAsInt();
+        int right = Arrays.stream(nums).sum();
 
-        int N = Integer.parseInt(sc.nextLine());
+        int res = right;
+        while (left <= right){
+            int mid = (left+right)/2;
 
-        int[] buckets = new int[N];
-        List<Integer> arrayList = new ArrayList<>();
-        for(int element : arr){
-            arrayList.add(element);
-        }
-        arrayList.sort((a,b) -> b-a);
-
-        List<Integer> res = new ArrayList<>();
-        int attack = greedy(arr, N);
-        res.add(attack);
-        backtrack2(arrayList, 0, buckets, res, attack);
-        int min = res.stream().min((a,b) -> a-b).get();
-        System.out.println(min);
-    }
-
-    static void backtrack2(List<Integer> taskList, int i, int[] buckets, List<Integer> res, int attack){
-        for(int j = 0; j<buckets.length; j++){
-            if(buckets[j] >= attack){
-                return;
+            if(check(0, mid, nums, new int[n])){
+                res = mid;
+                right = mid-1;
+            }else{
+                left = mid+1;
             }
-        }
-        if(i == taskList.size()){
-            res.add(Arrays.stream(buckets).max().getAsInt());
-            return;
-        }
-        for(int id = 0; id<buckets.length; id++){
-            if(id >0 && buckets[id-1] == buckets[id]){
-                continue;
-            }
-            buckets[id] += taskList.get(i);
 
-            backtrack2(taskList, i+1, buckets, res, attack);
-            buckets[id] -= taskList.get(i);
+        }
+        System.out.println(res);
+
+    }
+
+    static void reverse(int[] nums){
+        int i = 0;
+        int j = nums.length-1;
+        while (i < j){
+            swap(nums, i, j);
+            i++;
+            j--;
         }
     }
 
-    static int greedy(int[] arr, int N){
-        PriorityQueue<Integer> queue = new PriorityQueue<>();
-        for(int i = 0; i<N; i++){
-            queue.offer(0);
-        }
-
-        for(int i = arr.length-1; i>=0; i--){
-            int cur = arr[i];
-            int nm = queue.poll();
-            queue.offer(nm + cur);
-        }
-
-        int max = 0;
-        while(!queue.isEmpty()){
-            max = Math.max(max, queue.poll());
-        }
-        return max;
+    static void swap(int[] nums, int i, int j){
+        int t = nums[i];
+        nums[i] = nums[j];
+        nums[j] = t;
     }
 
-    static int backtrack(List<Integer> taskList, int buckets[], int i, List<Integer> res, int best_time){
-        if(i == taskList.size()){
-            return Arrays.stream(buckets).max().getAsInt();
+    static boolean check(int level, int mid, int[] nums, int[] buckets){
+        if(level == nums.length){
+            return true;
         }
-
-        int min_time = best_time;
-        for(int j = 0; j<buckets.length; j++){
-            if(j>1 && buckets[j] == buckets[j-1]){
+        for (int i = 0; i < n; i++) {
+            if(i > 0 && buckets[i] == buckets[i-1]){
                 continue;
             }
 
-            buckets[j] += taskList.get(i);
-            int cur_time = Arrays.stream(buckets).max().getAsInt();
-            if(cur_time < min_time){
-                min_time = backtrack(taskList, buckets, i+1, res, min_time);
+            if(buckets[i] + nums[level] <= mid){
+                buckets[i] += nums[level];
+
+                if(check(level+1, mid, nums, buckets)){
+                    return true;
+                }
+
+                buckets[i] -= nums[level];
             }
-            buckets[j] -= taskList.get(i);
+
         }
-        return min_time;
+        return false;
     }
 
 
