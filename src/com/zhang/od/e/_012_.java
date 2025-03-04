@@ -15,54 +15,57 @@ public class _012_ {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
+        boolean flag1 = false;
+        boolean flag2 = false;
         StringBuilder sb = new StringBuilder();
-
-        boolean flag1 = false;//单引号
-        boolean flag2 = false;//双引号
-        while(sc.hasNextLine()){
+        while (sc.hasNextLine()){
             String str = sc.nextLine();
             char[] cs = str.toCharArray();
+            for (int i = 0; i < cs.length; i++) {
+                char c = cs[i];
 
-            for(int i = 0; i<cs.length; i++){
-                if(cs[i] == '\''){
-                    if(i == 0 || (i-1>=0 && cs[i-1] != '\\')){
-                        flag1 = !flag1;
+
+                if(c == '\''){
+                    if(i == 0 || (i> 0 && cs[i-1] != '\\')){
+                        flag2 = !flag2;
+                        continue;
                     }
                 }
 
-                if(cs[i] == '\"'){
-                    if(i == 0 || i-1>=0 && cs[i-1] != '\\'){
-                        flag2 = !flag2;
+                if(c == '"'){
+                    if(i == 0 || (i> 0 && cs[i-1] != '\\')){
+                        flag1 = !flag1;
+                        continue;
                     }
                 }
 
                 if(flag1 || flag2){
+                    sb.append(" ");
                     continue;
                 }
 
-                if(cs[i] == '-' && i+1 <cs.length && cs[i+1] == '-'){
+                if(cs[i] == '-' && (i+1 < str.length() && cs[i+1]  == '-')){
                     break;
                 }
+
                 if(cs[i] == ' ' || cs[i] == '\t'){
                     continue;
                 }
-                sb.append(cs[i]);
+                sb.append(c);
             }
         }
         sb.append(";");
-        int last = -1;
         int ans = 0;
-        for(int i = 0; i<sb.length(); i++){
+        int last = -1;
+        for (int i = 0; i < sb.length(); i++) {
             if(sb.charAt(i) == ';'){
-                if(i-last > 1){
+                if(i - last > 1){
                     ans++;
                 }
                 last = i;
             }
         }
-        System.out.print(ans);
-
-
+        System.out.println(ans);
     }
 
 }
