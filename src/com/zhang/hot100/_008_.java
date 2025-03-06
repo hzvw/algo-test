@@ -19,24 +19,22 @@ public class _008_ {
     }
 
     public int lengthOfLongestSubstring(String s) {
-        int[] count = new int[128];
-        int n = s.length();
-
-        int max_len = 0;
+        int res = 0;
         int i = 0;
         int j = 0;
-        while (j < n){
+        int[] count = new int[128];
+
+        while (j< s.length()){
             char c = s.charAt(j);
             if(count[c] == 0){
-                max_len = Math.max(max_len, j-i+1);
-                count[c]++;
+                res = Math.max(res, j-i+1);
+                count[c] ++;
                 j++;
             }else{
                 count[s.charAt(i)]--;
                 i++;
             }
-            //max_len = Math.max(max_len, j-i+1);
         }
-        return max_len;
+        return res;
     }
 }
