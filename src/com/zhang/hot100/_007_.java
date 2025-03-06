@@ -14,29 +14,27 @@ import java.util.LinkedList;
  */
 public class _007_ {
     public static void main(String[] args) {
-        int[] nums = {6,5,3,7,10,1};
+        int[] nums = {60,30,30,10,70};
         System.out.println(new _007_().trap(nums));
     }
 
 
     public int trap(int[] height) {
         int res = 0;
-        if(height.length < 2){
-            return 0;
-        }
-
-        Deque<Integer> stack = new LinkedList<>();
-        for (int i = 0; i < height.length; i++) {
-            while (!stack.isEmpty() && height[i] > height[stack.peek()]){
-                int mid = stack.pop();
-                if(!stack.isEmpty()){
-                    int left = stack.peek();
-                    int right = i;
-                    res += (right - left - 1) * (Math.min(height[left], height[right]) - height[mid]);
+        Deque<Integer> st = new LinkedList<>();
+        st.push(0);
+        for (int i = 1; i < height.length; i++) {
+            while (!st.isEmpty() && height[i] > height[st.peek()]){
+                int right = i;
+                int mid = st.pop();
+                if(!st.isEmpty()){
+                    int left = st.peek();
+                    res += (right-left-1) * (Math.min(height[left], height[right]) - height[mid]);
                 }
             }
-            stack.push(i);
+            st.push(i);
         }
+
         return res;
     }
 
