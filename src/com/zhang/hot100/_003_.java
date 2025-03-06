@@ -18,22 +18,15 @@ public class _003_ {
     }
 
     public int longestConsecutive(int[] nums) {
-        TreeSet<Integer> set = new TreeSet<>();
-        for (int i = 0; i < nums.length; i++) {
-            set.add(nums[i]);
-        }
-
-        HashMap<Integer, Integer> count = new HashMap<>();
+        Set<Integer> set = new TreeSet<>();
+        Arrays.stream(nums).forEach(x->set.add(x));
+        HashMap<Integer, Integer> map = new HashMap<>();
         int i = 0;
-        for (Integer ele : set) {
-            count.put(ele-i, count.getOrDefault(ele-i, 0) + 1);
+        for(int num : set){
+            map.put(num - i, map.getOrDefault(num - i,  0) + 1);
             i++;
         }
-        if(count.size() > 0){
-            return count.values().stream().max((a,b) -> a-b).get();
-        }else{
-            return 0;
-        }
+        return map.size() > 0 ?  map.values().stream().max((a,b)-> a-b).get() : 0;
     }
 
 }

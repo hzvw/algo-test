@@ -16,40 +16,44 @@ import java.util.List;
  */
 public class _006_ {
     public List<List<Integer>> threeSum(int[] nums) {
-        Arrays.sort(nums);
-        int n = nums.length;
         List<List<Integer>> res = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length-2; i++) {
             if(nums[i] > 0){
-                return res;
+                continue;
             }
-
-            if(i > 0 && nums[i] == nums[i-1]){
+            if(i-1>=0 && nums[i] == nums[i-1]){
                 continue;
             }
 
-            int left = i+1;
-            int right = n-1;
-
-            while(left < right){
-                if(nums[i] + nums[left] + nums[right] > 0){
-                    right --;
-                }else if(nums[i] + nums[left] + nums[right] < 0){
-                    left ++;
+            int j = i+1;
+            int k = nums.length-1;
+            while (j < k){
+                int sum = nums[i] + nums[j] + nums[k];
+                if(sum > 0){
+                    k--;
+                }else if(sum < 0){
+                    j++;
                 }else{
-                    res.add(Arrays.asList(nums[i], nums[left], nums[right]));
+                    res.add(Arrays.asList(nums[i], nums[j], nums[k]));
 
-                    while(left < right && nums[right] == nums[right-1]){
-                        right--;
+                    while (j < k && nums[j] == nums[j+1]){
+                        j++;
                     }
-                    while(left < right && nums[left] == nums[left + 1]){
-                        left++;
+                    while (j<k && nums[k] == nums[k-1]){
+                        k--;
                     }
-                    left++;
-                    right--;
+
+                    j++;
+                    k--;
                 }
+
+
             }
+
         }
+
+
         return res;
     }
 }
