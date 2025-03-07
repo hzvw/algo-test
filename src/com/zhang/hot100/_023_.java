@@ -39,13 +39,13 @@ public class _023_ {
             return null;
         }
 
+        ListNode p = head;
         ListNode pre = null;
-        ListNode cur = head;
-        while (cur != null){
-            ListNode next = cur.next;
-            cur.next = pre;
-            pre = cur;
-            cur = next;
+        while (p != null){
+            ListNode next = p.next;
+            p.next = pre;
+            pre = p;
+            p = next;
         }
         return pre;
     }

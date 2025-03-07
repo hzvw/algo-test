@@ -1,5 +1,7 @@
 package com.zhang.hot100;
 
+import java.util.Arrays;
+
 /**
  * ClassName: _013_
  * Package: com.zhang.hot100
@@ -17,15 +19,14 @@ public class _013_ {
     }
 
     public int maxSubArray(int[] nums) {
-        int n = nums.length;
-        int[] dp = new int[n];
+        int res  = 0;
+        int[] dp = new int[nums.length];
         dp[0] = nums[0];
-        int result = nums[0];
-        for (int i = 1; i < n; i++) {
+        for (int i = 1; i < dp.length; i++) {
             dp[i] = Math.max(dp[i-1] + nums[i], nums[i]);
-            result = Math.max(result, dp[i]);
         }
-        return result;
+        res = Arrays.stream(dp).max().getAsInt();
+        return res;
     }
 
 }

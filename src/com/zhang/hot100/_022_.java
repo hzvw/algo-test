@@ -14,22 +14,22 @@ public class _022_ {
         if(headA == null || headB == null){
             return null;
         }
-        ListNode pA = headA;
-        ListNode pB = headB;
-        while(pA != pB){
-            if(pA == null){
-                pA = headB;
-            }else{
-                pA = pA.next;
-            }
 
-            if(pB == null){
-                pB = headA;
+        ListNode p1 = headA;
+        ListNode p2 = headB;
+        while (p1 != p2){
+            if(p1 != null){
+                p1 = p1.next;
             }else{
-                pB = pB.next;
+                p1 = headB;
+            }
+            if(p2 != null){
+                p2 = p2.next;
+            }else{
+                p2 = headA;
             }
         }
-        return pA;
+        return p1;
     }
 
     ListNode generateListNode(int[] A){

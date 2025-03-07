@@ -1,37 +1,46 @@
 package com.zhang.leetcode.bak.sort;
 
 public class _01_quick_sort {
-    void swap(int[] A, int i, int j){
-        int tmp = A[i];
-        A[i] = A[j];
-        A[j] = tmp;
+    void swap(int[] nums, int i, int j){
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
     }
 
-    void quick_sort(int[] A, int left, int right){
+    void quick_sort(int[] nums, int left, int right){
         if(left > right){
             return;
         }
+
         int i = left;
         int j = right;
-        int key = A[left];
 
-        while(i < j){
-            while(A[j] >= key && i<j){
+        int key = nums[left];
+        while (i < j){
+            while (i < j && nums[j] >= key){
                 j--;
             }
-            while(A[i] <= key && i<j){
+            while (i < j && nums[i] <= key){
                 i++;
             }
             if(i < j){
-                swap(A, i, j);
+                swap(nums, i, j);
             }
         }
 
-        A[left] = A[i];
-        A[i] = key;
+        nums[left] = nums[i];
+        nums[i] = key;
+        quick_sort(nums, left, i-1);
+        quick_sort(nums, i+1, right);
+    }
 
-        quick_sort(A, left, i-1);
-        quick_sort(A, i+1, right);
+    public static void main(String[] args) {
+        int[] nums = {4,3,2,1,5};
+        new _01_quick_sort().quick_sort(nums, 0, nums.length-1);
+        for (int i = 0; i < nums.length; i++) {
+            System.out.print(nums[i] + " ");
+        }
+
     }
 
 }

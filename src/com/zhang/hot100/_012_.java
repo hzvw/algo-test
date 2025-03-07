@@ -16,9 +16,6 @@ public class _012_ {
     }
 
     public String minWindow(String s, String t) {
-        int n = t.length();//目标长度
-
-        // 统计每个字符的次数
         int[] count = new int[128];
         for (int i = 0; i < t.length(); i++) {
             count[t.charAt(i)]++;
@@ -26,11 +23,10 @@ public class _012_ {
 
         int i = 0;
         int j = 0;
-        //双指针就绪
-
-        int min_len = s.length() + 1;
-        int start = 0;//记录最终结果的起点
-        while(j < s.length()){
+        int n = t.length();
+        int minLen = s.length() + 1;
+        int start = 0;
+        while (j < s.length()){
             char c = s.charAt(j);
             if(count[c] > 0){
                 n--;
@@ -38,22 +34,22 @@ public class _012_ {
             count[c]--;
 
             while (n == 0){
-                //说明i能向右收缩
-                if(min_len > j-i+1){
-                    min_len = j-i+1;
+                if(j-i+1 < minLen){
+                    minLen = j-i+1;
                     start = i;
                 }
-                char tmp = s.charAt(i);
-                if(count[tmp] == 0){
+
+                char c2 = s.charAt(i);
+                if(count[c2] == 0){
                     n++;
                 }
-                count[tmp]++;
-
+                count[c2]++;
                 i++;
             }
             j++;
         }
-        return min_len == s.length()+1 ? "" : s.substring(start, start+min_len);
+
+        return minLen == s.length() + 1 ? "" : s.substring(start, start+minLen);
     }
 
 }

@@ -20,32 +20,33 @@ public class _048_ {
 
     int ans = 0;
 
-    HashMap<Long, Integer> map = new HashMap<>();
+    HashMap<Long, Integer> sumFreq = new HashMap<>();
     public int pathSum(TreeNode root, int targetSum) {
         if(root == null){
             return 0;
         }
 
-        map.put(0l, 1);
-        dfs(root, root.val, targetSum);
+        sumFreq.put(0l, 1);
+        int curSum = root.val;
+        dfs(root, curSum, targetSum);
 
         return ans;
     }
 
-    void dfs(TreeNode root, long val, int target){
-        if(map.containsKey(val - target)){
-            ans += map.get(val - target);
+    void dfs(TreeNode root, long curSum, int target){
+        if(sumFreq.containsKey(curSum - target)){
+            ans += sumFreq.get(curSum - target);
         }
 
-        map.put(val, map.getOrDefault(val, 0)+1);
+        sumFreq.put(curSum, sumFreq.getOrDefault(curSum, 0)+1);
         if(root.left != null){
-            dfs(root.left, val + root.left.val, target);
+            dfs(root.left, curSum + root.left.val, target);
         }
         if(root.right != null){
-            dfs(root.right, val + root.right.val, target);
+            dfs(root.right, curSum + root.right.val, target);
         }
 
-        map.put(val, map.getOrDefault(val, 0)-1);
+        sumFreq.put(curSum, sumFreq.getOrDefault(curSum, 0)-1);
     }
 
 }

@@ -25,36 +25,35 @@ public class _009_ {
     }
 
     public List<Integer> findAnagrams(String s, String p) {
-        int[] count = new int[26];
-        int n = p.length();
-        int k = n;
-        for (int i = 0; i < n; i++) {
-            count[p.charAt(i)-'a']++;
-        }
-
         List<Integer> res = new ArrayList<>();
+        int[] count = new int[128];
+        for (int i = 0; i < p.length(); i++) {
+            count[p.charAt(i)]++;
+        }
+        int n = p.length();
         int i = 0;
         int j = 0;
         while (j < s.length()){
             char c = s.charAt(j);
-            if(count[c-'a'] > 0){
-                k--;
+            if(count[c] > 0){
+                n--;
             }
-            count[c-'a']--;
+            count[c]--;
 
-            while (k == 0){
-                if(j - i + 1 == n){
+            while (n == 0){
+                if(j-i+1 == p.length()){
                     res.add(i);
                 }
                 char c2 = s.charAt(i);
-                if(count[c2 - 'a'] == 0){
-                    k++;
+                if(count[c2] == 0){
+                    n++;
                 }
-                count[c2 - 'a']++;
+                count[c2]++;
                 i++;
             }
             j++;
         }
+
         return res;
     }
 

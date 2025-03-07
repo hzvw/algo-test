@@ -21,18 +21,12 @@ public class _021_ {
     public boolean searchMatrix(int[][] matrix, int target) {
         int m = matrix.length;
         int n = matrix[0].length;
-
-        if(target < matrix[0][0] || target > matrix[m-1][n-1]){
-            return false;
-        }
-
         int i = 0;
         int j = n-1;
-        while (i < m && j >= 0){
-            int cur = matrix[i][j];
-            if(cur > target){
+        while (i < m && j>=0){
+            if(matrix[i][j] > target){
                 j--;
-            }else if(cur < target){
+            }else if(matrix[i][j] < target){
                 i++;
             }else{
                 return true;

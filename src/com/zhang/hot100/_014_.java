@@ -18,36 +18,41 @@ public class _014_ {
     }
 
     public int[][] merge(int[][] intervals) {
-        Arrays.sort(intervals, (a,b) -> a[0] != b[0] ? a[0]-b[0] : a[1] - b[1]);
+        Arrays.sort(intervals, (a,b) -> a[0] != b[0] ? a[0]-b[0] : b[1]- a[1]);
+        LinkedList<int[]> list = new LinkedList<>();
+        list.add(new int[]{intervals[0][0], intervals[0][1]});
 
         int last_start = intervals[0][0];
         int last_end = intervals[0][1];
-
-        LinkedList<int[]> res = new LinkedList<>();
-        res.add(intervals[0]);
-
-        int[] last = res.getLast();
         for (int i = 1; i < intervals.length; i++) {
             int start = intervals[i][0];
             int end = intervals[i][1];
 
-            if(start == last[0]){
-                last[1] = end;
-            }else if(start <= last[1]){
-                if(end <= last[1]){
-
+            if(start == last_start){
+                continue;
+            }else if(start > last_start){
+                if(start < last_end){
+                    if(end <= last_end){
+                        continue;
+                    }else{
+                        last_end = end;
+                        list.getLast()[1] = end;
+                    }
+                }else if(start == last_end){
+                    last_end = end;
+                    list.getLast()[1] = end;
                 }else{
-                    last[1] = end;
+                    last_start = start;
+                    last_end = end;
+
+                    list.add(new int[]{start, end});
                 }
-            }else{
-                res.add(intervals[i]);
-                last = intervals[i];
             }
         }
-        int[][] arr = new int[res.size()][2];
-        for (int i = 0; i < res.size(); i++) {
-            arr[i] = res.get(i);
+        int[][] res = new int[list.size()][2];
+        for (int i = 0; i < list.size(); i++) {
+            res[i] = list.get(i);
         }
-        return arr;
+        return res;
     }
 }

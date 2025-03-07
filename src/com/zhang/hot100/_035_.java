@@ -40,7 +40,9 @@ public class _035_ {
         }
         int version = 0;
 
+        // key and node
         TreeMap<Integer, Node> kv = new TreeMap<>();
+        // version ans key
         TreeMap<Integer, Integer> vk = new TreeMap<>();
 
         int capacity = 0;

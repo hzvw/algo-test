@@ -17,18 +17,13 @@ public class _017_ {
 
     public int firstMissingPositive(int[] nums) {
         int n = nums.length;
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < nums.length; i++) {
             while (nums[i] >= 1 && nums[i] <= n && nums[nums[i]-1] != nums[i]){
-
-                System.out.println("i = " + i);
-                System.out.println("nums[i] = " + nums[i]);
-                System.out.println("nums[i]-1=" + (nums[i] - 1));
-                System.out.println("nums[nums[i]-1] = " + nums[nums[i]-1]);
-                swap(nums, i, nums[i]-1);
+                swap(nums, nums[i]-1, i);
             }
         }
         for (int i = 0; i < n; i++) {
-            if((i+1) != nums[i]){
+            if(nums[i] != i+1){
                 return i+1;
             }
         }
@@ -36,10 +31,10 @@ public class _017_ {
         return n+1;
     }
 
-    static void swap(int[] nums, int i, int j){
-        System.out.println("交换" + i + "--" + j);
+    void swap(int[] nums, int i, int j){
         int t = nums[i];
         nums[i] = nums[j];
         nums[j] = t;
     }
+
 }

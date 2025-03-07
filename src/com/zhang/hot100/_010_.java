@@ -37,22 +37,18 @@ public class _010_ {
 //    }
 
     public int subarraySum(int[] nums, int k) {
-        int result = 0;
-        int curSum = 0;
-        int n = nums.length;
-        HashMap<Integer, Integer> sumFreq = new HashMap<>();
-        sumFreq.put(0,1);
-
-        for (int i = 0; i < n; i++) {
-            curSum += nums[i];
-
-            if(sumFreq.containsKey(curSum - k)){
-                result += sumFreq.get(curSum - k);
+       int res = 0;
+       int curSum = 0;
+       HashMap<Integer, Integer> sumFreq = new HashMap<>();
+       sumFreq.put(0, 1);
+        for (int num : nums) {
+            curSum += num;
+            if(sumFreq.containsKey(curSum-k)){
+                res += sumFreq.get(curSum-k);
             }
             sumFreq.put(curSum, sumFreq.getOrDefault(curSum, 0) + 1);
         }
-
-        return result;
+        return res;
     }
 
 }

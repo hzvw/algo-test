@@ -20,51 +20,61 @@ public class _011_ {
     }
 
     public int[] maxSlidingWindow(int[] nums, int k) {
-        List<Integer> res = new ArrayList<>();
-        MyQueue queue = new MyQueue();
+        List<Integer> list = new ArrayList<>();
+        MyQueue myQueue = new MyQueue();
         for (int i = 0; i < k; i++) {
-            queue.add(nums[i]);
+            myQueue.offer(nums[i]);
         }
-        res.add(queue.getFirst());
+        list.add(myQueue.getFirst());
 
-        int j = k;
-        while (j < nums.length){
-            int in = nums[j];
-            int out = nums[j-k];
-            if(out == queue.getFirst()){
-                queue.removeFirst();
+        for (int i = k; i < nums.length; i++) {
+            int in = nums[i];
+            int out = nums[i-k];
+            if(out == myQueue.getFirst()){
+                myQueue.removeFirst();
             }
-            queue.add(in);
-
-            res.add(queue.getFirst());
-            j++;
+            myQueue.offer(in);
+            list.add(myQueue.getFirst());
         }
-        return res.stream().mapToInt(Integer::intValue).toArray();
+
+        int[] res = new int[list.size()];
+        for (int i = 0; i < res.length; i++) {
+            res[i] = list.get(i);
+        }
+        return res;
     }
 
-    /**
-     * 单调减队列，从头到尾是减的，所以头放的是最大值
-     */
     static class MyQueue{
-        LinkedList<Integer> buffer = new LinkedList<>();
+        LinkedList<Integer> queue = new LinkedList<>();
 
-        public void add(int ele){
-            while(!buffer.isEmpty() && ele > buffer.getLast()){
-                buffer.removeLast();
+        public MyQueue(){
+        }
+
+        void offer(int ele){
+            while (!queue.isEmpty() && ele > queue.getLast()){
+                queue.removeLast();
             }
-            buffer.add(ele);
+            queue.addLast(ele);
         }
 
-        public int getFirst(){
-            return buffer.getFirst();
+        int pop(){
+            return queue.removeFirst();
         }
 
-        public void removeFirst(){
-            buffer.removeFirst();
+        int getFirst(){
+            return queue.getFirst();
         }
+
+        void removeFirst(){
+            queue.removeFirst();
+        }
+
+
 
 
     }
+
+
 
 
 }
