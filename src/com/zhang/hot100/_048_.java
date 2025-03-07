@@ -18,35 +18,34 @@ public class _048_ {
 
     }
 
-    int ans = 0;
-
-    HashMap<Long, Integer> sumFreq = new HashMap<>();
-    public int pathSum(TreeNode root, int targetSum) {
+    public int pathSum(TreeNode root, int targetSum){
         if(root == null){
             return 0;
         }
-
-        sumFreq.put(0l, 1);
-        int curSum = root.val;
-        dfs(root, curSum, targetSum);
-
-        return ans;
+        this.targetSum = targetSum;
+        sumFreq.put(0, 1);
+        dfs(root, root.val);
+        return res;
     }
 
-    void dfs(TreeNode root, long curSum, int target){
-        if(sumFreq.containsKey(curSum - target)){
-            ans += sumFreq.get(curSum - target);
-        }
+    int targetSum = 0;
 
-        sumFreq.put(curSum, sumFreq.getOrDefault(curSum, 0)+1);
+    HashMap<Integer, Integer> sumFreq = new HashMap<>();
+
+    int res = 0;
+    void dfs(TreeNode root, int curSum){
+        if(sumFreq.containsKey(curSum - targetSum)){
+            res += sumFreq.get(curSum - targetSum);
+        }
+        sumFreq.put(curSum, sumFreq.getOrDefault(curSum, 0) + 1);
         if(root.left != null){
-            dfs(root.left, curSum + root.left.val, target);
+            dfs(root.left, curSum + root.left.val);
         }
         if(root.right != null){
-            dfs(root.right, curSum + root.right.val, target);
+            dfs(root.right, curSum + root.right.val);
         }
 
-        sumFreq.put(curSum, sumFreq.getOrDefault(curSum, 0)-1);
+        sumFreq.put(curSum, sumFreq.getOrDefault(curSum, 0) -1);
     }
 
 }

@@ -36,15 +36,16 @@ public class _010_ {
 //        return count;
 //    }
 
+    // 和为k的子数组的个数
     public int subarraySum(int[] nums, int k) {
-       int res = 0;
-       int curSum = 0;
-       HashMap<Integer, Integer> sumFreq = new HashMap<>();
-       sumFreq.put(0, 1);
+        int res = 0;
+        HashMap<Integer, Integer> sumFreq = new HashMap<>();
+        sumFreq.put(0, 1);
+        int curSum = 0;
         for (int num : nums) {
             curSum += num;
-            if(sumFreq.containsKey(curSum-k)){
-                res += sumFreq.get(curSum-k);
+            if(sumFreq.containsKey(curSum - k)){
+                res += sumFreq.get(curSum - k);
             }
             sumFreq.put(curSum, sumFreq.getOrDefault(curSum, 0) + 1);
         }
