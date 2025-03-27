@@ -36,16 +36,18 @@ public class _040_ {
 
         int left = min;
         int right = max;
+        int res = 0;
         while(left <= right){
             int mid = left + (right - left ) / 2;
             boolean isFound = check(mid);
             if(isFound){
+                res = mid;
                 right = mid-1;
             }else{
                 left = mid+1;
             }
         }
-        System.out.println(left);
+        System.out.println(res);
     }
 
     static boolean check(int mid){

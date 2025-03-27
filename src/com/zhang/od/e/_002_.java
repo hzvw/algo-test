@@ -42,21 +42,21 @@ public class _002_ {
 
     }
 
-    static int[] dj(int[][] arr, int source){
-        int N = arr.length;
-        boolean[] visited = new boolean[N];
-        int[] dist = new int[N];
+    private static int[] dj(int[][] arr, int source) {
+        int[] dist = new int[arr.length];
+        boolean[] visited = new boolean[arr.length];
         Arrays.fill(dist, Integer.MAX_VALUE);
-        dist[source] = 0;
 
-        for(int i = 0; i<N; i++){
-            int index = findShortestDisIndex(dist, visited);
+        dist[source] = 0;
+        for (int i = 0; i < arr.length; i++) {
+            int index = findShortDisIndex(dist, visited);
+
             if(index == -1){
-                break;//节点不可达
+                break;
             }
             visited[index] = true;
 
-            for(int j = 0; j<N; j++){
+            for (int j = 0; j < arr.length; j++) {
                 if(arr[index][j] != 0 && !visited[j]){
                     int new_dist = dist[index] + arr[index][j];
                     if(new_dist < dist[j]){
@@ -64,14 +64,15 @@ public class _002_ {
                     }
                 }
             }
+
         }
         return dist;
     }
 
-    static int findShortestDisIndex(int[] dist, boolean[] visited){
+    static int findShortDisIndex(int[] dist, boolean[] visited){
         int index = -1;
         int min_dist = Integer.MAX_VALUE;
-        for(int i =0;i<dist.length; i++){
+        for (int i = 0; i < dist.length; i++) {
             if(!visited[i] && dist[i] < min_dist){
                 min_dist = dist[i];
                 index = i;
@@ -79,5 +80,6 @@ public class _002_ {
         }
         return index;
     }
+
 
 }

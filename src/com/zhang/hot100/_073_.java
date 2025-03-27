@@ -21,22 +21,22 @@ public class _073_ {
     public int largestRectangleArea(int[] heights) {
         int res = 0;
         int n = heights.length;
+        Deque<Integer> st = new LinkedList<>();
         int[] nums = new int[n+2];
         for (int i = 0; i < n; i++) {
             nums[i+1] = heights[i];
         }
-
-        Deque<Integer> stack = new LinkedList<>();
         for (int i = 0; i < n+2; i++) {
-            while (!stack.isEmpty() && nums[i] < nums[stack.peek()]){
+            while (!st.isEmpty() && nums[i] < nums[st.peek()]){
                 int right = i;
-                int mid = stack.pop();
-                int left = stack.peek();
-                res = Math.max(res, (right - left -1) * nums[mid]);
+                int mid = st.pop();
+                if(!st.isEmpty()){
+                    int left = st.peek();
+                    res = Math.max(res, nums[mid] * (right - left - 1));
+                }
             }
-            stack.push(i);
+            st.push(i);
         }
-
         return res;
     }
 

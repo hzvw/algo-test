@@ -53,7 +53,7 @@ public class _022_ {
         int i = 0;
         int j = 0;
 
-        //记录上一个该字符所处的位置
+        // 记录滑动窗口中的字符出现的次数
         int[] count = new int[128];
 
         int maxLen = 0;

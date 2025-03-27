@@ -19,22 +19,17 @@ public class _071_ {
     }
     public String decodeString(String s) {
         StringBuilder sb = new StringBuilder();
-        //数字索引，在sb中的索引
         Deque<Integer> ids = new LinkedList<>();
-        //重复次数
         Deque<Integer> nums = new LinkedList<>();
 
         String num = "";
-        String str = "";
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-
-            if(c >= '0' && c<= '9'){
-                num += c;
-            }else if(c >= 'a' && c <= 'z'){
+            if(Character.isLowerCase(c)){
                 sb.append(c);
+            }else if(Character.isDigit(c)){
+                num += c;
             }else if(c == '['){
-                // 数字结束的标志
                 if(!"".equals(num)){
                     nums.push(Integer.parseInt(num));
                     num = "";
@@ -42,15 +37,13 @@ public class _071_ {
                 int start = sb.length();
                 ids.push(start);
             }else{
-                //右括号
-                //字符串结束的标志
                 int start = ids.pop();
                 int count = nums.pop();
+                String tmp = "";
                 for (int j = 0; j < count; j++) {
-                    str += sb.substring(start) ;
+                    tmp += sb.substring(start);
                 }
-                sb.replace(start, sb.length(), str);
-                str = "";
+                sb.replace(start, sb.length(), tmp);
             }
         }
         return sb.toString();

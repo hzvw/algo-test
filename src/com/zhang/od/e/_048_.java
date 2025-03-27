@@ -29,15 +29,17 @@ public class _048_ {
 
         int left = 0;
         int right = Arrays.stream(arr).sum();
+        int res = 0;
         while(left <= right){
             int mid = left + (right - left) / 2;
             if(check(mid)){
+                res = mid;
                 right = mid-1;
             }else{
                 left = mid+1;
             }
         }
-        System.out.println(left);
+        System.out.println(res);
     }
 
     /**

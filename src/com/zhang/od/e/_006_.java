@@ -62,6 +62,7 @@ public class _006_ {
             return true;
         }
         for (int i = 0; i < n; i++) {
+            // 剪枝
             if(i > 0 && buckets[i] == buckets[i-1]){
                 continue;
             }

@@ -48,9 +48,9 @@ public class _010_ {
         }
         dist[M-1][N-1] = val;
         LinkedList<int[]> queue = new LinkedList<>();
-        queue.addFirst(new int[]{i,j,val});
+        queue.add(new int[]{i,j,val});
         while(!queue.isEmpty()){
-            int[] t = queue.removeLast();
+            int[] t = queue.pollFirst();
             i = t[0];
             j = t[1];
             val = t[2];
@@ -65,13 +65,13 @@ public class _010_ {
                 if(n_x <0 || n_x >=M || n_y <0 || n_y>= N || map[n_x][n_y] == 0){
                     continue;
                 }
-                int n_val = computeVal(n_x, n_y, val);
+                int n_val = computeNVal(n_x, n_y, val);
                 if(n_val > 100){
                     continue;
                 }
                 if(n_val < dist[n_x][n_y]){
                     dist[n_x][n_y] = n_val;
-                    queue.addFirst(new int[]{n_x,n_y,n_val});
+                    queue.add(new int[]{n_x,n_y,n_val});
                 }
             }
         }
@@ -79,13 +79,13 @@ public class _010_ {
     }
 
     /**
-     * (x,y),val -> (n_x,n_y),n_val
+     *  (n_x,n_y),n_val  -> (x,y),val
      * @param n_x
      * @param n_y
      * @param val
      * @return
      */
-    static int computeVal(int n_x, int n_y, int val){
+    static int computeNVal(int n_x, int n_y, int val){
         // 从加油站出发，需要的油为0，因为加油站会加油100
         if(map[n_x][n_y] == -1) {
             return 0;

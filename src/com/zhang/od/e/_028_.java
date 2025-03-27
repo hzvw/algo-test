@@ -25,7 +25,7 @@ public class _028_ {
         }
         list.sort((a,b)->a-b);
 
-        int count = 1;
+        int count = 1;//第一个菜必吃
         int pre = 0;
         for (int i = 1; i < list.size(); i++) {
             if(list.get(i) - list.get(pre) >= sp){

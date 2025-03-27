@@ -25,9 +25,9 @@ public class _007_ {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int[] ints = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-        m = ints[0];
-        n = ints[1];
+        int[] nums = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        m = nums[0];
+        n = nums[1];
 
         map = new int[m][n];
         stepMap = new int[m][n];

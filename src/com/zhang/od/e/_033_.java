@@ -60,7 +60,6 @@ public class _033_ {
     static void p(char[] cs,  int level, LinkedList<Character> buckets,List<String> res){
         if(cs.length == buckets.size()){
             res.add(buckets.stream().map(x -> x+"").reduce("",String::concat));
-//            System.out.println(buckets.stream().map(x -> x+"").reduce("",String::concat));
             return;
         }
         for(int i = level; i < cs.length; i++){

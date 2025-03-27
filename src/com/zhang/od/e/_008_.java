@@ -47,10 +47,12 @@ public class _008_ {
             if(visited[i]){
                 continue;
             }
+            // 相同的字符不能相邻
             if(pre >= 0 && cs[i] == cs[pre]){
                 continue;
             }
 
+            // 树层去重（去除重复排列）
             if(i-1>= 0 && cs[i-1] == cs[i] && !visited[i-1]){
                 continue;
             }
