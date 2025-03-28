@@ -14,16 +14,16 @@ import java.util.*;
 public class _001_ {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int n = Integer.parseInt(sc.nextLine());
-        int[] nums = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        int n = sc.nextInt();
+        int e = sc.nextInt();
 
         // 记录启动时刻
         int[] time = new int[n];
         Arrays.fill(time, 1000);
-        for (int i = 0; i < nums.length; i += 2) {
+        for (int i = 0; i < e; i++) {
 
-            int p = nums[i];//发动机的位置编号
-            int t = nums[i+1];//手动启动时刻
+            int t = sc.nextInt();//手动启动时刻
+            int p = sc.nextInt();//发动机的位置编号
             time[p] = t;
         }
 
@@ -39,29 +39,25 @@ public class _001_ {
             }
         }
 
+        List<Integer> res = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            System.out.print(time[i] + " ");
+            if(res.size() == 0){
+                res.add(i);
+            }else{
+                if(time[res.get(0)] == time[i]){
+                    res.add(i);
+                }else if(time[res.get(0)] > time[i]){
+                    continue;
+                }else{
+                    res.clear();
+                    res.add(i);
+                }
+            }
         }
-
-//        List<Integer> res = new ArrayList<>();
-//        for (int i = 0; i < n; i++) {
-//            if(res.size() == 0){
-//                res.add(i);
-//            }else{
-//                if(time[res.get(0)] == time[i]){
-//                    res.add(i);
-//                }else if(time[res.get(0)] > time[i]){
-//                    continue;
-//                }else{
-//                    res.clear();
-//                    res.add(i);
-//                }
-//            }
-//        }
-//        System.out.println(res.size());
-//        for (Integer i : res) {
-//            System.out.print(i + " ");
-//        }
+        System.out.println(res.size());
+        for (Integer i : res) {
+            System.out.print(i + " ");
+        }
 
     }
 
