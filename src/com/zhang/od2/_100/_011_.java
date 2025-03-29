@@ -1,6 +1,10 @@
 package com.zhang.od2._100;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  * ClassName: _011_
@@ -8,97 +12,39 @@ import java.util.*;
  * Description:
  *
  * @Author Harizon
- * @Create 2025/3/29 16:12
+ * @Create 2025/3/29 16:50
  * @Version 1.0
  */
 public class _011_ {
-    static String[] content = {"absent", "late","leaveearly", "present"};
-
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int n = Integer.parseInt(sc.nextLine());
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            list.add(sc.nextLine());
-        }
+        String str = sc.nextLine() + "-";
+        int k = Integer.parseInt(sc.nextLine());
 
-        for (String s : list) {
-            String[] words = s.split(" ");
+        Map<Character, Integer> count = new HashMap<>();
 
-            if(check1(words) && check2(words) && check3(words)){
-                System.out.print(true + " ");
+        char[] cs = str.toCharArray();
+        char last = cs[0];
+        int cnt = 1;
+        for (int i = 1; i < cs.length; i++) {
+            if(last == cs[i]){
+                cnt++;
             }else{
-                System.out.print(false + " ");
-            }
-        }
-
-    }
-
-    static boolean check1(String[] words){
-        int count = 0;
-        for (String word : words) {
-            if(content[0].equals(word)){
-                count++;
-            }
-        }
-        return count <= 1;
-    }
-
-    static boolean check2(String[] words){
-        String last = "";
-        for (String word : words) {
-            if((word.equals(content[1])) || (word.equals(content[2]))){
-                if((last.equals(content[1])) || (last.equals(content[2]))){
-                    return false;
+                if(cnt > count.getOrDefault(last, 0)){
+                    count.put(last, cnt);
                 }
+                cnt = 1;
             }
-            last = word;
+            last = cs[i];
         }
-        return true;
-    }
-
-    static boolean check3(String[] words){
-        Set<String> set = new HashSet<>();
-        set.add(content[0]);
-        set.add(content[1]);
-        set.add(content[2]);
-
-        if(words.length <= 7){
-            int count = 0;
-            for (String word : words) {
-                if(set.contains(word)){
-                    count++;
-                }
-            }
-            if(count > 3){
-                return false;
-            }
+        List<Integer> list = count.values().stream().collect(Collectors.toList());
+        list.sort((a,b) -> b-a);
+        if(list.size() < k){
+            System.out.println(-1);
+            return;
         }else{
-            int count = 0;
-            for (int i = 0; i < 7; i++) {
-                if(set.contains(words[i])){
-                    count++;
-                }
-            }
-            if(count > 3){
-                return false;
-            }
-            for (int i = 7; i < words.length; i++) {
-                String in = words[i];
-                String out = words[i-7];
-                if(set.contains(in)){
-                    count++;
-                }
-                if(set.contains(out)){
-                    count--;
-                }
-                if(count > 3){
-                    return false;
-                }
-            }
-
+            System.out.println(list.get(k-1));
         }
-        return true;
-    }
 
+    }
 }
