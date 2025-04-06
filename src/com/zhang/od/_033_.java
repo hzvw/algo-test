@@ -26,9 +26,11 @@ public class _033_ {
 
         int min = Integer.MAX_VALUE;
         int len = nums.size();
-        for(int i = 1; i<len/2; i++){
+        // 第一步可以跳1至（len/2-1）
+        for(int i = 1; i<=len/2-1; i++){
+            int st = 1;
             int j = i + nums.get(i);
-            int st = 2;
+            st++;
 
             while(j<len - 1){
                 j += nums.get(j);
@@ -37,6 +39,8 @@ public class _033_ {
 
             if(j == len - 1){
                 min = Math.min(min, st);
+            }else{
+                // 跳飞出去了
             }
         }
 
