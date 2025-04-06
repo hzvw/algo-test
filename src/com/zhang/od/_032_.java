@@ -44,7 +44,7 @@ public class _032_ {
         for(int i = 0; i<i1.size(); i++){
             int index = biS(buffer, i1.get(i));
 
-            if(index < buffer.size()){
+            if(index != -1){
                 res.add("true");
                 buffer.get(index).n--;
 
@@ -65,20 +65,21 @@ public class _032_ {
 
     }
 
-    static int biS(List<Me> buffer, int target){
-        int l = 0;
-        int r = buffer.size()-1;
-        while(l <= r){
-            int mid = (l+r) / 2;
-            if(target < buffer.get(mid).p){
-                r = mid -1;
-            }else if(target > buffer.get(mid).p){
-                l = mid + 1;
+    static int biS(List<Me> list, int target){
+        int left = 0;
+        int right = list.size()-1;
+        int res = -1;
+        while (left <= right){
+            int midIndex = (left + right)/2;
+            if(list.get(midIndex).p >= target){
+                res = midIndex;
+                right = midIndex-1;
             }else{
-                return mid;
+                left = midIndex+1;
             }
+
         }
-        return l;
+        return res;
     }
 
 
