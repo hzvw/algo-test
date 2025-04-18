@@ -42,24 +42,21 @@ public class _055_ {
 
     static void dfs(int level){
         if(level == n){
-            StringBuilder sb = new StringBuilder();
-            buckets.forEach(x->sb.append(x));
-            res.add(sb.toString());
+            res.add(buckets.stream().map(x->x+"").reduce("", String::concat));
             return;
         }
 
         for (int i = 0; i < n; i++) {
-            if(visited[i]){
-                continue;
+            if(!visited[i]){
+                buckets.addLast(cs[i]);
+                visited[i] = true;
+
+                dfs(level+1);
+
+                buckets.removeLast();
+                visited[i] = false;
             }
-
-            buckets.addLast(cs[i]);
-            visited[i] = true;
-            dfs(level+1);
-            buckets.removeLast();
-            visited[i] = false;
         }
-
 
     }
 

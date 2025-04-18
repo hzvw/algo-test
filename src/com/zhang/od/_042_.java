@@ -17,8 +17,8 @@ public class _042_ {
         int T = sc.nextInt();
         int n = sc.nextInt();
 
-        int[] w = new int[n];
-        int[] v = new int[n];
+        int[] w = new int[n];//重量
+        int[] v = new int[n];//价值
         for(int i = 0; i<n; i++){
             w[i] = sc.nextInt();
             v[i] = sc.nextInt();
@@ -27,13 +27,20 @@ public class _042_ {
         //System.out.println(process(w,v,0,T));
 
         int bag = T;
-        int[] dp = new int[T+1];
-        for (int i = 0; i < n; i++) {
-            for (int j = bag; j >= w[i] ; j--) {
-                dp[j] = Math.max(dp[j], dp[j-w[i]] + v[i]);
+        int[][] dp = new int[n][bag+1];
+        for (int j = w[0]; j <=bag ; j++) {
+            dp[0][j] = v[0];
+        }
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j <= bag ; j++) {
+                if(j < w[i]){
+                    dp[i][j] = dp[i-1][j];
+                }else{
+                    dp[i][j] = Math.max(dp[i-1][j], dp[i-1][j-w[i]] + v[i]);
+                }
             }
         }
-        System.out.println(dp[bag]);
+        System.out.println(dp[n-1][bag]);
     }
 
 

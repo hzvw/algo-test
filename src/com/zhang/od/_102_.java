@@ -15,6 +15,27 @@ import java.util.Scanner;
 public class _102_ {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+        int[] nums = new int[n];
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for (int i = 0; i < n; i++) {
+            nums[i] = sc.nextInt();
+            pq.offer(nums[i]);
+        }
+
+        for (int i = 0; i < m; i++) {
+            pq.offer(pq.poll() + 1);
+        }
+
+        System.out.println(pq.peek());
+
+    }
+
+
+
+    public static void main01(String[] args) {
+        Scanner sc = new Scanner(System.in);
         int N = sc.nextInt();
         int M = sc.nextInt();
 

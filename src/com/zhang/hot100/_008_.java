@@ -22,16 +22,16 @@ public class _008_ {
         int res = 0;
         int i = 0;
         int j = 0;
-        int[] count = new int[128];
+        int[] count = new int[26];
 
         while (j< s.length()){
             char c = s.charAt(j);
-            if(count[c] == 0){
+            if(count[c-'a'] == 0){
                 res = Math.max(res, j-i+1);
-                count[c] ++;
+                count[c-'a'] ++;
                 j++;
             }else{
-                count[s.charAt(i)]--;
+                count[s.charAt(i)-'a']--;
                 i++;
             }
         }

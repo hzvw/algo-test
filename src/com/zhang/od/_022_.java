@@ -14,7 +14,9 @@ import java.util.*;
 public class _022_ {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        // 每次固定读取的长度
         int len = Integer.parseInt(sc.nextLine());
+        //
         int x = Integer.parseInt(sc.nextLine());
         LinkedList<LinkedList<Integer>> arr = new LinkedList<>();
         int cnt = 0;

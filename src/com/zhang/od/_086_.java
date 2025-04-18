@@ -16,20 +16,22 @@ public class _086_ {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
         int x = sc.nextInt();
+        long[] nums = new long[n];
+        for (int i = 0; i < n; i++) {
+            nums[i] = sc.nextLong();
+        }
 
-        long[] arr = new long[n+1];
-        for(int i = 1; i<=n;i++){
-            arr[i] = arr[i-1] + sc.nextLong();
+        long[] pre = new long[n+1];
+        for (int i = 1; i <=n ; i++) {
+            pre[i] = pre[i-1] + nums[i-1];
         }
 
         long cnt = 0;
-        for(int i = 0; i<=n-1; i++){
-            for(int j = i+1; j<=n; j++){
-                if(arr[j] - arr[i] >= x){
-                    long k = n-(j-1);
-                    cnt = cnt + k;
+        for (int i = 0; i < n ; i++) {
+            for (int j = i+1; j <= n ; j++) {
+                if(pre[j]- pre[i] >= x){
+                    cnt += n-j+1;
                     break;
-//                    cnt++;
                 }
             }
         }

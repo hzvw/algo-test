@@ -25,7 +25,7 @@ public class _093_ {
         Arrays.sort(arr);
 
         int i = 0 ;
-        int min_diff = Integer.MAX_VALUE;
+        int min_diff = tar;
         for(; i<=N-3; i++) {
             int j = i+1;
             int k = N-1;

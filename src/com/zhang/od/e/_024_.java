@@ -30,6 +30,7 @@ public class _024_ {
         System.out.println(result);
     }
 
+    //岸上的羊，岸上的狼，对岸的羊，对岸的狼
     static void dfs(int m1, int n1, int m2, int n2, int cnt){
         if(m1 == 0 && n1 == 0){
             res.add(cnt);

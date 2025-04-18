@@ -14,33 +14,25 @@ import java.util.stream.Collectors;
  */
 public class _069_ {
     public static void main(String[] args) {
+
         Scanner sc = new Scanner(System.in);
-
-        HashMap<String, Integer> map = new HashMap<>();
-
-        while(sc.hasNextLine()){
-            String line = sc.nextLine();
-
+        Map<String, Integer> count = new HashMap<>();
+        while (sc.hasNextLine()){
+            String str = sc.nextLine();
             try{
-                int n = Integer.parseInt(line);
-                List<String> buffer = map.entrySet().stream().sorted(new Comparator<Map.Entry<String, Integer>>() {
-                    @Override
-                    public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
-                        if(o1.getValue() == o2.getValue()){
-                            return o1.getKey().compareTo(o2.getKey());
-                        }else if(o1.getValue() > o2.getValue()){
-                            return -1;
-                        }else{
-                            return 1;
-                        }
+                int n = Integer.parseInt(str);
+                List<String> list = count.entrySet().stream().sorted((a, b) -> {
+                    if (a.getValue() != b.getValue()) {
+                        return b.getValue() - a.getValue();
+                    } else {
+                        return a.getKey().compareTo(b.getKey());
                     }
-                }).limit(n).map(x -> x.getKey()).collect(Collectors.toList());
-                System.out.println(String.join(",", buffer));
+                }).limit(n).map(x->x.getKey()).collect(Collectors.toList());
+                System.out.println(String.join(",", list));
             }catch(Exception e){
-                map.put(line, map.getOrDefault(line , 0) + 1);
+                count.put(str, count.getOrDefault(str, 0) + 1);
             }
 
-//            Integer.compare();
         }
 
     }

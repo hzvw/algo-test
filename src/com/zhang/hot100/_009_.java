@@ -26,29 +26,30 @@ public class _009_ {
 
     public List<Integer> findAnagrams(String s, String p) {
         List<Integer> res = new ArrayList<>();
-        int[] count = new int[128];
+        int[] count = new int[26];
         for (int i = 0; i < p.length(); i++) {
-            count[p.charAt(i)]++;
+            char c = p.charAt(i);
+            count[c-'a']++;
         }
         int n = p.length();
         int i = 0;
         int j = 0;
         while (j < s.length()){
             char c = s.charAt(j);
-            if(count[c] > 0){
+            if(count[c-'a'] > 0){
                 n--;
             }
-            count[c]--;
+            count[c-'a']--;
 
             while (n == 0){
                 if(j-i+1 == p.length()){
                     res.add(i);
                 }
                 char c2 = s.charAt(i);
-                if(count[c2] == 0){
+                if(count[c2-'a'] == 0){
                     n++;
                 }
-                count[c2]++;
+                count[c2-'a']++;
                 i++;
             }
             j++;
@@ -61,9 +62,10 @@ public class _009_ {
         int n = t.length();//目标长度
 
         // 统计每个字符的次数
-        int[] count = new int[128];
+        int[] count = new int[26];
         for (int i = 0; i < t.length(); i++) {
-            count[t.charAt(i)]++;
+            char c = t.charAt(i);
+            count[c-'a']++;
         }
 
         int i = 0;
@@ -74,10 +76,10 @@ public class _009_ {
         int start = 0;//记录最终结果的起点
         while(j < s.length()){
             char c = s.charAt(j);
-            if(count[c] > 0){
+            if(count[c-'a'] > 0){
                 n--;
             }
-            count[c]--;
+            count[c-'a']--;
 
             while (n == 0){
                 //说明i能向右收缩
@@ -85,11 +87,11 @@ public class _009_ {
                     min_len = j-i+1;
                     start = i;
                 }
-                char tmp = s.charAt(i);
-                if(count[tmp] == 0){
+                char c2 = s.charAt(i);
+                if(count[c2-'a'] == 0){
                     n++;
                 }
-                count[tmp]++;
+                count[c2-'a']++;
 
                 i++;
             }

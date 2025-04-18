@@ -14,74 +14,50 @@ import java.util.*;
 public class _085_ {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
-        int M = sc.nextInt();
+        int n = sc.nextInt();
+        int m = sc.nextInt();
 
-        Integer[] arr = new Integer[M-N+1];
-        for(int i = 0; i<=M-N; i++){
-            int k = N+i;
-            arr[i] = k * k;
+        Integer[] nums = new Integer[m-n+1];
+        for (int i = n; i <=m ; i++) {
+            nums[i-n] = i * i;
         }
-
-        HashSet<Integer> set = new HashSet<>();
-        Collections.addAll(set, arr);
-
+        Set<Integer> set = new HashSet<>();
+        Collections.addAll(set, nums);
         List<String> res = new ArrayList<>();
-
-        for(int i = 0; i<=M-N; i++){
-            for(int j = i+1; j<=M-N; j++){
-                int sum = arr[i] + arr[j];
+        for (int i = 0; i <=m-n ; i++) {
+            for (int j = i+1; j <=m-n ; j++) {
+                int sum = nums[i] + nums[j];
                 if(set.contains(sum)){
-                    int a = (int)Math.sqrt(arr[i]);
-                    int b = (int) Math.sqrt(arr[j]);
-                    int c = (int)Math.sqrt(sum);
+                    int a = (int) Math.sqrt(nums[i]);
+                    int b = (int) Math.sqrt(nums[j]);
+                    int c = (int) Math.sqrt(sum);
 
-                    if(p(a,b) || p(a,c) || p(b,c)){
-                        res.add(a + " " + b + " " + c);
+                    if(p(a,b) && p(a,c) && p(b,c)){
+                        res.add(a + " " + b + " " +c);
                     }
                 }
             }
         }
-        if(res.size() > 0){
-            res.forEach(System.out::println);
-        }else{
+        if(res.size() == 0){
             System.out.println("NA");
+            return;
+        }
+        for (String s : res) {
+            System.out.println(s);
         }
 
     }
 
-    static boolean p(int x, int y){
-//        if(x < y ){
-//            int t = x;
-//            x = y;
-//            y = t;
-//        }
-//
-//        int res = p1(x, y);
-//        if(res == 1){
-//            return true;
-//        }else{
-//            return false;
-//        }
-        return isRelativePrime(x,y);
-    }
-
-    static int p1(int x, int y){
-      if(x % y == 0){
-          return y;
-      }else{
-          return p1(y, x % y);
-      }
-    };
-
     // 判断两个数是否互质，辗转相除
-    public static boolean isRelativePrime(int x, int y) {
-        while (y > 0) {
+    static boolean p(int x, int y){
+        while (y > 0){
             int mod = x % y;
             x = y;
             y = mod;
         }
         return x == 1;
     }
+
+
 
 }

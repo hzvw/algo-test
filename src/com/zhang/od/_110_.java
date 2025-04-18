@@ -35,44 +35,40 @@ public class _110_ {
             }
         }
 
-        System.out.println(minWindow(s, sb.toString()));
+        minWindow(s, sb.toString());
+        //System.out.println(minWindow(s, sb.toString()));
     }
 
-    public static int minWindow(String s, String t) {
-        if(s == null || s.length() == 0 || t == null || t.length() == 0){
-            return 0;
-        }
-
+    public static void minWindow(String s, String t) {
+        int min_len = s.length();
         int[] count = new int[26];
         for (int i = 0; i < t.length(); i++) {
-            count[t.charAt(i)-'A']++;
+            char c = t.charAt(i);
+            count[c-'a']++;
         }
-        int min_len = s.length();
+        int n = t.length();
         int i = 0;
         int j = 0;
-        //一共欠账
-        int n = t.length();
-        while (j < s.length()){
-            char c = s.charAt(j);
-            if(count[c-'A'] > 0){
+        while (i < s.length()){
+            char c = s.charAt(i);
+            if(count[c-'a'] > 0){
                 n--;
             }
-            count[c-'A']--;
+            count[c-'a']--;
 
             while (n == 0){
-                if(j-i+1 < min_len){
-                    min_len = j-i+1;
+                if(i-j+1<min_len){
+                    min_len = i-j+1;
                 }
-                char c2 = s.charAt(i);
-                if(count[c2-'A'] == 0){
+                char c2 = s.charAt(j);
+                if(count[c2-'a'] >= 0){
                     n++;
                 }
-                count[c2-'A']++;
-                i++;
+                count[c2-'a']++;
+                j++;
             }
-
-            j++;
+            i++;
         }
-        return min_len;
+        System.out.println(min_len == s.length() ? "-1 0": j + " " + min_len);
     }
 }

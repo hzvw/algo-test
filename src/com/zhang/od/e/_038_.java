@@ -16,6 +16,7 @@ public class _038_ {
         Scanner sc = new Scanner(System.in);
 
         int[] ints = Arrays.stream(sc.nextLine().split(",")).mapToInt(Integer::parseInt).toArray();
+        // 优先级和序号
         LinkedList<int[]> queue = new LinkedList<>();
         for (int i = 0; i < ints.length; i++) {
             queue.offer(new int[]{ints[i], i});
@@ -43,6 +44,7 @@ public class _038_ {
             arr[i][1] = i;
         }
 
+        // 根据序号排序
         Arrays.sort(arr, (a,b) -> a[0] - b[0]);
 
         for (int i = 0; i < arr.length; i++) {

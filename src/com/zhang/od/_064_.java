@@ -28,40 +28,35 @@ public class _064_ {
     }
 
     static void p(int minA, int[] arr){
+        List<int[]> buffer = new ArrayList<>();
         int n = arr.length;
-        int[] pre = new int[n+1];
-        for(int i = 1; i<n+1; i++){
+        int[] pre = new int[arr.length+1];
+        for (int i = 1; i <= n  ; i++) {
             pre[i] = pre[i-1] + arr[i-1];
         }
 
-        List<int[]> buffer = new ArrayList<>();
-        int min_length = 0;
-        for(int i = 0; i<n; i++){
-            for(int j = i; j<n; j++){
+        int max_len = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = i+1; j < n ; j++) {
+                int len = j - i + 1;
                 int sum = pre[j+1] - pre[i];
-                int i1 = minA * (j-i+1);
-
-                int len = j-i+1;
-                if(sum <= i1){
-                    if(len >= min_length){
-                        if(len > min_length){
+                if(minA * len >= sum){
+                    if(len >= max_len){
+                        if(len > max_len){
                             buffer = new ArrayList<>();
                         }
-                        min_length = len;
                         buffer.add(new int[]{i, j});
+                        max_len = len;
                     }
                 }
             }
         }
 
-//        for(int[] i : buffer){
-//            System.out.println(i[0] + ":" + i[1]);
-//        }
-
         if(buffer.size() == 0){
             System.out.println("NULL");
             return;
         }
+        buffer.sort((a,b) -> a[0] - b[0]);
 
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i<buffer.size(); i++){

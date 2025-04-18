@@ -15,7 +15,8 @@ public class _115_ {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int N = Integer.parseInt(sc.nextLine());
-        int[] arr1 = Arrays.stream(sc.nextLine().split(",")).mapToInt(Integer::parseInt).toArray();
+        int[] arr1 = Arrays.stream(sc.nextLine().split(","))
+                .mapToInt(Integer::parseInt).toArray();
         int[][] arr = new int[N][N];
         for(int i = 0; i<N; i++){
             arr[i] = Arrays.stream(sc.nextLine().split(",")).mapToInt(Integer::parseInt).toArray();

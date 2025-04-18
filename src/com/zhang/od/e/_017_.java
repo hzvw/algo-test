@@ -47,6 +47,8 @@ public class _017_ {
             pre[i] = pre[i-1] + arr[i-1];
         }
 
+        // a%k == b%k
+        // 等价于 (a-b) % k == 0
         HashSet<Integer> set = new HashSet<>();
         for(int i = 0; i<n+1; i++){
             if(set.contains(pre[i] % m)){

@@ -16,39 +16,28 @@ public class _020_ {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        String str = sc.nextLine();
-
+        String str = sc.nextLine() + "0";
         String reg = "^(01)+0$";
         Pattern p = Pattern.compile(reg);
 
-        String res = null;
-        int maxLen = 0;
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0; i<str.length(); i++){
-            char c = str.charAt(i);
-            if(c == '0'){
-                //碰到连续的两个0
-                if(sb.length() > 0 && sb.charAt(sb.length()-1) == '0'){
-                    if(p.matcher(sb.toString()).find()){
-                        if(sb.length() > maxLen){
-                            maxLen = sb.length();
-                            res = sb.toString();
-                        }
+        int i = 0;
+        int j = 1;
+        String res = "";
+        for (; j< str.length(); j++){
+            if(str.charAt(j) == '0' && str.charAt(j) == str.charAt(j-1)){
+                String sub = str.substring(i, j);
+
+                if(p.matcher(sub).find()){
+                    if(sub.length() > res.length()){
+                        res = sub;
                     }
-                    sb = new StringBuilder();
                 }
-            }
-            sb.append(c);
-        }
-        if(sb.length() > 0 && p.matcher(sb.toString()).find()){
-            if(sb.length() > maxLen){
-                maxLen = sb.length();
-                res = sb.toString();
+
+                i = j;
             }
         }
 
-
-        System.out.println(res == null ? -1:res);
+        System.out.println("".equals(res) ? "-1" : res);
 
     }
 

@@ -59,29 +59,28 @@ public class _050_ {
     static class UnionSet{
         int[] fa;
 
-        public UnionSet(int n){
+        public UnionSet(int n) {
             this.fa = new int[n];
-            for(int i = 0; i<n; i++){
+            for (int i = 0; i < n; i++) {
                 fa[i] = i;
             }
         }
 
-        public int find(int x){
+        int find(int x){
             if(fa[x] != x){
                 return find(fa[x]);
             }
-            return x;
+            return fa[x];
         }
 
-        public void union(int a, int b){
-            int fa_a = find(a);
-            int fa_b = find(b);
+        void union(int x, int y){
+            int fa_x = find(x);
+            int fa_y = find(y);
 
-            if(fa_a != fa_b){
-                fa[fa_b] = fa_a;
+            if(fa_x != fa_y){
+                fa[fa_y] = fa_x;
             }
         }
-
     }
     
 

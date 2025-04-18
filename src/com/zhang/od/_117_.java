@@ -19,38 +19,34 @@ import java.util.stream.Stream;
 public class _117_ {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String A = sc.nextLine();
-        String B = sc.nextLine();
+        String s1 = sc.nextLine();
+        String s2 = sc.nextLine();
 
-        char[] ca = A.toCharArray();
-        char[] cb = B.toCharArray();
+        char[] cs1 = s1.toCharArray();
+        char[] cs2 = s2.toCharArray();
+
+        int cnt = 0;
 
         int i = 0;
         int j = 0;
-        int cnt = 0;
-        while (true) {
-            char a = ca[i];
-            char b = cb[j];
-
-            if (a == b) {
-                ca[i] = '#';
+        while (true){
+            if(cs1[i] == cs2[j]){
+                cs1[i] = '#';
                 i++;
                 j++;
-            } else {
+            }else{
                 i++;
             }
-            if (j == cb.length) {
+            if(j == cs2.length){
+                cnt++;
                 i = 0;
                 j = 0;
-                cnt++;
             }
-
-            if (i == ca.length /*&& j < cb.length*/) {
+            if(i == s1.length()){
                 break;
             }
         }
 
         System.out.println(cnt);
-
     }
 }

@@ -17,53 +17,49 @@ import java.util.Scanner;
 public class _116_ {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        int[] nums = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
 
-        long[] arr = Arrays.stream(sc.nextLine().split(" ")).mapToLong(Long::parseLong).toArray();
-
-        int N = arr.length;
-        //初始集合，只有一个
-        ArrayList<Integer> list = new ArrayList<>();
-        for(int i = 0; i<N; i++){
-            list.add(i);
+        LinkedList<LinkedList<Integer>> link = new LinkedList<>();
+        LinkedList<Integer> init = new LinkedList<>();
+        for (int i = 0; i < nums.length; i++) {
+            init.add(i);
         }
+        link.addFirst(init);
 
-        LinkedList<ArrayList<Integer>>  buffer = new LinkedList<>();
-        buffer.addFirst(list);
-        //冠军组的人数超过1，要继续比赛
-        while(buffer.getFirst().size() > 1){
-            ArrayList<Integer> firstList = buffer.removeFirst();
+        while (link.get(0).size() > 1){
+            LinkedList<Integer> win = new LinkedList<>();
+            LinkedList<Integer> lose = new LinkedList<>();
 
-            ArrayList<Integer> win = new ArrayList<>();//获胜者分到这个组
-            ArrayList<Integer> lose = new ArrayList<>();//失败者到这个组
+            LinkedList<Integer> tmp = link.removeFirst();
+            for (int i = 0; i+1 < tmp.size(); i+=2) {
+                int a = nums[tmp.get(i)];
+                int b = nums[tmp.get(i+1)];
 
-            for(int i = 1;  i< firstList.size(); i += 2){
-                int j1 = firstList.get(i-1);
-                int j2 = firstList.get(i);
-
-                if(arr[j1] >= arr[j2]){
-                    win.add(j1);
-                    lose.add(j2);
+                if(a>b){
+                    win.add(tmp.get(i));
+                    lose.add(tmp.get(i+1));
+                }else if(a<b){
+                    win.add(tmp.get(i+1));
+                    lose.add(tmp.get(i));
                 }else{
-                    win.add(j2);
-                    lose.add(j1);
+                    win.add(tmp.get(i));
+                    lose.add(tmp.get(i+1));
                 }
             }
-            if(firstList.size() % 2 == 1){
-                win.add(firstList.get(firstList.size()-1));
+            if(tmp.size() % 2 == 1){
+                win.add(tmp.getLast());
             }
-
-
-            buffer.addFirst(lose);
-            buffer.addFirst(win);
+            link.addFirst(lose);
+            link.addFirst(win);
         }
-        int first = buffer.get(0).get(0);
-        int second = buffer.get(1).get(0);
+        int first = link.get(0).getFirst();
+        int second = link.get(1).getFirst();
 
-        buffer.get(2).sort((a,b)-> arr[a] != arr[b] ? Long.compare(arr[b], arr[a]) : a-b);
+        link.get(2).sort((a,b) -> nums[a] != nums[b] ? nums[b]- nums[a] : a-b);
+        int thred = link.get(2).getFirst();
 
-        int third = buffer.get(2).get(0);
+        System.out.println(first + " " + second + " " + thred);
 
-        System.out.println(first + " " + second + " " + third);
     }
 
 }

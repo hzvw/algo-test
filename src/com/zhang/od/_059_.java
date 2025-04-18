@@ -15,40 +15,39 @@ public class _059_ {
     // 这题太难
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String s1 = sc.next();
-        String s2 = sc.next();
+        String str1 = sc.nextLine();
+        String str2 = sc.nextLine();
 
         int[] count = new int[26];
-
-        for (int i = 0; i < s1.length(); i++) {
-            char c = s1.charAt(i);
+        for (int i = 0; i < str1.length(); i++) {
+            char c = str1.charAt(i);
             count[c-'a']++;
         }
 
-        int n = s1.length();
-        int i = 0;
-        while (i < s2.length()) {
-            char c = s2.charAt(i);
-
-            if(count[c-'a'] > 0){
+        int n = str1.length();
+        for (int i = 0; i < str2.length(); i++) {
+            char c = str2.charAt(i);
+            if(count[c-'a'] >  0){
                 n--;
             }
             count[c-'a']--;
 
-            if(i>=s1.length()){
-                char c2 = s2.charAt(i - s1.length());
+            int j = i - str1.length() ;
+            if(j >= 0){
+                char c2 = str2.charAt(j);
                 if(count[c2-'a'] >= 0){
                     n++;
                 }
                 count[c2-'a']++;
             }
             if(n == 0){
-                System.out.println(i-s1.length()+1);
+                System.out.println(j+1);
                 return;
             }
-
-            i++;
         }
+
         System.out.println(-1);
+        return;
+
     }
 }

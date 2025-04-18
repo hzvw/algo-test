@@ -40,7 +40,7 @@ public class _012_ {
                 }
 
                 char c2 = s.charAt(i);
-                if(count[c2] == 0){
+                if(count[c2] >= 0){
                     n++;
                 }
                 count[c2]++;

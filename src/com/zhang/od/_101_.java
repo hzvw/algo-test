@@ -17,38 +17,37 @@ public class _101_ {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
         int m = sc.nextInt();
-
-        int[][] arr = new int[n][m];
+        int[][] nums = new int[n][m];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                arr[i][j] = sc.nextInt();
+                nums[i][j] = sc.nextInt();
             }
         }
 
         int res = Integer.MIN_VALUE;
-        for(int i = 0; i<n; i++){
-            res = Math.max(res, max_sub(arr[i]));
+        for (int i = 0; i < n; i++) {
+            res = Math.max(res, max_sub(nums[i]));
 
-            for(int j = i+1; j<n; j++){
-                for(int k = 0; k<m; k++){
-                    arr[i][k] += arr[j][k];
+            for (int j = i+1; j < n; j++) {
+                for (int k = 0; k < m; k++) {
+                    nums[i][k] += nums[j][k];
                 }
-                res = Math.max(res, max_sub(arr[i]));
+                res = Math.max(res, max_sub(nums[i]));
             }
+
         }
+
+
         System.out.println(res);
-
-
-
     }
 
-    public static int max_sub(int[] nums) {
+    static int max_sub(int[] nums){
         int[] dp = new int[nums.length];
         dp[0] = nums[0];
-
         for (int i = 1; i < nums.length; i++) {
-            dp[i] = Math.max(dp[i-1], 0) + nums[i];
+            dp[i] = Math.max(0, dp[i-1]) + nums[i];
         }
+
         return Arrays.stream(dp).max().getAsInt();
     }
 

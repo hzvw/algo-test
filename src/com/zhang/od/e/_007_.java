@@ -17,9 +17,9 @@ public class _007_ {
 
     static int[][] map;
 
-    static Set<Integer> visited;
+    static Set<Integer> visited;//所有马都能跳到的位置
 
-    static int[][] stepMap;
+    static int[][] stepMap;//所有马到达每一个位置，最小步数之和
 
     static int[][] directions = new int[][]{{1,2},{1,-2},{2,1},{2,-1},{-1,2},{-1,-2},{-2,1},{-2,-1}};
     public static void main(String[] args) {

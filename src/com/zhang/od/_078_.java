@@ -1,7 +1,7 @@
 package com.zhang.od;
 
-import java.util.LinkedList;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * ClassName: _078_
@@ -15,31 +15,36 @@ import java.util.Scanner;
 public class _078_ {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String str = sc.next();
-        int N = sc.nextInt();
+        String num = sc.next();
+        int k = sc.nextInt();
 
-        LinkedList<Integer> stack = new LinkedList<>();
+        int count = 0;
+        Deque<Character> st = new LinkedList<>();
+        for (int i = 0; i < num.length(); i++) {
+            char c = num.charAt(i);
 
-        int cnt = 0;
-        for(int i = 0; i<str.length(); i++){
-            int t = str.charAt(i) - '0';
-            while (stack.size() > 0 && stack.getLast() > t && cnt < N){
-                stack.removeLast();
-                cnt++;
+            while (!st.isEmpty() && c<st.peek() && count < k){
+                st.pop();
+                count++;
             }
-            stack.addLast(t);
+            st.push(c);
         }
 
-        while(stack.size() > str.length() - N){
-            stack.removeLast();
+        while (st.size() > num.length() - k){
+            st.pop();
         }
 
-        while(stack.getFirst() == 0 && stack.size() != 1){
-            stack.removeFirst();
+        ArrayList<Character> list = new ArrayList<>();
+        while (!st.isEmpty()){
+            list.add(st.pop());
+        }
+        Collections.reverse(list);
+        while (list.size() > 1 && list.get(0) == '0'){
+            list.remove(0);
         }
 
-        for(int i : stack){
-            System.out.print(i);
+        for (Character c : list) {
+            System.out.print(c);
         }
 
     }

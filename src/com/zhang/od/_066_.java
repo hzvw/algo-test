@@ -21,27 +21,25 @@ public class _066_ {
     }
 
     static int p(int[] arr){
-        int N = arr.length;
         Arrays.sort(arr);
-        if(arr[0] == 0){
-            return 1;
-        }
-
-        boolean[] flag = new boolean[N];
-        int cnt = 0;
-        for(int i = 0; i<N; i++){
-            if(flag[i] == true){
+        int n = arr.length;
+        boolean[] color = new boolean[n];
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            if(color[i]){
                 continue;
             }
-            flag[i] = true;
-            for(int j = i+1; j<N; j++){
-                if(!flag[j] && arr[j] % arr[i] == 0){
-                    flag[j] = true;
+            color[i] = true;
+            for (int j = i+1; j < n; j++) {
+                if(!color[j] && arr[j] % arr[i] == 0){
+                    color[j] = true;
                 }
             }
-            cnt++;
+            count++;
         }
-        return cnt;
+
+
+        return count;
     }
 
 }

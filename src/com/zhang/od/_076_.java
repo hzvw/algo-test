@@ -45,25 +45,24 @@ public class _076_ {
 //    }
 
 
-    static HashMap<String, Integer> buffer = new HashMap<>();
+    static Map<String, Integer> map = new HashMap<>();
     static{
-        buffer.put("M", 1);
-        buffer.put("G", 1024);
-        buffer.put("T", 1024 * 1024);
+        map.put("M", 1);
+        map.put("G", 1024);
+        map.put("T", 1024 * 1024);
     }
 
     static long p(String str){
         Pattern p = Pattern.compile("(\\d+)(M|G|T)");
         Matcher m = p.matcher(str);
-
-        long sum = 0;
-        while(m.find()){
-            String d = m.group(1);
-            String dw = m.group(2);
-
-            sum += Long.parseLong(d) * buffer.get(dw);
+        long res = 0;
+        while (m.find()){
+            int num = Integer.parseInt(m.group(1));
+            int unit = map.get(m.group(2));
+            res += num * unit;
         }
-        return sum;
+
+        return res;
     }
 
 

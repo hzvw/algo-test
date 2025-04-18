@@ -1,6 +1,8 @@
 package com.zhang.od;
 
+import java.beans.BeanDescriptor;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -17,48 +19,48 @@ public class _063_ {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int[] arr = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        int[] arr = Arrays.stream(sc.nextLine().split(" "))
+                .mapToInt(Integer::parseInt).toArray();
 
         System.out.println(p(arr));
 
     }
 
-    static int p(int[] arr){
-        LinkedList<Integer> stack = new LinkedList<>();
-
-        int negative = 0;//负数逃生人数
-        for(int num : arr){
-            if(num == 0 ){
+    static int p(int[] nums){
+        int negative = 0;
+        Deque<Integer> st = new LinkedList<>();
+        for (int i = 0; i < nums.length; i++) {
+            int ele = nums[i];
+            if(ele == 0){
                 return -1;
             }
 
-            if(num > 0){
-                stack.addLast(num);
+            if(ele > 0){
+                st.push(ele);
             }else{
                 while(true){
-                    if(stack.size() == 0){
+                    if(st.size() == 0){
                         negative++;
                         break;
                     }else{
-                        int pk = stack.removeLast() + num;
-                        if(pk == 0){
-                            //同归于尽
-                            break;
-                        }else if(pk>0){
-                            //正数赢
-                            stack.addLast(pk);
+                        int pk = st.pop() + ele;
+                        if(pk < 0){
+                            ele = pk;
+                        }else if(pk == 0){
                             break;
                         }else{
-                            //负数赢
-                            //i1++;
-                            num = pk;
+                            st.push(pk);
+                            break;
                         }
+
                     }
                 }
             }
+
         }
 
-        return negative + stack.size();
+
+        return st.size() + negative;
     }
 
 }

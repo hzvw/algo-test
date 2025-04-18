@@ -27,16 +27,16 @@ public class _053_ {
             buffer.addLast(i);
         }
 
-        int cnt = 0;
-        while(buffer.size() >= M){
-             int t = buffer.removeFirst();
-             cnt++;
+        int num = 1;
+        while (buffer.size() >= M){
+            int id = buffer.removeFirst();
 
-             if(cnt == M){
-                 cnt = 0;
-             }else{
-                 buffer.addLast(t);
-             }
+            if(num == M){
+                num = 1;
+            }else{
+                buffer.addLast(id);
+                num++;
+            }
         }
 
         buffer.sort((x,y)->x-y);

@@ -1,6 +1,8 @@
 package com.zhang.od;
 
+import java.util.Deque;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 /**
  * ClassName: _084_
@@ -12,59 +14,42 @@ import java.util.LinkedList;
  * @Version 1.0
  */
 public class _084_ {
-    public static void main01(String[] args) {
-        String s = "1+2-3-4";
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String str = sc.nextLine() + "$";
 
-        s = "(" + s + ")";
+        Deque<Integer> nums = new LinkedList<>();
+        Deque<Character> ops = new LinkedList<>();
+        StringBuilder num = new StringBuilder();
 
-        LinkedList<Integer> stack1 = new LinkedList<>();//数字栈
-        LinkedList<Character> stack2 = new LinkedList<>();//符号栈
-
-        char[] cs = s.toCharArray();
-        for(int i = 0; i<cs.length; i++){
-            char c = cs[i];
-            if(c >='0' && c<='9'){// 是数字
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            if(Character.isDigit(c)){
                 int j = i;
-                StringBuilder sb = new StringBuilder();
-                while(j<cs.length && cs[j] >= '0' && cs[j] <= '9'){
-                    sb.append(cs[j]);
-                    j++;
+                for (; j < str.length() && Character.isDigit(str.charAt(j)); j++) {
+                    num.append(str.charAt(j));
                 }
-                stack1.addLast(Integer.parseInt(sb.toString()));
-                i = j-1;
-            }else if(c == '('){//
-                stack2.addLast(c);
-            } else if(c == ')'){
-                while(!stack2.isEmpty()){
-                    char c2 = stack2.removeLast();
-//                    char c2 = stack2.getLast();
-                    if(c2 != '('){
-                        int i1 = stack1.removeLast();
-                        int i2 = stack1.removeLast();
-                        if(c2 == '+'){
-                            stack1.addLast(i1+i2);
-                        }else{
-                            stack1.addLast(i2-i1);
-                        }
+                nums.push(Integer.parseInt(num.toString()));
+                num = new StringBuilder();
+                i = j - 1;
+            }
+
+            if(c == '#' || c == '$'){
+                while (!ops.isEmpty() && c >= ops.peek()){
+                    int y = nums.pop();
+                    int x = nums.pop();
+                    char op = ops.pop();
+                    if(op == '#'){
+                        nums.push(4 * x + 3 * y + 2);
+                    }else{
+                        nums.push(2 * x + y + 3);
                     }
                 }
-            }else{
-                // 加减号
-                stack2.addLast(c);
+                ops.push(c);
             }
         }
-        System.out.println(stack1.removeLast());
+        System.out.println(nums.peek());
     }
-
-    // 优先级
-    static int p(char c){
-        if(c == '*' || c == '/'){
-            return 100;
-        }else{
-            return 1;
-        }
-    }
-
 
 
 
