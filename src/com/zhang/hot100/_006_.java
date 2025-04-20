@@ -15,6 +15,7 @@ import java.util.List;
  * @Version 1.0
  */
 public class _006_ {
+
     public List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
         Arrays.sort(nums);
