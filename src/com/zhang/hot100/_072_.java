@@ -16,15 +16,17 @@ import java.util.LinkedList;
 public class _072_ {
     public int[] dailyTemperatures(int[] nums) {
         int[] res = new int[nums.length];
-        Deque<Integer> st = new LinkedList<>();
-        st.push(0);
+        LinkedList<Integer> st = new LinkedList<>();
+
+        // 单减栈
+        st.addLast(0);
         for (int i = 1; i < nums.length; i++) {
-            while (!st.isEmpty() && nums[i] > nums[st.peek()]){
+            while (!st.isEmpty() && nums[i] > nums[st.getLast()]){
                 int right = i;
-                int left = st.pop();
-                res[left] = i-left;
+                int left = st.removeLast();
+                res[left] = right-left;
             }
-            st.push(i);
+            st.addLast(i);
         }
         return res;
     }

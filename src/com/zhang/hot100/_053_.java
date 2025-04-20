@@ -28,6 +28,8 @@ public class _053_ {
             int a = prerequisite[0];
             int b = prerequisite[1];
 
+            // b->a
+
             set.add(a);
             set.add(b);
 
@@ -46,6 +48,8 @@ public class _053_ {
         int count = 0;
         while (!queue.isEmpty()){
             int b = queue.poll();
+
+
             List<Integer> list = out.get(b);
             if(list == null || list.size() == 0){
                 continue;

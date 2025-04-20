@@ -14,8 +14,8 @@ import java.util.HashMap;
 public class _010_ {
     public static void main(String[] args) {
 
-        int[] nums = {-1,-1,1};
-        int k = 0;
+        int[] nums = {1,2,3};
+        int k = 3;
         System.out.println(new _010_().subarraySum(nums, k));
     }
 

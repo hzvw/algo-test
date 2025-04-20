@@ -19,22 +19,21 @@ public class _007_ {
     }
 
 
-    public int trap(int[] height) {
+    public int trap(int[] nums) {
         int res = 0;
-        Deque<Integer> st = new LinkedList<>();
-        st.push(0);
-
-        for (int i = 1; i < height.length; i++) {
-            while (!st.isEmpty() && height[i]>height[st.peek()]){
+        LinkedList<Integer> st = new LinkedList<>();
+        st.addLast(0);
+        for (int i = 1; i < nums.length; i++) {
+            while (!st.isEmpty() && nums[i] > nums[st.getLast()]){
                 int right = i;
-                int mid = st.pop();
+                int mid = st.removeLast();
                 if(!st.isEmpty()){
-                    int left = st.peek();
+                    int left = st.getLast();
 
-                    res += (right-left-1) * (Math.min(height[left], height[right]) - height[mid]);
+                    res += (Math.min(nums[left], nums[right]) - nums[mid]) * (right-left-1);
                 }
             }
-            st.push(i);
+            st.addLast(i);
         }
         return res;
     }
