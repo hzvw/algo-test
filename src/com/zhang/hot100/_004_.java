@@ -10,6 +10,7 @@ package com.zhang.hot100;
  * @Version 1.0
  */
 public class _004_ {
+
     public static void main(String[] args) {
         new _004_().moveZeroes(new int[]{0,1,0,3,12});
 
