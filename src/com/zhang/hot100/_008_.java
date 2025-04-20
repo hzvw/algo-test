@@ -16,6 +16,7 @@ import java.util.List;
 public class _008_ {
     public static void main(String[] args) {
         System.out.println(new _008_().lengthOfLongestSubstring("abba"));
+
     }
 
     public int lengthOfLongestSubstring(String s) {
