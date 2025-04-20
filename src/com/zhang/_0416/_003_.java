@@ -18,6 +18,7 @@ import java.util.Scanner;
 public class _003_ {
     static int[] count = new int[14];
 
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String str = sc.nextLine();
