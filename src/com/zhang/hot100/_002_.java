@@ -21,6 +21,7 @@ public class _002_ {
     }
 
     public List<List<String>> groupAnagrams(String[] strs) {
+
         HashMap<String, List<String>> map2 = new HashMap<>();
         for(String str : strs){
             char[] cs = str.toCharArray();
