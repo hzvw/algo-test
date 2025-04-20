@@ -12,6 +12,7 @@ import java.awt.*;
  * @Version 1.0
  */
 public class HeapSort {
+
     public static void main(String[] args) {
         int[] nums = {6,5,4,2,1,3};
         new HeapSort().heap_sort(nums);
