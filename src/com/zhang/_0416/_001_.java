@@ -14,8 +14,75 @@ import java.util.regex.Pattern;
  * @Version 1.0
  */
 public class _001_ {
-
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        String str = sc.nextLine();
+        String reg = "([+-]?(\\d+[+*-])*\\d+)";
+        Pattern p = Pattern.compile(reg);
+        Matcher m = p.matcher(str);
+
+        String maxLenStr = "";
+        while (m.find()){
+            String tmp = m.group();
+            if(tmp.length() > maxLenStr.length()){
+                maxLenStr = tmp;
+            }
+        }
+
+        System.out.println(compute(maxLenStr));
+    }
+
+    static int compute(String s){
+        s += "+0";
+
+        LinkedList<Integer> st = new LinkedList<>();
+        String num = "";
+        int num_coef = 1;
+        char start = s.charAt(0);
+        if(start == '+' || start == '-'){
+            s = s.substring(1);
+        }
+
+        if(start == '-'){
+            num_coef = -1;
+        }
+
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if(Character.isDigit(c)){
+                num += c;
+                continue;
+            }
+
+            int t = num_coef * Integer.parseInt(num);
+            st.addLast(t);
+            num = "";
+            switch (c){
+                case '+':
+                    num_coef = 1;
+                    break;
+                case '-':
+                    num_coef = -1;
+                    break;
+                case '*':
+                    num_coef = st.removeLast();
+                    break;
+            }
+        }
+
+        int res = 0;
+        for (Integer ele : st) {
+            res += ele;
+        }
+
+        return res;
+    }
+
+
+
+
+    public static void main01(String[] args) {
         Scanner sc = new Scanner(System.in);
         String str = sc.nextLine();
 
