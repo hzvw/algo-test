@@ -14,6 +14,7 @@ import java.util.List;
  * @Version 1.0
  */
 public class MyPriorityQueue {
+
     public static void main(String[] args) {
         int[] nums = {1,2,3,4,5,5};
         MyPriorityQueue myPriorityQueue = new MyPriorityQueue();
