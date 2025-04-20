@@ -20,6 +20,7 @@ public class _007_ {
 
 
     public int trap(int[] nums) {
+
         int res = 0;
         LinkedList<Integer> st = new LinkedList<>();
         st.addLast(0);
