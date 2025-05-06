@@ -31,10 +31,9 @@ public class _033_ {
         String line = sc.nextLine();
         String bad = sc.nextLine();
 
-        char[] cs = line.toCharArray();
+        cs = line.toCharArray();
 
-        List<String> res = new ArrayList<>();
-        p(cs, 0, new LinkedList<>(), res);
+        dfs(cs, 0);
 
         List<String> ret = new ArrayList<>();
         for(String s : res){
@@ -57,7 +56,13 @@ public class _033_ {
 
     }
 
-    static void p(char[] cs,  int level, LinkedList<Character> buckets,List<String> res){
+    static LinkedList<Character> buckets = new LinkedList<>();
+
+    static List<String> res = new ArrayList<>();
+
+    static char[] cs = null;
+
+    static void dfs(char[] cs, int level){
         if(cs.length == buckets.size()){
             res.add(buckets.stream().map(x -> x+"").reduce("",String::concat));
             return;
@@ -67,7 +72,7 @@ public class _033_ {
             char[] vs = value.toCharArray();
             for(int j = 0; j<vs.length; j++){
                 buckets.addLast(vs[j]);
-                p(cs, i+1, buckets, res);
+                dfs(cs, i+1);
                 buckets.removeLast();
             }
         }
