@@ -20,56 +20,66 @@ public class _036_ {
         map.put(9,6);
     }
 
+    static List<String> res = new ArrayList<>();
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int[] ints = Arrays.stream(sc.nextLine().split(",")).mapToInt(Integer::parseInt).toArray();
-        List<String> res = new ArrayList<>();
+        nums = Arrays.stream(sc.nextLine().split(",")).mapToInt(Integer::parseInt).toArray();
 
-        for (int i = 0; i < ints.length; i++) {
-            res.add(ints[i] + "");
-            if(map.get(ints[i]) != null){
-                res.add(map.get(ints[i]) + "");
+        n = nums.length;
+        visited = new boolean[nums.length];
+
+        for (int i = 0; i < nums.length; i++) {
+            res.add(nums[i] + "");
+            if(map.get(nums[i]) != null){
+                res.add(map.get(nums[i]) + "");
             }
         }
 
-        p(ints, 0, 2, new LinkedList<>(), res, new boolean[ints.length]);
+        dfs(0);
 
         List<Integer> ret = new ArrayList<>();
         res.forEach(x -> ret.add(Integer.parseInt(x)));
 
         ret.sort((x,y) -> Integer.compare(x,y));
 
-        System.out.println(ret.get(Arrays.stream(ints).boxed().max((a,b)->a-b).get()-1));
-       // ret.forEach(System.out::println);
+        System.out.println(ret.get(Arrays.stream(nums).boxed().max((a,b)->a-b).get()-1));
 
     }
 
-    static void p(int[] ints,int level, int n, LinkedList<Integer> buckets, List<String> res, boolean[] visited){
-        if(buckets.size() == n){
-//            System.out.println(buckets.stream().map( x -> x+"").reduce("", String::concat));
+    static LinkedList<Integer> buckets = new LinkedList<>();
+
+    static boolean[] visited ;
+
+    static int n;
+
+    static int[] nums;
+
+    static void dfs(int level){
+        if(level == n){
             res.add(buckets.stream().map( x -> x+"").reduce("", String::concat));
             return ;
         }
 
-        for(int i = 0; i<ints.length; i++){
+        for(int i = 0; i<nums.length; i++){
             if(visited[i]){
                 continue;
             }
-            if(map.get(ints[i]) != null){
-                int[] tmp = new int[]{ints[i], map.get(ints[i])};
+            if(map.get(nums[i]) != null){
+                int[] tmp = new int[]{nums[i], map.get(nums[i])};
                 for(int j = 0; j<2; j++){
                     buckets.addLast(tmp[j]);
                     visited[i] = true;
 
-                    p(ints, i+1, n, buckets, res, visited);
+                    dfs(i+1);
                     buckets.removeLast();
                     visited[i] = false;
                 }
             }else{
-                buckets.addLast(ints[i]);
+                buckets.addLast(nums[i]);
                 visited[i] = true;
 
-                p(ints, i+1, n, buckets, res, visited);
+                dfs(i+1);
                 buckets.removeLast();
                 visited[i] = false;
             }
