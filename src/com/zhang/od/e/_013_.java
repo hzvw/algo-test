@@ -15,6 +15,7 @@ import java.util.Scanner;
  * @Version 1.0
  */
 public class _013_ {
+
     static int n;
     static char[][] arr;
 
@@ -35,11 +36,10 @@ public class _013_ {
             }
         }
         st = sc.nextLine();
-
-        List<List<String>> res = new ArrayList<>();
+        len = st.length();
         for(int i =0;i<n; i++){
             for(int j = 0; j<n; j++){
-                dfs(i,j,0, new LinkedList<>(), st.length(), res);
+                dfs(i,j,0);
             }
         }
         if(res.size() > 0){
@@ -50,26 +50,33 @@ public class _013_ {
 
     }
 
-    static void dfs(int i, int j, int k, LinkedList<String> buckets, int len, List<List<String>> res){
-        if(i<0 || i>=n || j<0 || j>=n || k > len){
-            return;
-        }
-        if(buckets.size() == len){
+    static int[][] directions = {{-1,0},{0,-1},{0,1},{1,0}};
+
+    static LinkedList<String> buckets = new LinkedList<>();
+
+    static int len;
+
+    static List<List<String>> res = new ArrayList<>();
+
+    static void dfs(int i, int j, int level){
+        if(level == len){
             res.add(new ArrayList<>(buckets));
             return;
         }
-        if(arr[i][j] != st.charAt(k)){
+        if(arr[i][j] != st.charAt(level)){
             return;
         }
         buckets.addLast(i + "," + j);
         visited[i][j] = true;
 
-        dfs(i,j-1,k+1,buckets,len,res);
-        dfs(i-1,j,k+1,buckets,len,res);
-        dfs(i,j+1,k+1,buckets,len,res);
-        dfs(i+1,j,k+1,buckets,len,res);
+        for (int[] direction : directions) {
+            int x = i + direction[0];
+            int y = j + direction[1];
 
-
+            if(x>=0 && x<n && y>=0 && y< n){
+                dfs(x,y, level+1);
+            }
+        }
         buckets.removeLast();
         visited[i][j] = false;
 
