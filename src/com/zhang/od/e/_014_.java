@@ -86,27 +86,12 @@ public class _014_ {
             int fa_y = find(y);
 
             if(fa_x <= fa_y){
-//                fa[y] = fa_x;
                 fa[fa_y] = fa_x;
             }else{
-//                fa[x] = fa_y;
                 fa[fa_x] = fa_y;
             }
 
         }
-
-
-//        public void union(int x, int y) {
-//            int x_fa = this.find(x);
-//            int y_fa = this.find(y);
-//
-//            // 保证字典序小的字符优先为根
-//            if (x_fa < y_fa) {
-//                this.fa[y_fa] = x_fa;
-//            } else {
-//                this.fa[x_fa] = y_fa;
-//            }
-//        }
     }
 
 }
