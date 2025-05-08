@@ -45,15 +45,17 @@ public class _061_ {
 
         int left = min_reli;
         int right = max_reli;
+        int res = 0;
         while(left <= right){
             int mid = (right + left ) / 2;
             if(check(mid, s, n)){
+                res = mid;
                 left = mid+1;
             }else{
                 right = mid-1;
             }
         }
-        System.out.println(right);
+        System.out.println(res);
     }
 
     static boolean check(int mid,int s, int n){
